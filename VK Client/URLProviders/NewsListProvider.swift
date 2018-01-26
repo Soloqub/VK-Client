@@ -65,106 +65,107 @@ class NewsListProvider {
                 return
         }
 
-        print(items.count)
+        print("Найдено сущностей: ", items.count)
 
-//        items.forEach() { item in
-//
-//            guard let type = NewsType(rawValue: item.type) else {
-//                assertionFailure()
-//                return
-//            }
-//
-//            let newItem = News()
-//            newItem.type = type
-//            newItem.date = Date(timeIntervalSince1970: item.date)
-//            newItem.text = item.text
-//            newItem.sourceType = item.sourceID > 0 ? .profile : .group
-//            newItem.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
-//            newItem.views = item.views?.count
-//            newItem.likes = item.likes?.count
-//            newItem.reposts = item.reposts?.count
-//
-//            item.attachments?.forEach() {
-//                if let type = AttachmentType(rawValue: $0.type) {
-//
-//                    switch type {
-//
-//                    case .photo:
-//                        var newAttach = PostAttachmentWithPhotos(urls: [])
-//
-//                        if let urlString = $0.photo?.smallSizePhotoURL,
-//                            let url = URL(string: urlString) {
-//                            newAttach.urls.append(.small(url))
-//                        }
-//
-//                        if let urlString = $0.photo?.middleSizePhotoURL,
-//                            let url = URL(string: urlString) {
-//                            newAttach.urls.append(.middle(url))
-//                        }
-//
-//                        if let urlString = $0.photo?.bigSizePhotoURL,
-//                            let url = URL(string: urlString) {
-//                            newAttach.urls.append(.big(url))
-//                        }
-//
-//                        if newAttach.urls.count < 1 { assertionFailure() } else {
-//                            newItem.attachments.append(newAttach)
-//                        }
-//
-//                    case .link:
-//                        guard
-//                            let url = $0.link?.url,
-//                            let title = $0.link?.title,
-//                            let caption = $0.link?.caption,
-//                            let description = $0.link?.description else {
-//                                assertionFailure()
-//                                return
-//                        }
-//
-//                        var newLink = PostAttachmentWithLink(url: url,
-//                                                             title: title,
-//                                                             caption: caption,
-//                                                             description: description,
-//                                                             photo: [])
-//
-//                        if let urlString = $0.photo?.smallSizePhotoURL,
-//                            let url = URL(string: urlString) {
-//                            newLink.photo.append(.small(url))
-//                        }
-//
-//                        if let urlString = $0.photo?.middleSizePhotoURL,
-//                            let url = URL(string: urlString) {
-//                            newLink.photo.append(.middle(url))
-//                        }
-//
-//                        if let urlString = $0.photo?.bigSizePhotoURL,
-//                            let url = URL(string: urlString) {
-//                            newLink.photo.append(.big(url))
-//                        }
-//                    }
-//                }
-//            }
-//
-//            item.photos?.forEach() { item in
-//                var photo = WallPhoto()
-//                photo.text = item.text
-//                photo.likes = item.likes?.count
-//
-//                if let urlString = item.smallSizePhotoURL,
-//                    let url = URL(string: urlString) {
-//                    photo.urls.append(.small(url))
-//                }
-//
-//                if let urlString = item.middleSizePhotoURL,
-//                    let url = URL(string: urlString) {
-//                    photo.urls.append(.middle(url))
-//                }
-//
-//                if let urlString = item.bigSizePhotoURL,
-//                    let url = URL(string: urlString) {
-//                    photo.urls.append(.big(url))
-//                }
-//            }
-//        }
+        items.forEach() { item in
+            
+            if let type = NewsType(rawValue: item.type) {
+                
+                let newItem = News()
+                newItem.type = type
+                newItem.date = Date(timeIntervalSince1970: item.date)
+                newItem.text = item.text
+                newItem.sourceType = item.sourceID > 0 ? .profile : .group
+                newItem.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
+                newItem.views = item.views?.count
+                newItem.likes = item.likes?.count
+                newItem.reposts = item.reposts?.count
+                
+                item.attachments?.forEach() {
+                    if let type = AttachmentType(rawValue: $0.type) {
+                        
+                        switch type {
+                            
+                        case .photo:
+                            var newAttach = PostAttachmentWithPhotos(urls: [])
+                            
+                            if let urlString = $0.photo?.smallSizePhotoURL,
+                                let url = URL(string: urlString) {
+                                newAttach.urls.append(.small(url))
+                            }
+                            
+                            if let urlString = $0.photo?.middleSizePhotoURL,
+                                let url = URL(string: urlString) {
+                                newAttach.urls.append(.middle(url))
+                            }
+                            
+                            if let urlString = $0.photo?.bigSizePhotoURL,
+                                let url = URL(string: urlString) {
+                                newAttach.urls.append(.big(url))
+                            }
+                            
+                            if newAttach.urls.count < 1 { assertionFailure() } else {
+                                newItem.attachments.append(newAttach)
+                            }
+                            
+                        case .link:
+                            guard
+                                let url = $0.link?.url,
+                                let title = $0.link?.title,
+                                let description = $0.link?.description else {
+                                    assertionFailure()
+                                    return
+                            }
+                            
+                            var newLink = PostAttachmentWithLink(url: url,
+                                                                 title: title,
+                                                                 caption: $0.link?.caption,
+                                                                 description: description,
+                                                                 photo: [])
+                            
+                            if let urlString = $0.photo?.smallSizePhotoURL,
+                                let url = URL(string: urlString) {
+                                newLink.photo.append(.small(url))
+                            }
+                            
+                            if let urlString = $0.photo?.middleSizePhotoURL,
+                                let url = URL(string: urlString) {
+                                newLink.photo.append(.middle(url))
+                            }
+                            
+                            if let urlString = $0.photo?.bigSizePhotoURL,
+                                let url = URL(string: urlString) {
+                                newLink.photo.append(.big(url))
+                            }
+                        }
+                    } else {
+                        print("Нераспарсенный тип: ", $0.type)
+                    }
+                }
+                
+                item.photos?.items.forEach() { item in
+                    var photo = WallPhoto()
+                    photo.text = item.text
+                    photo.likes = item.likes?.count
+                    
+                    if let urlString = item.smallSizePhotoURL,
+                        let url = URL(string: urlString) {
+                        photo.urls.append(.small(url))
+                    }
+                    
+                    if let urlString = item.middleSizePhotoURL,
+                        let url = URL(string: urlString) {
+                        photo.urls.append(.middle(url))
+                    }
+                    
+                    if let urlString = item.bigSizePhotoURL,
+                        let url = URL(string: urlString) {
+                        photo.urls.append(.big(url))
+                    }
+                }
+            } else {
+                print(item.type)
+            }
+        }
     }
 }

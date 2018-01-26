@@ -152,7 +152,7 @@ struct PostAttachmentWithLink: Attachments {
 
     var url: String
     var title: String
-    var caption: String
+    var caption: String?
     var description: String
     var photo: [URLSize]
 }
@@ -174,7 +174,7 @@ enum URLSize {
 
 enum NewsType: String {
     case post
-    case wallPhoto
+    case wallPhoto = "wall_photo"
 }
 
 enum AttachmentType: String {
