@@ -1,0 +1,4 @@
+.DS_Store
+Pods/
+.git/
+Podfile.lock
