@@ -1,0 +1,67 @@
+{
+    "response":{
+        "items":[
+                 
+                 {
+                 "type":"post",
+                 "source_id":-79138567,
+                 "date":1495094389,
+                 "post_id":445327,
+                 "post_type":"post",
+                 "text":"К сожалению, мы точно этого никогда не узнаем. Однако, опираясь на некоторые факты, можно выдвинуть несколько интересных предположений: https://thequestion.ru/questions/201550/chto-by-skazal-stiv-dzhobs-esli-by-uvidel-novye-produkty-apple?utm_campaign=editorial&utm_source=vk&utm_medium=social",
+                 "marked_as_ads":0,
+                 "attachments":[
+                                {
+                                "type":"photo",
+                                "photo":{
+                                "id":456265344,
+                                "album_id":-7,
+                                "owner_id":-79138567,
+                                "user_id":100,
+                                "photo_75":"https://cs540107....a36/2_kLzrMhfYs.jpg",
+                                "photo_130":"https://cs540107....a37/PifuwFkK_M8.jpg",
+                                "photo_604":"https://cs540107....a38/sqBXntZ7HA0.jpg",
+                                "photo_807":"https://cs540107....a39/jDEdUPYWCz0.jpg",
+                                "photo_1280":"https://cs540107....a3a/I-gSMVouRYA.jpg",
+                                "width":1200,
+                                "height":630,
+                                "text":"Original: https://media.thequestion.ru/cards/question/201550/d3c0070606dc69f4ca57a8c065ea13a0cea51330?t=1491214303",
+                                "date":1495094389,
+                                "post_id":445327,
+                                "access_key":"f0eed003a34f922084"
+                                }
+                                },
+                                {
+                                "type":"link",
+                                "link":{
+                                "url":"https://thequesti...p;utm_medium=social",
+                                "title":"Что бы сказал Стив Джобс, если бы увидел новые продукты Apple?",
+                                "description":"Боюсь вас разочаровать, но мы никогда не получим ответа на этот вопрос. Если серьезно - то компанией Apple руководят люди, которых назначал лично Джобс. Весь совет директоров не менялся, и в него входят все те же самые участники, что были с компанией на протяжении многих лет до этого. Да, сегодня Тим Кук у руля. Но он тоже далеко не новый человек в компании, он пришел работать в Apple в марте 1998",
+                                "target":"external"
+                                }
+                                }
+                                ],
+                 "post_source":{
+                 "type":"vk"
+                 },
+                 "comments":{
+                 "count":0,
+                 "can_post":1
+                 },
+                 "likes":{
+                 "count":1,
+                 "user_likes":0,
+                 "can_like":1,
+                 "can_publish":1
+                 },
+                 "reposts":{
+                 "count":0,
+                 "user_reposted":0
+                 },
+                 "views":{
+                 "count":1317
+                 }
+                 }
+                 ]
+    }
+}
