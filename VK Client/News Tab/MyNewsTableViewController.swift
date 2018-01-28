@@ -11,14 +11,21 @@ import SwiftKeychainWrapper
 
 class MyNewsTableViewController: UITableViewController {
 
+    var news = [News]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Пробуем получить список групп
         let token = KeychainWrapper.standard.string(forKey: "Token")!
 
+        // Пробуем получить список новостей
         let provider = NewsListProvider(token: token)
-        provider.getNewsList()
+        provider.getNewsList() { [weak self] news in
+
+            self?.news = news
+            self?.tableView.reloadData()
+            print(self?.news.count as Any)
+        }
         
     }
 
@@ -26,13 +33,18 @@ class MyNewsTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "simplest", for: indexPath)
+        return cell
+    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return self.news.count
     }
 }

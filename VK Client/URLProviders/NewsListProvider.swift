@@ -52,7 +52,7 @@ class NewsListProvider {
         }
     }
     
-    func getNewsList() {
+    func getNewsList(completion: @escaping (_ news: [News]) -> Void) {
 
         Alamofire.request(self.makeURLRequest()!).responseData(queue: .global(qos: .userInitiated)) { response in
 
@@ -104,6 +104,9 @@ class NewsListProvider {
                     print(item.type)
                 }
             }
+
+            print("Новостей: ", newsArray.count)
+            DispatchQueue.main.async { completion(newsArray) }
         }
     }
 
