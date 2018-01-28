@@ -65,107 +65,161 @@ class NewsListProvider {
                 return
         }
 
+        var newsArray = [News]()
+
         print("Найдено сущностей: ", items.count)
 
-        items.forEach() { item in
+        items.enumerated().forEach { index, item in
             
             if let type = NewsType(rawValue: item.type) {
-                
-                let newItem = News()
-                newItem.type = type
-                newItem.date = Date(timeIntervalSince1970: item.date)
-                newItem.text = item.text
-                newItem.sourceType = item.sourceID > 0 ? .profile : .group
-                newItem.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
-                newItem.views = item.views?.count
-                newItem.likes = item.likes?.count
-                newItem.reposts = item.reposts?.count
-                
-                item.attachments?.forEach() {
-                    if let type = AttachmentType(rawValue: $0.type) {
-                        
-                        switch type {
-                            
-                        case .photo:
-                            var newAttach = PostAttachmentWithPhotos(urls: [])
-                            
-                            if let urlString = $0.photo?.smallSizePhotoURL,
-                                let url = URL(string: urlString) {
-                                newAttach.urls.append(.small(url))
-                            }
-                            
-                            if let urlString = $0.photo?.middleSizePhotoURL,
-                                let url = URL(string: urlString) {
-                                newAttach.urls.append(.middle(url))
-                            }
-                            
-                            if let urlString = $0.photo?.bigSizePhotoURL,
-                                let url = URL(string: urlString) {
-                                newAttach.urls.append(.big(url))
-                            }
-                            
-                            if newAttach.urls.count < 1 { assertionFailure() } else {
-                                newItem.attachments.append(newAttach)
-                            }
-                            
-                        case .link:
-                            guard
-                                let url = $0.link?.url,
-                                let title = $0.link?.title,
-                                let description = $0.link?.description else {
-                                    assertionFailure()
-                                    return
-                            }
-                            
-                            var newLink = PostAttachmentWithLink(url: url,
-                                                                 title: title,
-                                                                 caption: $0.link?.caption,
-                                                                 description: description,
-                                                                 photo: [])
-                            
-                            if let urlString = $0.photo?.smallSizePhotoURL,
-                                let url = URL(string: urlString) {
-                                newLink.photo.append(.small(url))
-                            }
-                            
-                            if let urlString = $0.photo?.middleSizePhotoURL,
-                                let url = URL(string: urlString) {
-                                newLink.photo.append(.middle(url))
-                            }
-                            
-                            if let urlString = $0.photo?.bigSizePhotoURL,
-                                let url = URL(string: urlString) {
-                                newLink.photo.append(.big(url))
-                            }
+
+                switch type {
+                case .post:
+                    if item.attachments != nil {
+
+                        if let pieceOfNews = self.createPost(withItem: item) {
+                            newsArray.append(pieceOfNews)
                         }
+
                     } else {
-                        print("Нераспарсенный тип: ", $0.type)
+                        print("Пропускаем репост без аттачментов с id: ", item.id)
+                        return
+                    }
+                case .wallPhoto:
+                    let pieceOfNews = self.createPhotoWall(withItem: item)
+
+                    if pieceOfNews.photos.count > 0 {
+                        newsArray.append(pieceOfNews)
+                    } else {
+                        assertionFailure("Некорректная структура PhotoWall")
+                        return
                     }
                 }
-                
-                item.photos?.items.forEach() { item in
-                    var photo = WallPhoto()
-                    photo.text = item.text
-                    photo.likes = item.likes?.count
-                    
-                    if let urlString = item.smallSizePhotoURL,
-                        let url = URL(string: urlString) {
-                        photo.urls.append(.small(url))
-                    }
-                    
-                    if let urlString = item.middleSizePhotoURL,
-                        let url = URL(string: urlString) {
-                        photo.urls.append(.middle(url))
-                    }
-                    
-                    if let urlString = item.bigSizePhotoURL,
-                        let url = URL(string: urlString) {
-                        photo.urls.append(.big(url))
-                    }
-                }
+
             } else {
                 print(item.type)
             }
         }
+    }
+
+    private func createPost(withItem item: ResponseNewsVK.Item) -> Post? {
+
+        guard
+            let text = item.text,
+            let views = item.views?.count,
+            let likes = item.likes?.count,
+            let reposts = item.reposts?.count,
+            let attachments = item.attachments else {
+
+                assertionFailure()
+                return nil
+        }
+
+        var attachmentsArray = [Attachments]()
+
+        for attach in attachments {
+
+            let urlStrings = ["Small": attach.photo?.smallSizePhotoURL,
+                              "Middle": attach.photo?.middleSizePhotoURL,
+                              "Big": attach.photo?.bigSizePhotoURL]
+            let photoUrls = self.parsePhotos(withStrings: urlStrings)
+
+            if let type = AttachmentType(rawValue: attach.type) {
+
+                switch type {
+                case .photo:
+                    let newAttach = PostAttachmentWithPhotos(urls: photoUrls)
+
+                    if newAttach.urls.count < 1 { assertionFailure() } else {
+                        attachmentsArray.append(newAttach)
+                    }
+
+                case .link:
+                    guard
+                        let url = attach.link?.url,
+                        let title = attach.link?.title,
+                        let description = attach.link?.description else {
+                            assertionFailure("Некорректный аттач типа Link")
+                            return nil
+                    }
+
+                    let newLink = PostAttachmentWithLink(url: url,
+                                                         title: title,
+                                                         caption: attach.link?.caption,
+                                                         description: description,
+                                                         photo: photoUrls)
+                    attachmentsArray.append(newLink)
+                }
+            } else {
+                print("Нераспарсиваемый тип: ", attach.type)
+                print("Пропускаем элемент")
+                return nil
+            }
+        }
+
+        let newItem = Post()
+        newItem.date = Date(timeIntervalSince1970: item.date)
+        newItem.text = text
+        newItem.sourceType = item.sourceID > 0 ? .profile : .group
+        newItem.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
+        newItem.views = views
+        newItem.likes = likes
+        newItem.reposts = reposts
+        newItem.attachments = attachmentsArray
+
+        return newItem
+    }
+
+    private func createPhotoWall(withItem item: ResponseNewsVK.Item) -> PhotoWall {
+
+        let photoWall = PhotoWall()
+
+        item.photos?.items.forEach { item in
+            var photo = Photo()
+            photo.text = item.text
+            photo.likes = item.likes?.count
+
+            let urlStrings = ["Small": item.smallSizePhotoURL,
+                              "Middle": item.middleSizePhotoURL,
+                              "Big": item.bigSizePhotoURL]
+            photo.urls = self.parsePhotos(withStrings: urlStrings)
+
+            if photo.urls.count > 0 {
+                photoWall.photos.append(photo)
+            } else {
+                assertionFailure("Некорректное фото")
+                return
+            }
+        }
+
+        return photoWall
+    }
+
+    private func parsePhotos(withStrings urlStrings: [String: String?]) -> [URLSize] {
+
+        var urls = [URLSize]()
+
+        if let urlStringOptional = urlStrings["Small"],
+            let urlString = urlStringOptional,
+            let url = URL(string: urlString) {
+
+            urls.append(.small(url))
+        }
+
+        if let urlStringOptional = urlStrings["Middle"],
+            let urlString = urlStringOptional,
+            let url = URL(string: urlString) {
+
+            urls.append(.middle(url))
+        }
+
+        if let urlStringOptional = urlStrings["Big"],
+            let urlString = urlStringOptional,
+            let url = URL(string: urlString) {
+
+            urls.append(.big(url))
+        }
+
+        return urls
     }
 }

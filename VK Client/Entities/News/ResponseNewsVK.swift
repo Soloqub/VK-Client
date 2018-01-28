@@ -1,26 +1,12 @@
 //
-//  News.swift
+//  ResponseNewsVK.swift
 //  VK Client
 //
-//  Created by Денис Львович on 21.01.18.
+//  Created by Денис Львович on 28.01.18.
 //  Copyright © 2018 Денис Львович. All rights reserved.
 //
 
 import UIKit
-
-class News {
-
-    var type: NewsType = .post //
-    var date = Date() //
-    var text: String? //
-    var sourceID: Int = 0 //
-    var sourceType: SourceType = .profile //
-    var views: Int? //
-    var likes: Int? //
-    var reposts: Int? //
-    var attachments = [Attachments]() //
-    var wallPhotos = [WallPhoto]()
-}
 
 struct ResponseNewsVK: Decodable {
 
@@ -28,6 +14,7 @@ struct ResponseNewsVK: Decodable {
 
     struct Item: Decodable {
 
+        var id: Int
         var type: String
         var sourceID: Int
         var date: TimeInterval
@@ -39,6 +26,7 @@ struct ResponseNewsVK: Decodable {
         var reposts: Repost?
 
         enum CodingKeys : String, CodingKey {
+            case id = "post_id"
             case type
             case date
             case text
@@ -138,51 +126,4 @@ struct ResponseNewsVK: Decodable {
             case smallSizePhotoURL = "photo_604"
         }
     }
-}
-
-protocol Attachments {
-}
-
-struct PostAttachmentWithPhotos: Attachments {
-
-    var urls = [URLSize]()
-}
-
-struct PostAttachmentWithLink: Attachments {
-
-    var url: String
-    var title: String
-    var caption: String?
-    var description: String
-    var photo: [URLSize]
-}
-
-struct WallPhoto {
-
-    var urls = [URLSize]()
-    var text: String?
-    var likes: Int?
-}
-
-enum URLSize {
-    case big(URL)
-    case middle(URL)
-    case small(URL)
-
-    static let values = [URLSize.big, URLSize.middle, URLSize.small]
-}
-
-enum NewsType: String {
-    case post
-    case wallPhoto = "wall_photo"
-}
-
-enum AttachmentType: String {
-    case photo
-    case link
-}
-
-enum SourceType {
-    case profile
-    case group
 }
