@@ -14,7 +14,7 @@ struct ResponseNewsVK: Decodable {
 
     struct Item: Decodable {
 
-        var id: Int
+        var id: Int?
         var type: String
         var sourceID: Int
         var date: TimeInterval
@@ -24,6 +24,7 @@ struct ResponseNewsVK: Decodable {
         var views: Views?
         var likes: Like?
         var reposts: Repost?
+        var isRepost: [CopyHistory]?
 
         enum CodingKeys : String, CodingKey {
             case id = "post_id"
@@ -36,6 +37,7 @@ struct ResponseNewsVK: Decodable {
             case likes
             case reposts
             case sourceID = "source_id"
+            case isRepost = "copy_history"
         }
     }
 
@@ -125,5 +127,8 @@ struct ResponseNewsVK: Decodable {
             case middleSizePhotoURL = "photo_807"
             case smallSizePhotoURL = "photo_604"
         }
+    }
+
+    struct CopyHistory: Decodable {
     }
 }

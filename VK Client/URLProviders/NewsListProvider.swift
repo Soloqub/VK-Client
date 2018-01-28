@@ -22,8 +22,7 @@ class NewsListProvider {
 
         let defaultParams: Parameters = [
             "access_token": token,
-            "v": "5.69",
-            "fields":"nickname,domain,photo_50"
+            "v": "5.69"
         ]
 
         let defaultConf:RequestConfig = (
@@ -55,49 +54,55 @@ class NewsListProvider {
     
     func getNewsList() {
 
-        guard
-            let path = Bundle.main.path(forResource: "sample", ofType: "json"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: Data.ReadingOptions.mappedIfSafe),
-            let myStructDictionary = try? JSONDecoder().decode([String: ResponseNewsVK].self, from: data),
-            let items = myStructDictionary["response"]?.items
-            else {
-                assertionFailure()
-                return
-        }
+        Alamofire.request(self.makeURLRequest()!).responseData(queue: .global(qos: .userInitiated)) { response in
 
-        var newsArray = [News]()
+            guard
+                let data = response.value,
+                let myStructDictionary = try? JSONDecoder().decode([String: ResponseNewsVK].self, from: data),
+                let items = myStructDictionary["response"]?.items
 
-        print("Найдено сущностей: ", items.count)
+                else {
+                    assertionFailure()
+                    return
+            }
 
-        items.enumerated().forEach { index, item in
-            
-            if let type = NewsType(rawValue: item.type) {
+            var newsArray = [News]()
+            print("Найдено сущностей: ", items.count)
 
-                switch type {
-                case .post:
-                    if item.attachments != nil {
+            items.enumerated().forEach { index, item in
 
-                        if let pieceOfNews = self.createPost(withItem: item) {
-                            newsArray.append(pieceOfNews)
+                if let type = NewsType(rawValue: item.type) {
+
+                    switch type {
+                    case .post:
+                        if item.isRepost != nil {
+                            print("Запись является репостом с id: ", item.id as Any, " пропускаем")
+                            return
                         }
+                        if item.attachments != nil || item.text != "" {
 
-                    } else {
-                        print("Пропускаем репост без аттачментов с id: ", item.id)
-                        return
-                    }
-                case .wallPhoto:
-                    let pieceOfNews = self.createPhotoWall(withItem: item)
+                            if let pieceOfNews = self.createPost(withItem: item) {
+                                newsArray.append(pieceOfNews)
+                            }
 
-                    if pieceOfNews.photos.count > 0 {
-                        newsArray.append(pieceOfNews)
-                    } else {
-                        assertionFailure("Некорректная структура PhotoWall")
-                        return
+                        } else {
+                            print("Пустой пост без приложений и текста с id: ", item.id as Any)
+                            return
+                        }
+                    case .wallPhoto:
+                        let pieceOfNews = self.createPhotoWall(withItem: item)
+
+                        if pieceOfNews.photos.count > 0 {
+                            newsArray.append(pieceOfNews)
+                        } else {
+                            assertionFailure("Некорректная структура PhotoWall")
+                            return
+                        }
                     }
+
+                } else {
+                    print(item.type)
                 }
-
-            } else {
-                print(item.type)
             }
         }
     }
@@ -108,8 +113,7 @@ class NewsListProvider {
             let text = item.text,
             let views = item.views?.count,
             let likes = item.likes?.count,
-            let reposts = item.reposts?.count,
-            let attachments = item.attachments else {
+            let reposts = item.reposts?.count else {
 
                 assertionFailure()
                 return nil
@@ -117,43 +121,46 @@ class NewsListProvider {
 
         var attachmentsArray = [Attachments]()
 
-        for attach in attachments {
+        if let attachments = item.attachments {
 
-            let urlStrings = ["Small": attach.photo?.smallSizePhotoURL,
-                              "Middle": attach.photo?.middleSizePhotoURL,
-                              "Big": attach.photo?.bigSizePhotoURL]
-            let photoUrls = self.parsePhotos(withStrings: urlStrings)
+            for attach in attachments {
 
-            if let type = AttachmentType(rawValue: attach.type) {
+                let urlStrings = ["Small": attach.photo?.smallSizePhotoURL,
+                                  "Middle": attach.photo?.middleSizePhotoURL,
+                                  "Big": attach.photo?.bigSizePhotoURL]
+                let photoUrls = self.parsePhotos(withStrings: urlStrings)
 
-                switch type {
-                case .photo:
-                    let newAttach = PostAttachmentWithPhotos(urls: photoUrls)
+                if let type = AttachmentType(rawValue: attach.type) {
 
-                    if newAttach.urls.count < 1 { assertionFailure() } else {
-                        attachmentsArray.append(newAttach)
+                    switch type {
+                    case .photo:
+                        let newAttach = PostAttachmentWithPhotos(urls: photoUrls)
+
+                        if newAttach.urls.count < 1 { assertionFailure() } else {
+                            attachmentsArray.append(newAttach)
+                        }
+
+                    case .link:
+                        guard
+                            let url = attach.link?.url,
+                            let title = attach.link?.title,
+                            let description = attach.link?.description else {
+                                assertionFailure("Некорректный аттач типа Link")
+                                return nil
+                        }
+
+                        let newLink = PostAttachmentWithLink(url: url,
+                                                             title: title,
+                                                             caption: attach.link?.caption,
+                                                             description: description,
+                                                             photo: photoUrls)
+                        attachmentsArray.append(newLink)
                     }
-
-                case .link:
-                    guard
-                        let url = attach.link?.url,
-                        let title = attach.link?.title,
-                        let description = attach.link?.description else {
-                            assertionFailure("Некорректный аттач типа Link")
-                            return nil
-                    }
-
-                    let newLink = PostAttachmentWithLink(url: url,
-                                                         title: title,
-                                                         caption: attach.link?.caption,
-                                                         description: description,
-                                                         photo: photoUrls)
-                    attachmentsArray.append(newLink)
+                } else {
+                    print("Нераспарсиваемый тип: ", attach.type)
+                    print("Пропускаем элемент")
+                    return nil
                 }
-            } else {
-                print("Нераспарсиваемый тип: ", attach.type)
-                print("Пропускаем элемент")
-                return nil
             }
         }
 
@@ -165,7 +172,7 @@ class NewsListProvider {
         newItem.views = views
         newItem.likes = likes
         newItem.reposts = reposts
-        newItem.attachments = attachmentsArray
+        newItem.attachments = attachmentsArray.count > 0 ? attachmentsArray : nil
 
         return newItem
     }
@@ -223,3 +230,15 @@ class NewsListProvider {
         return urls
     }
 }
+
+/* Тестовая проверка json
+ guard
+ let path = Bundle.main.path(forResource: "sample", ofType: "json"),
+ let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: Data.ReadingOptions.mappedIfSafe),
+ let myStructDictionary = try? JSONDecoder().decode([String: ResponseNewsVK].self, from: data),
+ let items = myStructDictionary["response"]?.items
+ else {
+ assertionFailure()
+ return
+ }
+ */
