@@ -9,4 +9,7 @@ target 'VK Client' do
   pod 'Alamofire'
   pod 'RealmSwift'
   pod 'SwiftKeychainWrapper'
+  # pod 'SnapKit'
+  # pod 'SteviaLayout'
+  pod 'YogaKit'
 end

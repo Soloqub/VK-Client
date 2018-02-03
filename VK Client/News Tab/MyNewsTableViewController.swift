@@ -18,6 +18,13 @@ class MyNewsTableViewController: UITableViewController {
 
         let token = KeychainWrapper.standard.string(forKey: "Token")!
 
+        tableView.register(PostWithPhotosCell.self, forCellReuseIdentifier: "PostWithPhotos")
+
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 100.0
+
+        print("ViewDidLoad")
+
         // Пробуем получить список новостей
         let provider = NewsListProvider(token: token)
         provider.getNewsList() { [weak self] news in
@@ -26,7 +33,6 @@ class MyNewsTableViewController: UITableViewController {
             self?.tableView.reloadData()
             print(self?.news.count as Any)
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +40,19 @@ class MyNewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "simplest", for: indexPath)
+
+//        let item = news[indexPath.row]
+        print("cellForRow")
+        let name = "Ivanoff Ivan"
+        let date = "25-02-2065"
+        let image = UIImage(named: "noimage")
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostWithPhotos", for: indexPath) as! PostWithPhotosCell
+
+        cell.header.avatar.image = image
+        cell.header.nameLabel.text = name
+        cell.header.dateLabel.text = date
+
         return cell
     }
 
@@ -45,6 +63,6 @@ class MyNewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.news.count
+        return 1 //self.news.count
     }
 }

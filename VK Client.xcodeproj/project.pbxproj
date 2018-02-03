@@ -23,8 +23,10 @@
 		9269A074200D4917005776B3 /* MyNewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269A073200D4917005776B3 /* MyNewsTableViewController.swift */; };
 		927B3E951FD43352000EDA51 /* FriendsPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B3E941FD43352000EDA51 /* FriendsPhotoCell.swift */; };
 		927B3E971FD434A9000EDA51 /* FriendsGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B3E961FD434A9000EDA51 /* FriendsGalleryViewController.swift */; };
+		927CA5C5202652E30002033B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927CA5C4202652E30002033B /* HeaderView.swift */; };
 		928976841FE579A200260502 /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928976831FE579A200260502 /* BaseEntity.swift */; };
 		928976861FE57EF900260502 /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928976851FE57EF900260502 /* RealmHelper.swift */; };
+		929E8A42201E5B5500574ED9 /* PostWithPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */; };
 		92B441EC1FDC8570008A7111 /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B441EB1FDC8570008A7111 /* Friends.swift */; };
 		92B8652C1FD46027002F30DB /* Common structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8652B1FD46027002F30DB /* Common structs.swift */; };
 		92B8652E1FD4659F002F30DB /* AllGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */; };
@@ -59,8 +61,10 @@
 		9269A073200D4917005776B3 /* MyNewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNewsTableViewController.swift; sourceTree = "<group>"; };
 		927B3E941FD43352000EDA51 /* FriendsPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPhotoCell.swift; sourceTree = "<group>"; };
 		927B3E961FD434A9000EDA51 /* FriendsGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsGalleryViewController.swift; sourceTree = "<group>"; };
+		927CA5C4202652E30002033B /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		928976831FE579A200260502 /* BaseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
 		928976851FE57EF900260502 /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
+		929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWithPhotosCell.swift; sourceTree = "<group>"; };
 		92B441EB1FDC8570008A7111 /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		92B8652B1FD46027002F30DB /* Common structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common structs.swift"; sourceTree = "<group>"; };
 		92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsTableViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				9269A073200D4917005776B3 /* MyNewsTableViewController.swift */,
+				929E8A43201E5B5F00574ED9 /* Views */,
 			);
 			path = "News Tab";
 			sourceTree = "<group>";
@@ -171,6 +176,15 @@
 				928976851FE57EF900260502 /* RealmHelper.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		929E8A43201E5B5F00574ED9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */,
+				927CA5C4202652E30002033B /* HeaderView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		92B8652A1FD45C93002F30DB /* Friends Tab */ = {
@@ -315,14 +329,22 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
+				"${BUILT_PRODUCTS_DIR}/YogaKit/YogaKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stevia.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YogaKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -357,6 +379,8 @@
 				92504B561FD6FEB400853259 /* FriendsListProvider.swift in Sources */,
 				9264F7A31F9A362C00CF0CD6 /* FriendsTableViewController.swift in Sources */,
 				927B3E951FD43352000EDA51 /* FriendsPhotoCell.swift in Sources */,
+				929E8A42201E5B5500574ED9 /* PostWithPhotosCell.swift in Sources */,
+				927CA5C5202652E30002033B /* HeaderView.swift in Sources */,
 				920110652014F30B002502FD /* NewsListProvider.swift in Sources */,
 				9255A56E1F94219800808C3C /* LoginFormViewController.swift in Sources */,
 				923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */,
