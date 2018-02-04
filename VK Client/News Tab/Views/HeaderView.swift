@@ -41,16 +41,19 @@ class HeaderView: UIView {
         self.dateLabel.font = UIFont(name: self.dateLabel.font.familyName, size: 14)
         self.dateLabel.textColor = UIColor.gray
 
+        self.configure(view: self.nameLabel, withID: .name)
+        self.configure(view: self.dateLabel, withID: .date)
+
         nameAndDateSubview.addSubview(self.nameLabel)
         nameAndDateSubview.addSubview(self.dateLabel)
 
-        self.configure(view: self.nameLabel, withID: .name)
-        self.configure(view: self.dateLabel, withID: .date)
     }
 
     override func layoutSubviews() {
 
         self.yoga.applyLayout(preservingOrigin: true)
+
+        self.nameLabel.sizeToFit()
 
         self.avatar.layer.cornerRadius = self.avatar.frame.size.width / 2
         self.avatar.clipsToBounds = true
@@ -63,7 +66,6 @@ class HeaderView: UIView {
             layout.isEnabled = true
 
             switch id {
-
             case .selfView:
                 layout.flexDirection = .row
                 layout.width = YGValue(UIScreen.main.bounds.size.width)

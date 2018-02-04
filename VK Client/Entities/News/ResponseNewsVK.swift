@@ -11,6 +11,8 @@ import UIKit
 struct ResponseNewsVK: Decodable {
 
     var items: [Item]
+    var profiles: [ProfileVK]
+    var groups: [GroupVK]
 
     struct Item: Decodable {
 
@@ -131,4 +133,40 @@ struct ResponseNewsVK: Decodable {
 
     struct CopyHistory: Decodable {
     }
+
+    struct ProfileVK: Decodable, NewsSourceVK {
+
+        var id: Int
+        var firstName: String
+        var lastName: String
+        var photo: String
+
+        enum CodingKeys : String, CodingKey {
+
+            case id
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case photo = "photo_50"
+        }
+    }
+
+    struct GroupVK: Decodable, NewsSourceVK {
+
+        var id: Int
+        var name: String
+        var photo: String
+
+        enum CodingKeys : String, CodingKey {
+
+            case id
+            case name
+            case photo = "photo_50"
+        }
+    }
+}
+
+protocol NewsSourceVK {
+
+    var id: Int {set get}
+    var photo: String {set get}
 }

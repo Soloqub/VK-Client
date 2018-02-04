@@ -67,6 +67,19 @@ class NewsListProvider {
             }
 
             var newsArray = [News]()
+            var profilesArray = [Profile]()
+            var groupsArray = [GroupVK]()
+
+            if let profiles = myStructDictionary["response"]?.profiles {
+
+                profilesArray = self.parseSources(fromArray: profiles) as! [Profile]
+            }
+
+            if let groups = myStructDictionary["response"]?.groups {
+
+                groupsArray = self.parseSources(fromArray: groups) as! [GroupVK]
+            }
+
             print("Найдено сущностей: ", items.count)
 
             items.enumerated().forEach { index, item in
@@ -82,6 +95,11 @@ class NewsListProvider {
                         if item.attachments != nil || item.text != "" {
 
                             if let pieceOfNews = self.createPost(withItem: item) {
+
+                                pieceOfNews.source = pieceOfNews.sourceType == .profile ?
+                                    profilesArray.first(where: {$0.id == pieceOfNews.sourceID}) :
+                                    groupsArray.first(where: {$0.id == pieceOfNews.sourceID})
+
                                 newsArray.append(pieceOfNews)
                             }
 
@@ -93,6 +111,11 @@ class NewsListProvider {
                         let pieceOfNews = self.createPhotoWall(withItem: item)
 
                         if pieceOfNews.photos.count > 0 {
+
+                            pieceOfNews.source = pieceOfNews.sourceType == .profile ?
+                                profilesArray.first(where: {$0.id == pieceOfNews.sourceID}) :
+                                groupsArray.first(where: {$0.id == pieceOfNews.sourceID})
+
                             newsArray.append(pieceOfNews)
                         } else {
                             assertionFailure("Некорректная структура PhotoWall")
@@ -231,6 +254,51 @@ class NewsListProvider {
         }
 
         return urls
+    }
+
+    private func parseSources(fromArray sources: [NewsSourceVK]) -> [NewsSource] {
+
+        if sources is [ResponseNewsVK.ProfileVK] {
+
+            guard let profiles = sources as? [ResponseNewsVK.ProfileVK] else {
+                assertionFailure("Этого не может быть")
+                return []
+            }
+
+            var profilesArray = [Profile]()
+
+            for profile in profiles {
+                guard let photoUrl = URL(string: profile.photo) else {
+                    assertionFailure("С урлом непорядок")
+                    continue
+                }
+                
+                let newProfile = Profile(id: profile.id, name: profile.firstName + " " + profile.lastName, photo: photoUrl)
+                profilesArray.append(newProfile)
+            }
+
+            return profilesArray
+        } else {
+
+            guard let groups = sources as? [ResponseNewsVK.GroupVK] else {
+                assertionFailure("Этого не может быть")
+                return []
+            }
+
+            var groupsArray = [GroupVK]()
+
+            for group in groups {
+                guard let photoUrl = URL(string: group.photo) else {
+                    assertionFailure("С урлом непорядок")
+                    continue
+                }
+
+                let newGroup = GroupVK(id: group.id, name: group.name, photo: photoUrl)
+                groupsArray.append(newGroup)
+            }
+
+            return groupsArray
+        }
     }
 }
 

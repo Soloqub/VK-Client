@@ -41,17 +41,19 @@ class MyNewsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-//        let item = news[indexPath.row]
-        print("cellForRow")
-        let name = "Ivanoff Ivan"
-        let date = "25-02-2065"
-        let image = UIImage(named: "noimage")
-
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostWithPhotos", for: indexPath) as! PostWithPhotosCell
 
-        cell.header.avatar.image = image
-        cell.header.nameLabel.text = name
-        cell.header.dateLabel.text = date
+        print("news: ", self.news.count)
+        if news.count > 0 {
+            let item = news[0]//news[indexPath.row]
+            let name = item.source?.name
+            let date = item.date.description
+            let image = UIImage(named: "noimage")
+
+            cell.header.avatar.image = image
+            cell.header.nameLabel.text = "Sample"//name
+            cell.header.dateLabel.text = "Sample" //date
+        }
 
         return cell
     }

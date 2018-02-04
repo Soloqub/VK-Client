@@ -12,6 +12,7 @@ class News {
 
     var date = Date()
     var sourceID: Int = 0
+    var source: NewsSource?
     var sourceType: SourceType = .profile
 }
 
@@ -51,6 +52,27 @@ struct Photo {
     var urls = [URLSize]()
     var text: String?
     var likes: Int?
+}
+
+struct Profile: NewsSource {
+
+    var id: Int
+    var name: String
+    var photo: URL
+}
+
+struct GroupVK: NewsSource {
+
+    var id: Int
+    var name: String
+    var photo: URL
+}
+
+protocol NewsSource {
+
+    var id: Int {set get}
+    var name: String {set get}
+    var photo: URL {set get}
 }
 
 enum URLSize {
