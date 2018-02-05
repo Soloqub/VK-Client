@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import YogaKit
+import Neon
 
 class PostWithPhotosCell: UITableViewCell {
 
-    var header = HeaderView()
+    var header = HeaderView(frame: .zero)
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,7 +19,6 @@ class PostWithPhotosCell: UITableViewCell {
     }
 
     required init?(coder aDecoder: NSCoder) {
-
         super.init(coder: aDecoder)
     }
 
@@ -27,27 +26,12 @@ class PostWithPhotosCell: UITableViewCell {
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.configureLayout { layout in
-
-            layout.isEnabled = true
-            layout.height = 60
-        }
-
-        self.contentView.configureLayout { layout in
-
-            layout.isEnabled = true
-            layout.flexDirection = .column
-            layout.width = YGValue(UIScreen.main.bounds.size.width)
-            layout.height = 60
-        }
-
-        self.header = HeaderView(frame: CGRect(origin: self.contentView.frame.origin, size: self.contentView.frame.size))
-        self.contentView.addSubview(header)
-
+//        self.contentView.addSubview(header)
+        self.contentView.backgroundColor = .brown
     }
 
     override func layoutSubviews() {
 
-        self.yoga.applyLayout(preservingOrigin: true)
+//        self.header.anchorAndFillEdge(.top, xPad: 0, yPad: 0, otherSize: header.frame.height)
     }
 }

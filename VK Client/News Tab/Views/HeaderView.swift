@@ -7,13 +7,16 @@
 //
 
 import UIKit
-import YogaKit
+import Neon
 
 class HeaderView: UIView {
 
     var avatar = UIImageView()
     var nameLabel = UILabel(frame: .zero)
     var dateLabel = UILabel(frame: .zero)
+
+    private let nameAndDate = UIView(frame: .zero)
+    private let screen = UIScreen.main.bounds
 
     required init?(coder aDecoder: NSCoder) {
 
@@ -24,77 +27,39 @@ class HeaderView: UIView {
 
         super.init(frame: frame)
 
-        self.backgroundColor = .gray
-        self.configure(view: self, withID: .selfView)
-
-        self.configure(view: self.avatar, withID: .avatar)
-        self.avatar.backgroundColor = .red
         self.addSubview(self.avatar)
+        self.addSubview(nameAndDate)
+        nameAndDate.addSubview(self.nameLabel)
+        nameAndDate.addSubview(self.dateLabel)
 
-        let nameAndDateSubview = UIView()
-        nameAndDateSubview.backgroundColor = .green
-        self.configure(view: nameAndDateSubview, withID: .nameAndDate)
-        self.addSubview(nameAndDateSubview)
-
-        self.nameLabel.font = UIFont(name: self.nameLabel.font.familyName, size: 18)
-        self.nameLabel.textColor = UIColor.blue
-        self.dateLabel.font = UIFont(name: self.dateLabel.font.familyName, size: 14)
-        self.dateLabel.textColor = UIColor.gray
-
-        self.configure(view: self.nameLabel, withID: .name)
-        self.configure(view: self.dateLabel, withID: .date)
-
-        nameAndDateSubview.addSubview(self.nameLabel)
-        nameAndDateSubview.addSubview(self.dateLabel)
-
+        nameLabel.font = UIFont(name: self.nameLabel.font.familyName, size: 18)
+        dateLabel.font = UIFont(name: self.dateLabel.font.familyName, size: 14)
+        nameLabel.textColor = .blue
+        dateLabel.textColor = .gray
     }
 
-    override func layoutSubviews() {
 
-        self.yoga.applyLayout(preservingOrigin: true)
+    func configure() {
 
-        self.nameLabel.sizeToFit()
+//        self.fillSuperview()
+        self.frame = CGRect(x: 0, y: 0, width: screen.width, height: 60)
+        self.backgroundColor = .gray
 
-        self.avatar.layer.cornerRadius = self.avatar.frame.size.width / 2
-        self.avatar.clipsToBounds = true
-    }
+        avatar.anchorAndFillEdge(.left, xPad: 10, yPad: 5, otherSize: 50)
+        avatar.backgroundColor = .red
+        avatar.layer.cornerRadius = self.avatar.frame.size.width / 2
+        avatar.clipsToBounds = true
 
-    func configure(view: UIView, withID id: ViewID) {
+        nameAndDate.backgroundColor = .green
+        nameAndDate.alignAndFill(align: .toTheRightCentered, relativeTo: self.avatar, padding: 0)
+        nameAndDate.frame.origin.x += 10
+        nameAndDate.frame.size.width -= 10
 
-        view.configureLayout { layout in
-
-            layout.isEnabled = true
-
-            switch id {
-            case .selfView:
-                layout.flexDirection = .row
-                layout.width = YGValue(UIScreen.main.bounds.size.width)
-                layout.height = 60
-
-            case .avatar:
-                layout.width = 50
-                layout.aspectRatio = 1
-                layout.marginHorizontal = 10
-                layout.marginVertical = 5
-
-            case .nameAndDate:
-                layout.flexDirection = .column
-                layout.width = 50
-                layout.flexGrow = 1
-                layout.paddingLeft = 10
-                layout.paddingVertical = 10
-
-            case .name:
-                layout.marginBottom = 2
-
-            case .date:
-                break
-            }
-        }
-    }
-
-    enum ViewID {
-
-        case selfView, avatar, nameAndDate, name, date
+        nameLabel.sizeToFit()
+        dateLabel.sizeToFit()
+        nameAndDate.groupAndFill(group: .vertical, views: [self.nameLabel, self.dateLabel], padding: 5)
+        nameLabel.frame.origin.y += 2
+        dateLabel.frame.origin.y -= 2
+        print("HeaderView: ", self.frame.size.height)
     }
 }

@@ -12,19 +12,14 @@ import SwiftKeychainWrapper
 class MyNewsTableViewController: UITableViewController {
 
     var news = [News]()
+    var views = [[CellViews:UIView]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.configureTableView()
+
         let token = KeychainWrapper.standard.string(forKey: "Token")!
-
-        tableView.register(PostWithPhotosCell.self, forCellReuseIdentifier: "PostWithPhotos")
-
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 100.0
-
-        print("ViewDidLoad")
-
         // Пробуем получить список новостей
         let provider = NewsListProvider(token: token)
         provider.getNewsList() { [weak self] news in
@@ -35,24 +30,29 @@ class MyNewsTableViewController: UITableViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    func configureTableView() {
+
+//        self.tableView.estimatedRowHeight = 100
+//        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.register(PostWithPhotosCell.self, forCellReuseIdentifier: "PostWithPhotos")
+
+//        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+//        self.tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        self.tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        self.tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//        self.tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostWithPhotos", for: indexPath) as! PostWithPhotosCell
 
-        print("news: ", self.news.count)
-        if news.count > 0 {
-            let item = news[0]//news[indexPath.row]
-            let name = item.source?.name
-            let date = item.date.description
-            let image = UIImage(named: "noimage")
-
-            cell.header.avatar.image = image
-            cell.header.nameLabel.text = "Sample"//name
-            cell.header.dateLabel.text = "Sample" //date
+        if let headerView = self.views[indexPath.row][.header], let header = headerView as? HeaderView {
+            cell.header = header
+            cell.addSubview(header)
+//            cell.setNeedsLayout()
+        } else {
+            assertionFailure()
         }
 
         return cell
@@ -64,7 +64,32 @@ class MyNewsTableViewController: UITableViewController {
         return 1
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        if self.views.count - 1 < indexPath.row {
+
+            print("heightForRowAt: ", indexPath.row)
+            let header = HeaderView(frame: .zero)
+            header.nameLabel.text = self.news[indexPath.row].source?.name
+            header.dateLabel.text = self.news[indexPath.row].date.description
+            header.configure()
+
+            self.views.append([:])
+            self.views[indexPath.row][.header] = header
+            print("header.bounds.height: ", header.frame.height)
+
+            return header.bounds.height
+        } else {
+
+            return self.views[indexPath.row][.header]!.height
+        }
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 //self.news.count
+        return self.news.count
+    }
+
+    enum CellViews {
+        case header
     }
 }
