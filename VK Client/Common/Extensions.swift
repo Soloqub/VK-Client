@@ -43,3 +43,14 @@ extension URL {
         }
     }
 }
+
+extension Date {
+    func vkDateFormatter() -> String {
+        
+        let vkDateFormater = DateFormatter()
+        vkDateFormater.locale = Locale(identifier: "ru_RU")
+        vkDateFormater.dateFormat = "dd MMM в HH:mm"
+
+        return vkDateFormater.string(from: self)
+    }
+}

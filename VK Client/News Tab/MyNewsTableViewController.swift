@@ -32,15 +32,7 @@ class MyNewsTableViewController: UITableViewController {
 
     func configureTableView() {
 
-//        self.tableView.estimatedRowHeight = 100
-//        self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.register(PostWithPhotosCell.self, forCellReuseIdentifier: "PostWithPhotos")
-
-//        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-//        self.tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        self.tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        self.tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//        self.tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,7 +42,6 @@ class MyNewsTableViewController: UITableViewController {
         if let headerView = self.views[indexPath.row][.header], let header = headerView as? HeaderView {
             cell.header = header
             cell.addSubview(header)
-//            cell.setNeedsLayout()
         } else {
             assertionFailure()
         }
@@ -68,19 +59,18 @@ class MyNewsTableViewController: UITableViewController {
 
         if self.views.count - 1 < indexPath.row {
 
-            print("heightForRowAt: ", indexPath.row)
+//            print("heightForRowAt: ", indexPath.row)
             let header = HeaderView(frame: .zero)
             header.nameLabel.text = self.news[indexPath.row].source?.name
-            header.dateLabel.text = self.news[indexPath.row].date.description
+            header.dateLabel.text = self.news[indexPath.row].date.vkDateFormatter()
             header.configure()
 
             self.views.append([:])
             self.views[indexPath.row][.header] = header
-            print("header.bounds.height: ", header.frame.height)
+//            print("header.bounds.height: ", header.frame.height)
 
             return header.bounds.height
         } else {
-
             return self.views[indexPath.row][.header]!.height
         }
     }
