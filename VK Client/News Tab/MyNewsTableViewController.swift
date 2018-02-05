@@ -63,6 +63,11 @@ class MyNewsTableViewController: UITableViewController {
             let header = HeaderView(frame: .zero)
             header.nameLabel.text = self.news[indexPath.row].source?.name
             header.dateLabel.text = self.news[indexPath.row].date.vkDateFormatter()
+//            print("")
+//            print("PostID: ",(self.news[indexPath.row] as? Post)?.id as Any)
+//            print("Date: ", self.news[indexPath.row].date.vkDateFormatter())
+//            print("SourceType: ", self.news[indexPath.row].sourceType.hashValue)
+//            print("SourceID: ", self.news[indexPath.row].sourceID)
             header.configure()
 
             self.views.append([:])

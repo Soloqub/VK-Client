@@ -18,6 +18,7 @@ class News {
 
 class Post: News {
 
+    var id = 0
     var text = ""
     var views = 0
     var likes = 0

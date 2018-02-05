@@ -44,6 +44,7 @@ class NewsListProvider {
         do {
 
             encodedRequest = try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
+//            print(encodedRequest)
             return encodedRequest
         } catch {
 
@@ -76,14 +77,12 @@ class NewsListProvider {
             }
 
             if let groups = myStructDictionary["response"]?.groups {
-
                 groupsArray = self.parseSources(fromArray: groups) as! [GroupVK]
             }
 
             print("Найдено сущностей: ", items.count)
 
             items.enumerated().forEach { index, item in
-
                 if let type = NewsType(rawValue: item.type) {
 
                     switch type {
@@ -93,7 +92,6 @@ class NewsListProvider {
                             return
                         }
                         if item.attachments != nil || item.text != "" {
-
                             if let pieceOfNews = self.createPost(withItem: item) {
 
                                 pieceOfNews.source = pieceOfNews.sourceType == .profile ?
@@ -136,6 +134,7 @@ class NewsListProvider {
     private func createPost(withItem item: ResponseNewsVK.Item) -> Post? {
 
         guard
+            let id = item.id,
             let text = item.text,
             let views = item.views?.count,
             let likes = item.likes?.count,
@@ -191,6 +190,7 @@ class NewsListProvider {
         }
 
         let newItem = Post()
+        newItem.id = id
         newItem.date = Date(timeIntervalSince1970: item.date)
         newItem.text = text
         newItem.sourceType = item.sourceID > 0 ? .profile : .group
@@ -224,6 +224,10 @@ class NewsListProvider {
                 return
             }
         }
+        
+        photoWall.date = Date(timeIntervalSince1970: item.date)
+        photoWall.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
+        photoWall.sourceType = item.sourceID > 0 ? .profile : .group
 
         return photoWall
     }
