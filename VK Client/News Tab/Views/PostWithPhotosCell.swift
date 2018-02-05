@@ -27,7 +27,7 @@ class PostWithPhotosCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
 //        self.contentView.addSubview(header)
-        self.contentView.backgroundColor = .brown
+//        self.contentView.backgroundColor = .brown
     }
 
     override func layoutSubviews() {

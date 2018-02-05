@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftKeychainWrapper
+import AlamofireImage
 
 class MyNewsTableViewController: UITableViewController {
 
@@ -42,6 +43,11 @@ class MyNewsTableViewController: UITableViewController {
         if let headerView = self.views[indexPath.row][.header], let header = headerView as? HeaderView {
             cell.header = header
             cell.addSubview(header)
+
+            if let url = self.news[indexPath.row].source?.photo {
+                self.setPhoto(forImageView: cell.header.avatar, withURL: url)
+            }
+
         } else {
             assertionFailure()
         }
@@ -82,6 +88,13 @@ class MyNewsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.news.count
+    }
+
+    func setPhoto(forImageView imageView: UIImageView, withURL url: URL) {
+
+        imageView.af_setImage(withURL: url,
+                              placeholderImage: UIImage(named: "noimage"),
+                              progressQueue: .global(qos: .userInteractive))
     }
 
     enum CellViews {

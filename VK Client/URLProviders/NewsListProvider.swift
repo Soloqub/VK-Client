@@ -42,7 +42,6 @@ class NewsListProvider {
         var encodedRequest:URLRequest
 
         do {
-
             encodedRequest = try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
 //            print(encodedRequest)
             return encodedRequest
@@ -61,7 +60,6 @@ class NewsListProvider {
                 let data = response.value,
                 let myStructDictionary = try? JSONDecoder().decode([String: ResponseNewsVK].self, from: data),
                 let items = myStructDictionary["response"]?.items
-
                 else {
                     assertionFailure()
                     return
@@ -72,7 +70,6 @@ class NewsListProvider {
             var groupsArray = [GroupVK]()
 
             if let profiles = myStructDictionary["response"]?.profiles {
-
                 profilesArray = self.parseSources(fromArray: profiles) as! [Profile]
             }
 
@@ -109,12 +106,12 @@ class NewsListProvider {
                         let pieceOfNews = self.createPhotoWall(withItem: item)
 
                         if pieceOfNews.photos.count > 0 {
-
                             pieceOfNews.source = pieceOfNews.sourceType == .profile ?
                                 profilesArray.first(where: {$0.id == pieceOfNews.sourceID}) :
                                 groupsArray.first(where: {$0.id == pieceOfNews.sourceID})
 
                             newsArray.append(pieceOfNews)
+
                         } else {
                             assertionFailure("Некорректная структура PhotoWall")
                             return

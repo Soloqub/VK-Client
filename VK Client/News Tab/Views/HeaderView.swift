@@ -32,9 +32,9 @@ class HeaderView: UIView {
         nameAndDate.addSubview(self.nameLabel)
         nameAndDate.addSubview(self.dateLabel)
 
-        nameLabel.font = UIFont(name: self.nameLabel.font.familyName, size: 18)
+        nameLabel.font = UIFont(name: self.nameLabel.font.familyName, size: 17)
         dateLabel.font = UIFont(name: self.dateLabel.font.familyName, size: 14)
-        nameLabel.textColor = .blue
+        nameLabel.textColor = .rgbColor(red: 83, green: 129, blue: 182)
         dateLabel.textColor = .gray
     }
 
@@ -43,14 +43,14 @@ class HeaderView: UIView {
 
 //        self.fillSuperview()
         self.frame = CGRect(x: 0, y: 0, width: screen.width, height: 60)
-        self.backgroundColor = .gray
+//        self.backgroundColor = .gray
 
         avatar.anchorAndFillEdge(.left, xPad: 10, yPad: 5, otherSize: 50)
-        avatar.backgroundColor = .red
+//        avatar.backgroundColor = .red
         avatar.layer.cornerRadius = self.avatar.frame.size.width / 2
         avatar.clipsToBounds = true
 
-        nameAndDate.backgroundColor = .green
+//        nameAndDate.backgroundColor = .green
         nameAndDate.alignAndFill(align: .toTheRightCentered, relativeTo: self.avatar, padding: 0)
         nameAndDate.frame.origin.x += 10
         nameAndDate.frame.size.width -= 10
@@ -60,6 +60,6 @@ class HeaderView: UIView {
         nameAndDate.groupAndFill(group: .vertical, views: [self.nameLabel, self.dateLabel], padding: 5)
         nameLabel.frame.origin.y += 2
         dateLabel.frame.origin.y -= 2
-        print("HeaderView: ", self.frame.size.height)
+//        print("HeaderView: ", self.frame.size.height)
     }
 }
