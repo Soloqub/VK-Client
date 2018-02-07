@@ -26,6 +26,7 @@
 		927CA5C5202652E30002033B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927CA5C4202652E30002033B /* HeaderView.swift */; };
 		928976841FE579A200260502 /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928976831FE579A200260502 /* BaseEntity.swift */; };
 		928976861FE57EF900260502 /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928976851FE57EF900260502 /* RealmHelper.swift */; };
+		9294BE7C2029D77000C4C9C6 /* MainContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294BE7B2029D77000C4C9C6 /* MainContent.swift */; };
 		929E8A42201E5B5500574ED9 /* PostWithPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */; };
 		92B441EC1FDC8570008A7111 /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B441EB1FDC8570008A7111 /* Friends.swift */; };
 		92B8652C1FD46027002F30DB /* Common structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8652B1FD46027002F30DB /* Common structs.swift */; };
@@ -64,6 +65,7 @@
 		927CA5C4202652E30002033B /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		928976831FE579A200260502 /* BaseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
 		928976851FE57EF900260502 /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
+		9294BE7B2029D77000C4C9C6 /* MainContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContent.swift; sourceTree = "<group>"; };
 		929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWithPhotosCell.swift; sourceTree = "<group>"; };
 		92B441EB1FDC8570008A7111 /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		92B8652B1FD46027002F30DB /* Common structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common structs.swift"; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */,
 				927CA5C4202652E30002033B /* HeaderView.swift */,
+				9294BE7B2029D77000C4C9C6 /* MainContent.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				92DA2B951FDDC0CD00DB59D7 /* UserPhotosListProvider.swift in Sources */,
 				92B8652E1FD4659F002F30DB /* AllGroupsTableViewController.swift in Sources */,
 				927B3E971FD434A9000EDA51 /* FriendsGalleryViewController.swift in Sources */,
+				9294BE7C2029D77000C4C9C6 /* MainContent.swift in Sources */,
 				9269A074200D4917005776B3 /* MyNewsTableViewController.swift in Sources */,
 				92F7CF1A1FDF2ADE00719106 /* Groups.swift in Sources */,
 				928976861FE57EF900260502 /* RealmHelper.swift in Sources */,

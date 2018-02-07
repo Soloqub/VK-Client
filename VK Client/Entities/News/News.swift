@@ -94,7 +94,7 @@ enum AttachmentType: String {
     case link
 }
 
-enum SourceType {
+enum SourceType: String {
     case profile
     case group
 }

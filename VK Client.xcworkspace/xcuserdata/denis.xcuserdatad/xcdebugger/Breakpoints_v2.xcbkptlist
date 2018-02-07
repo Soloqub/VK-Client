@@ -2,4 +2,54 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VK Client/News Tab/MyNewsTableViewController.swift"
+            timestampString = "539646137.745698"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VK_Client.MyNewsTableViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "VK Client"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denis/Dropbox/xcode/VK%20Client/VK%20Client/News%20Tab/MyNewsTableViewController.swift"
+                  timestampString = "539619110.398644"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "494">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;VK_Client.News&gt;) -&gt; () in VK_Client.MyNewsTableViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "VK Client"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denis/Dropbox/xcode/VK%20Client/VK%20Client/News%20Tab/MyNewsTableViewController.swift"
+                  timestampString = "539619110.402572"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "25">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

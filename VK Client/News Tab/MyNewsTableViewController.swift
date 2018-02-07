@@ -39,19 +39,26 @@ class MyNewsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostWithPhotos", for: indexPath) as! PostWithPhotosCell
-
-        if let headerView = self.views[indexPath.row][.header], let header = headerView as? HeaderView {
-            cell.header = header
-            cell.addSubview(header)
-
-            if let url = self.news[indexPath.row].source?.photo {
-                self.setPhoto(forImageView: cell.header.avatar, withURL: url)
-            }
-
-        } else {
-            assertionFailure()
+        
+        guard let headerView = self.views[indexPath.row][.header],
+            let header = headerView as? HeaderView,
+            let mainView = self.views[indexPath.row][.main],
+            let main = mainView as? MainContent
+            else {
+                assertionFailure()
+                return cell
         }
-
+        
+        cell.header = header
+        cell.contentView.addSubview(header)
+        
+        if let url = self.news[indexPath.row].source?.photo {
+            self.setPhoto(forImageView: cell.header.avatar, withURL: url)
+        }
+        
+        cell.contentView.addSubview(main)
+        print("cellForRowAt indexPath")
+        
         return cell
     }
 
@@ -70,24 +77,32 @@ class MyNewsTableViewController: UITableViewController {
             header.nameLabel.text = self.news[indexPath.row].source?.name
             header.dateLabel.text = self.news[indexPath.row].date.vkDateFormatter()
 //            print("")
+//            if self.news[indexPath.row] is Post { print("Post") } else { print("PhotoWall") }
 //            print("PostID: ",(self.news[indexPath.row] as? Post)?.id as Any)
 //            print("Date: ", self.news[indexPath.row].date.vkDateFormatter())
-//            print("SourceType: ", self.news[indexPath.row].sourceType.hashValue)
+//            print("SourceType: ", self.news[indexPath.row].sourceType.rawValue)
 //            print("SourceID: ", self.news[indexPath.row].sourceID)
             header.configure()
+            
+            let mainContent = MainContent(aboveView: header)
+            if let post = self.news[indexPath.row] as? Post {
+                mainContent.textLabel.text = post.text
+                mainContent.configure()
+            }
 
             self.views.append([:])
             self.views[indexPath.row][.header] = header
+            self.views[indexPath.row][.main] = mainContent
 //            print("header.bounds.height: ", header.frame.height)
 
-            return header.bounds.height
+            return header.viewHeight + mainContent.viewHeight
         } else {
-            return self.views[indexPath.row][.header]!.height
+            return self.views[indexPath.row][.header]!.height + self.views[indexPath.row][.main]!.height
         }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.news.count
+        return self.news.count == 0 ? 0 : 1
     }
 
     func setPhoto(forImageView imageView: UIImageView, withURL url: URL) {
@@ -98,6 +113,6 @@ class MyNewsTableViewController: UITableViewController {
     }
 
     enum CellViews {
-        case header
+        case header, main
     }
 }

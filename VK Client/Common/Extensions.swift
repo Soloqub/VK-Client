@@ -55,6 +55,11 @@ extension Date {
     }
 }
 
+extension UIView {
+    var viewHeight: CGFloat { return self.frame.size.height }
+    var viewWidth: CGFloat { return self.frame.size.width }
+}
+
 extension UIColor {
     class func rgbColor(red: Int, green: Int, blue: Int) -> UIColor {
 
