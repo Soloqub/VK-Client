@@ -13,7 +13,7 @@ import AlamofireImage
 class MyNewsTableViewController: UITableViewController {
 
     var news = [News]()
-    var views = [[CellViews:UIView]]()
+    var views = [[CellViews: UIView]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +38,8 @@ class MyNewsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostWithPhotos", for: indexPath) as! PostWithPhotosCell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostWithPhotos", for: indexPath) // as! PostWithPhotosCell
+
         guard let headerView = self.views[indexPath.row][.header],
             let header = headerView as? HeaderView,
             let mainView = self.views[indexPath.row][.main],
@@ -48,14 +48,27 @@ class MyNewsTableViewController: UITableViewController {
                 assertionFailure()
                 return cell
         }
-        
-        cell.header = header
-        cell.contentView.addSubview(header)
-        
+
+        cell.contentView.subviews.forEach({ $0.removeFromSuperview() })
+
         if let url = self.news[indexPath.row].source?.photo {
-            self.setPhoto(forImageView: cell.header.avatar, withURL: url)
+            self.setPhoto(forImageView: header.avatar, withURL: url)
         }
-        
+
+//        cell.header = header
+        cell.contentView.addSubview(header)
+
+        switch self.news[indexPath.row] {
+        case let post as PostWithSinglePhoto:
+            self.setPhoto(forImageView: main.mainImageView, withURL: post.photo.url)
+        case let post as PostWithPhotos:
+            for (index, image) in post.photos.enumerated() {
+                self.setPhoto(forImageView: main.images[index], withURL: image.url)
+            }
+        default:
+            break
+        }
+
         cell.contentView.addSubview(main)
         print("cellForRowAt indexPath")
         
@@ -72,7 +85,6 @@ class MyNewsTableViewController: UITableViewController {
 
         if self.views.count - 1 < indexPath.row {
 
-//            print("heightForRowAt: ", indexPath.row)
             let header = HeaderView(frame: .zero)
             header.nameLabel.text = self.news[indexPath.row].source?.name
             header.dateLabel.text = self.news[indexPath.row].date.vkDateFormatter()
@@ -85,15 +97,27 @@ class MyNewsTableViewController: UITableViewController {
             header.configure()
             
             let mainContent = MainContent(aboveView: header)
+
             if let post = self.news[indexPath.row] as? Post {
                 mainContent.textLabel.text = post.text
+                if let singleImagePost = self.news[indexPath.row] as? PostWithSinglePhoto {
+                    mainContent.mainImageSize = CGSize(width: singleImagePost.photo.width,
+                                                       height: singleImagePost.photo.height)
+                }
+                
+                else if let imagesPost = self.news[indexPath.row] as? PostWithPhotos {
+                    
+//                    mainContent.mainImageSize = CGSize(width: imagesPost.photos[0].width,
+//                                                       height: imagesPost.photos[0].height)
+                }
+                
+//                print(mainContent.textLabel.text)
                 mainContent.configure()
             }
 
             self.views.append([:])
             self.views[indexPath.row][.header] = header
             self.views[indexPath.row][.main] = mainContent
-//            print("header.bounds.height: ", header.frame.height)
 
             return header.viewHeight + mainContent.viewHeight
         } else {
@@ -102,7 +126,7 @@ class MyNewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.news.count == 0 ? 0 : 1
+        return self.news.count //== 0 ? 0 : 1
     }
 
     func setPhoto(forImageView imageView: UIImageView, withURL url: URL) {

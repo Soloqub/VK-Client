@@ -13,6 +13,9 @@ class MainContent: UIView {
 
     var textLabel = UILabel()
     var mainImageView = UIImageView(frame: .zero)
+    var mainImageSize = CGSize(width: 0, height: 0)
+    var additionalImagesContainer = UIView(frame: .zero)
+    var images = [UIImageView]()
     private var imageContainer = UIView(frame: .zero)
     private let screen = UIScreen.main.bounds
 
@@ -26,14 +29,13 @@ class MainContent: UIView {
         let frame = CGRect(origin: origin, size: .zero)
         super.init(frame: frame)
 
-        self.backgroundColor = .green
+//        self.backgroundColor = .green
         self.addSubview(textLabel)
+        self.addSubview(imageContainer)
         textLabel.font = UIFont(name: self.textLabel.font.familyName, size: 14)
     }
     
     func configure() {
-        
-//        self.frame = CGRect(x: 0, y: 0, width: screen.width, height: 60)
         
         textLabel.numberOfLines = 0
 
@@ -43,10 +45,22 @@ class MainContent: UIView {
         self.frame.size = CGSize(width: screen.width,
                                  height: 5 + textLabel.viewHeight + 5)
         textLabel.anchorAndFillEdge(.top, xPad: 5, yPad: 5, otherSize: AutoHeight)
+        
+        imageContainer.alignAndFillWidth(align: .underCentered, relativeTo: textLabel, padding: 5, height: 0)
+        imageContainer.addSubview(mainImageView)
+        imageContainer.addSubview(additionalImagesContainer)
 
-//        textLabel.anchorAndFillEdge(.top, xPad: 5, yPad: 5, otherSize: 50)
-//        textLabel.sizeToFit()
+        let estimatedHeight = screen.width * mainImageSize.height / mainImageSize.width
+        let mainImageHeight = estimatedHeight < screen.height * 0.6 ? estimatedHeight : screen.height * 0.6
+        let mainImageWidth = mainImageHeight / estimatedHeight * screen.width
+        mainImageView.anchorToEdge(.top, padding: 5, width: mainImageWidth, height: mainImageHeight)
+        
+        additionalImagesContainer.alignAndFill(align: .underCentered, relativeTo: mainImageView, padding: 5)
+        let additionalImagesContainerHeight: CGFloat = images.count > 0 ? 100 : 0
+        additionalImagesContainer.align(.underCentered, relativeTo: mainImageView, padding: 5,
+                                        width: screen.width, height: additionalImagesContainerHeight)
 
-        //        print("HeaderView: ", self.frame.size.height)
+        imageContainer.resizeToFitSubviews()
+        self.resizeToFitSubviews()
     }
 }

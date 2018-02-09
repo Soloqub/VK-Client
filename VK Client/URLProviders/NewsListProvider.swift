@@ -43,7 +43,7 @@ class NewsListProvider {
 
         do {
             encodedRequest = try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
-//            print(encodedRequest)
+            print(encodedRequest)
             return encodedRequest
         } catch {
 
@@ -96,26 +96,27 @@ class NewsListProvider {
                                     groupsArray.first(where: {$0.id == pieceOfNews.sourceID})
 
                                 newsArray.append(pieceOfNews)
-                            }
+                            } else { return }
 
                         } else {
                             print("Пустой пост без приложений и текста с id: ", item.id as Any)
                             return
                         }
                     case .wallPhoto:
-                        let pieceOfNews = self.createPhotoWall(withItem: item)
-
-                        if pieceOfNews.photos.count > 0 {
-                            pieceOfNews.source = pieceOfNews.sourceType == .profile ?
-                                profilesArray.first(where: {$0.id == pieceOfNews.sourceID}) :
-                                groupsArray.first(where: {$0.id == pieceOfNews.sourceID})
-
-                            newsArray.append(pieceOfNews)
-
-                        } else {
-                            assertionFailure("Некорректная структура PhotoWall")
-                            return
-                        }
+                        break
+//                        let pieceOfNews = self.createPhotoWall(withItem: item)
+//
+//                        if pieceOfNews.photos.count > 0 {
+//                            pieceOfNews.source = pieceOfNews.sourceType == .profile ?
+//                                profilesArray.first(where: {$0.id == pieceOfNews.sourceID}) :
+//                                groupsArray.first(where: {$0.id == pieceOfNews.sourceID})
+//
+//                            newsArray.append(pieceOfNews)
+//
+//                        } else {
+//                            assertionFailure("Некорректная структура PhotoWall")
+//                            return
+//                        }
                     }
 
                 } else {
@@ -136,30 +137,35 @@ class NewsListProvider {
             let views = item.views?.count,
             let likes = item.likes?.count,
             let reposts = item.reposts?.count else {
-
                 assertionFailure()
                 return nil
         }
 
-        var attachmentsArray = [Attachments]()
+//        var attachmentsArray = [Attachments]()
+        var photosArray = [PostAttachmentWithPhotos]()
+        var linksArray = [PostAttachmentWithLink]()
 
         if let attachments = item.attachments {
-
             for attach in attachments {
 
-                let urlStrings = ["Small": attach.photo?.smallSizePhotoURL,
-                                  "Middle": attach.photo?.middleSizePhotoURL,
-                                  "Big": attach.photo?.bigSizePhotoURL]
+                let urlStrings: [URLSizes: String?] = [.small: attach.photo?.smallSizePhotoURL,
+                                  .middle: attach.photo?.middleSizePhotoURL,
+                                  .big: attach.photo?.bigSizePhotoURL,
+                                  .smallest: attach.photo?.smallestSizePhotoURL]
                 let photoUrls = self.parsePhotos(withStrings: urlStrings)
 
                 if let type = AttachmentType(rawValue: attach.type) {
 
                     switch type {
                     case .photo:
-                        let newAttach = PostAttachmentWithPhotos(urls: photoUrls)
+                        guard let photoItem = attach.photo else {
+                            assertionFailure("Некорректный аттач типа Photo")
+                            return nil
+                        }
+                        let newAttach = PostAttachmentWithPhotos(urls: photoUrls, height: photoItem.height, width: photoItem.width)
 
                         if newAttach.urls.count < 1 { assertionFailure() } else {
-                            attachmentsArray.append(newAttach)
+                            photosArray.append(newAttach)
                         }
 
                     case .link:
@@ -176,7 +182,7 @@ class NewsListProvider {
                                                              caption: attach.link?.caption,
                                                              description: description,
                                                              photo: photoUrls)
-                        attachmentsArray.append(newLink)
+                        linksArray.append(newLink)
                     }
                 } else {
                     print("Нераспарсиваемый тип: ", attach.type)
@@ -186,7 +192,41 @@ class NewsListProvider {
             }
         }
 
-        let newItem = Post()
+        let newItem: Post
+
+        if linksArray.count < 1 && photosArray.count == 1 {
+            if let photo = self.photoFrom(attachmentPhoto: photosArray[0], asFirstPhoto: true) {
+                newItem = PostWithSinglePhoto(photo: photo)
+            } else {
+                assertionFailure()
+                return nil
+            }
+        } else if linksArray.count < 1 && photosArray.count > 1 {
+            return nil
+//            newItem = PostWithPhotos()
+//            var photos = [Photo]()
+//
+//            if let photo = self.photoFrom(attachmentPhoto: photosArray[0], asFirstPhoto: true) {
+//                photos.append(photo)
+//            } else {
+//                return nil
+//            }
+//
+//            for index in 1...photosArray.count - 1 {
+//                if let photo = self.photoFrom(attachmentPhoto: photosArray[index], asFirstPhoto: false) {
+//                    photos.append(photo)
+//                }
+//            }
+//
+//            if photos.count < 2 {
+//                assertionFailure()
+//                return nil
+//            }
+        } else {
+            print("Пост содержит неподдерживаемый тип вложений, пропускаем")
+            return nil
+        }
+
         newItem.id = id
         newItem.date = Date(timeIntervalSince1970: item.date)
         newItem.text = text
@@ -195,63 +235,71 @@ class NewsListProvider {
         newItem.views = views
         newItem.likes = likes
         newItem.reposts = reposts
-        newItem.attachments = attachmentsArray.count > 0 ? attachmentsArray : nil
+//        newItem.attachments = attachmentsArray.count > 0 ? attachmentsArray : nil
 
         return newItem
     }
 
-    private func createPhotoWall(withItem item: ResponseNewsVK.Item) -> PhotoWall {
+//    private func createPhotoWall(withItem item: ResponseNewsVK.Item) -> PhotoWall {
+//
+//        let photoWall = PhotoWall()
+//
+//        item.photos?.items.forEach { item in
+//            var photo = PhotoWallPhoto()
+//            photo.text = item.text
+//            photo.likes = item.likes?.count
+//
+//            let urlStrings: [URLSizes: String?] = [.small: item.smallSizePhotoURL,
+//                              .middle: item.middleSizePhotoURL,
+//                              .big: item.bigSizePhotoURL,
+//                              .smallest: item.smallestSizePhotoURL]
+//            photo.urls = self.parsePhotos(withStrings: urlStrings)
+//
+//            if photo.urls.count > 0 {
+//                photoWall.photos.append(photo)
+//            } else {
+//                assertionFailure("Некорректное фото")
+//                return
+//            }
+//        }
+//
+//        photoWall.date = Date(timeIntervalSince1970: item.date)
+//        photoWall.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
+//        photoWall.sourceType = item.sourceID > 0 ? .profile : .group
+//
+//        return photoWall
+//    }
 
-        let photoWall = PhotoWall()
+    private func parsePhotos(withStrings urlStrings: [URLSizes: String?]) -> [URLSizes: URL] {
 
-        item.photos?.items.forEach { item in
-            var photo = Photo()
-            photo.text = item.text
-            photo.likes = item.likes?.count
+        var urls = [URLSizes: URL]()
 
-            let urlStrings = ["Small": item.smallSizePhotoURL,
-                              "Middle": item.middleSizePhotoURL,
-                              "Big": item.bigSizePhotoURL]
-            photo.urls = self.parsePhotos(withStrings: urlStrings)
-
-            if photo.urls.count > 0 {
-                photoWall.photos.append(photo)
-            } else {
-                assertionFailure("Некорректное фото")
-                return
-            }
-        }
-        
-        photoWall.date = Date(timeIntervalSince1970: item.date)
-        photoWall.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
-        photoWall.sourceType = item.sourceID > 0 ? .profile : .group
-
-        return photoWall
-    }
-
-    private func parsePhotos(withStrings urlStrings: [String: String?]) -> [URLSize] {
-
-        var urls = [URLSize]()
-
-        if let urlStringOptional = urlStrings["Small"],
+        if let urlStringOptional = urlStrings[.smallest],
             let urlString = urlStringOptional,
             let url = URL(string: urlString) {
 
-            urls.append(.small(url))
+            urls[.smallest] = url
         }
 
-        if let urlStringOptional = urlStrings["Middle"],
+        if let urlStringOptional = urlStrings[.small],
             let urlString = urlStringOptional,
             let url = URL(string: urlString) {
 
-            urls.append(.middle(url))
+            urls[.small] = url
         }
 
-        if let urlStringOptional = urlStrings["Big"],
+        if let urlStringOptional = urlStrings[.middle],
             let urlString = urlStringOptional,
             let url = URL(string: urlString) {
 
-            urls.append(.big(url))
+            urls[.middle] = url
+        }
+
+        if let urlStringOptional = urlStrings[.big],
+            let urlString = urlStringOptional,
+            let url = URL(string: urlString) {
+
+            urls[.big] = url
         }
 
         return urls
@@ -300,6 +348,29 @@ class NewsListProvider {
 
             return groupsArray
         }
+    }
+
+    private func photoFrom(attachmentPhoto attach: PostAttachmentWithPhotos, asFirstPhoto firstPhoto: Bool) -> Photo? {
+
+        let photoUrl: URL
+        if firstPhoto {
+
+            if let url = attach.urls[.big] { photoUrl = url } else
+            if let url = attach.urls[.middle] { photoUrl = url } else
+                if let url = attach.urls[.small] { photoUrl = url } else {
+                    assertionFailure()
+                    return nil
+            }
+        } else {
+            if let url = attach.urls[.small] { photoUrl = url } else if
+            let url = attach.urls[.smallest] { photoUrl = url } else if
+            let url = attach.urls[.middle] { photoUrl = url } else {
+                        assertionFailure()
+                        return nil
+            }
+        }
+
+        return Photo(width: CGFloat(attach.width), height: CGFloat(attach.height), url: photoUrl)
     }
 }
 

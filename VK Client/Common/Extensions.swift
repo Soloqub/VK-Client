@@ -58,6 +58,23 @@ extension Date {
 extension UIView {
     var viewHeight: CGFloat { return self.frame.size.height }
     var viewWidth: CGFloat { return self.frame.size.width }
+    var bottomLeftPoint: CGPoint { return CGPoint(x: self.frame.origin.x,
+                                                  y: self.frame.origin.y + self.frame.size.height) }
+    
+    func resizeToFitSubviews() {
+        
+        let subviewsRect = subviews.reduce(CGRect.zero) {
+            $0.union($1.frame)
+        }
+        
+        let fix = subviewsRect.origin
+        subviews.forEach {
+            $0.frame = $0.frame.offsetBy(dx: -fix.x, dy: -fix.y)
+        }
+        
+        frame = frame.offsetBy(dx: fix.x, dy: fix.y)
+        frame.size = subviewsRect.size
+    }
 }
 
 extension UIColor {

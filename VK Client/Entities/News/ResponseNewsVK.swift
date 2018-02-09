@@ -83,11 +83,17 @@ struct ResponseNewsVK: Decodable {
         var bigSizePhotoURL: String?
         var middleSizePhotoURL: String?
         var smallSizePhotoURL: String?
+        var smallestSizePhotoURL: String?
+        var width: Int
+        var height: Int
 
         enum CodingKeys : String, CodingKey {
             case bigSizePhotoURL = "photo_1280"
             case middleSizePhotoURL = "photo_807"
             case smallSizePhotoURL = "photo_604"
+            case smallestSizePhotoURL = "photo_130"
+            case width
+            case height
         }
     }
 
@@ -119,6 +125,7 @@ struct ResponseNewsVK: Decodable {
         var bigSizePhotoURL: String?
         var middleSizePhotoURL: String?
         var smallSizePhotoURL: String?
+        var smallestSizePhotoURL: String?
         var text: String?
         var likes: Like?
 
@@ -128,6 +135,7 @@ struct ResponseNewsVK: Decodable {
             case bigSizePhotoURL = "photo_1280"
             case middleSizePhotoURL = "photo_807"
             case smallSizePhotoURL = "photo_604"
+            case smallestSizePhotoURL = "photo_130"
         }
     }
 

@@ -11,7 +11,7 @@ import Neon
 
 class PostWithPhotosCell: UITableViewCell {
 
-    var header = HeaderView(frame: .zero)
+//    var header = HeaderView(frame: .zero)
 //    var mainContent = MainContent(frame: .zero)
 
     override func awakeFromNib() {
@@ -30,12 +30,13 @@ class PostWithPhotosCell: UITableViewCell {
 //        self.contentView.addSubview(header)
 //        self.contentView.backgroundColor = .brown
 //        self.configure()
+//        self.contentView.addSubview(header)
     }
 
     override func layoutSubviews() {
 
 //        self.header.anchorAndFillEdge(.top, xPad: 0, yPad: 0, otherSize: header.frame.height)
-        self.configure()
+//        self.configure()
     }
 
     func configure() {

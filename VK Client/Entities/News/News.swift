@@ -23,34 +23,65 @@ class Post: News {
     var views = 0
     var likes = 0
     var reposts = 0
-    var attachments: [Attachments]?
+//    var attachments: [Attachments]?
 }
 
-class PhotoWall: News {
+class PostWithSinglePhoto: Post {
+
+    var photo: Photo
+
+    init(photo: Photo) {
+        self.photo = photo
+    }
+}
+
+class PostWithPhotos: Post {
 
     var photos = [Photo]()
 }
 
-protocol Attachments {
+class PostWithLink: Post {
+
+    var url = ""
+    var title = ""
+    var caption: String?
+    var description = ""
+    var photo: Photo?
 }
 
-struct PostAttachmentWithPhotos: Attachments {
-
-    var urls = [URLSize]()
+struct Photo {
+    var width: CGFloat
+    var height: CGFloat
+    var url: URL
 }
 
-struct PostAttachmentWithLink: Attachments {
+class PhotoWall: News {
+
+    var photos = [PhotoWallPhoto]()
+}
+
+//protocol Attachments {
+//}
+
+struct PostAttachmentWithPhotos {
+
+    var urls = [URLSizes: URL]()
+    var height: Int
+    var width: Int
+}
+
+struct PostAttachmentWithLink {
 
     var url: String
     var title: String
     var caption: String?
     var description: String
-    var photo: [URLSize]
+    var photo: [URLSizes: URL]
 }
 
-struct Photo {
+struct PhotoWallPhoto {
 
-    var urls = [URLSize]()
+    var urls = [URLSizes: URL]()
     var text: String?
     var likes: Int?
 }
@@ -76,12 +107,11 @@ protocol NewsSource {
     var photo: URL {set get}
 }
 
-enum URLSize {
-    case big(URL)
-    case middle(URL)
-    case small(URL)
-
-    static let values = [URLSize.big, URLSize.middle, URLSize.small]
+enum URLSizes {
+    case big
+    case middle
+    case small
+    case smallest
 }
 
 enum NewsType: String {
