@@ -55,23 +55,25 @@ class MyNewsTableViewController: UITableViewController {
             self.setPhoto(forImageView: header.avatar, withURL: url)
         }
 
-//        cell.header = header
         cell.contentView.addSubview(header)
 
         switch self.news[indexPath.row] {
-        case let post as PostWithSinglePhoto:
-            self.setPhoto(forImageView: main.mainImageView, withURL: post.photo.url)
+
         case let post as PostWithPhotos:
             for (index, image) in post.photos.enumerated() {
-                self.setPhoto(forImageView: main.images[index], withURL: image.url)
+
+                if index == 0 {
+                    self.setPhoto(forImageView: main.mainImageView, withURL: image.url)
+                } else {
+                    self.setPhoto(forImageView: main.images[index - 1], withURL: image.url)
+                }
             }
         default:
             break
         }
 
         cell.contentView.addSubview(main)
-        print("cellForRowAt indexPath")
-        
+
         return cell
     }
 
@@ -100,18 +102,24 @@ class MyNewsTableViewController: UITableViewController {
 
             if let post = self.news[indexPath.row] as? Post {
                 mainContent.textLabel.text = post.text
-                if let singleImagePost = self.news[indexPath.row] as? PostWithSinglePhoto {
-                    mainContent.mainImageSize = CGSize(width: singleImagePost.photo.width,
-                                                       height: singleImagePost.photo.height)
+
+                switch self.news[indexPath.row] {
+
+                case let post as PostWithPhotos:
+                    if post.photos.count > 0 {
+                        mainContent.mainImageSize = CGSize(width: post.photos[0].width,
+                                                           height: post.photos[0].height)
+                    }
+                    if post.photos.count > 1 {
+                        let maxSize = post.photos.count - 1 < 3 ? post.photos.count - 1 : 3
+                        for index in 1...maxSize {
+                            mainContent.imagesSizes.append(CGSize(width: post.photos[index].width, height: post.photos[index].height))
+                        }
+                    }
+                default:
+                    break
                 }
-                
-                else if let imagesPost = self.news[indexPath.row] as? PostWithPhotos {
-                    
-//                    mainContent.mainImageSize = CGSize(width: imagesPost.photos[0].width,
-//                                                       height: imagesPost.photos[0].height)
-                }
-                
-//                print(mainContent.textLabel.text)
+
                 mainContent.configure()
             }
 

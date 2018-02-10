@@ -141,7 +141,6 @@ class NewsListProvider {
                 return nil
         }
 
-//        var attachmentsArray = [Attachments]()
         var photosArray = [PostAttachmentWithPhotos]()
         var linksArray = [PostAttachmentWithLink]()
 
@@ -194,34 +193,25 @@ class NewsListProvider {
 
         let newItem: Post
 
-        if linksArray.count < 1 && photosArray.count == 1 {
+        if linksArray.count < 1 && photosArray.count > 0 {
+
+            var photos = [Photo]()
+
             if let photo = self.photoFrom(attachmentPhoto: photosArray[0], asFirstPhoto: true) {
-                newItem = PostWithSinglePhoto(photo: photo)
+                photos.append(photo)
             } else {
-                assertionFailure()
                 return nil
             }
-        } else if linksArray.count < 1 && photosArray.count > 1 {
-            return nil
-//            newItem = PostWithPhotos()
-//            var photos = [Photo]()
-//
-//            if let photo = self.photoFrom(attachmentPhoto: photosArray[0], asFirstPhoto: true) {
-//                photos.append(photo)
-//            } else {
-//                return nil
-//            }
-//
-//            for index in 1...photosArray.count - 1 {
-//                if let photo = self.photoFrom(attachmentPhoto: photosArray[index], asFirstPhoto: false) {
-//                    photos.append(photo)
-//                }
-//            }
-//
-//            if photos.count < 2 {
-//                assertionFailure()
-//                return nil
-//            }
+
+            if photosArray.count > 1 {
+                for index in 1...photosArray.count - 1 {
+                    if let photo = self.photoFrom(attachmentPhoto: photosArray[index], asFirstPhoto: false) {
+                        photos.append(photo)
+                    }
+                }
+            }
+            newItem = PostWithPhotos(photos: photos)
+
         } else {
             print("Пост содержит неподдерживаемый тип вложений, пропускаем")
             return nil
@@ -235,7 +225,6 @@ class NewsListProvider {
         newItem.views = views
         newItem.likes = likes
         newItem.reposts = reposts
-//        newItem.attachments = attachmentsArray.count > 0 ? attachmentsArray : nil
 
         return newItem
     }

@@ -16,6 +16,7 @@ class MainContent: UIView {
     var mainImageSize = CGSize(width: 0, height: 0)
     var additionalImagesContainer = UIView(frame: .zero)
     var images = [UIImageView]()
+    var imagesSizes = [CGSize]()
     private var imageContainer = UIView(frame: .zero)
     private let screen = UIScreen.main.bounds
 
@@ -29,7 +30,6 @@ class MainContent: UIView {
         let frame = CGRect(origin: origin, size: .zero)
         super.init(frame: frame)
 
-//        self.backgroundColor = .green
         self.addSubview(textLabel)
         self.addSubview(imageContainer)
         textLabel.font = UIFont(name: self.textLabel.font.familyName, size: 14)
@@ -50,15 +50,27 @@ class MainContent: UIView {
         imageContainer.addSubview(mainImageView)
         imageContainer.addSubview(additionalImagesContainer)
 
-        let estimatedHeight = screen.width * mainImageSize.height / mainImageSize.width
-        let mainImageHeight = estimatedHeight < screen.height * 0.6 ? estimatedHeight : screen.height * 0.6
-        let mainImageWidth = mainImageHeight / estimatedHeight * screen.width
-        mainImageView.anchorToEdge(.top, padding: 5, width: mainImageWidth, height: mainImageHeight)
+
+        if mainImageSize.height != 0 && mainImageSize.width != 0 {
+            let estimatedHeight = screen.width * mainImageSize.height / mainImageSize.width
+            let mainImageHeight = estimatedHeight < screen.height * 0.6 ? estimatedHeight : screen.height * 0.6
+            let mainImageWidth = mainImageHeight / estimatedHeight * screen.width
+            mainImageView.anchorToEdge(.top, padding: 5, width: mainImageWidth, height: mainImageHeight)
+        }
         
-        additionalImagesContainer.alignAndFill(align: .underCentered, relativeTo: mainImageView, padding: 5)
-        let additionalImagesContainerHeight: CGFloat = images.count > 0 ? 100 : 0
+        let additionalImagesContainerHeight: CGFloat = imagesSizes.count > 0 ? 100 : 0
         additionalImagesContainer.align(.underCentered, relativeTo: mainImageView, padding: 5,
                                         width: screen.width, height: additionalImagesContainerHeight)
+        if imagesSizes.count > 0 {
+            for imageSize in imagesSizes {
+                let image = UIImageView(frame: CGRect(x: 0, y: 0, width: imageSize.width * 100 / imageSize.height, height: 100 - 10))
+                self.images.append(image)
+                additionalImagesContainer.addSubview(image)
+            }
+
+            additionalImagesContainer.groupInCenter(group: .horizontal, views: images, padding: 5,
+                                                    width: 100, height: 100)
+        }
 
         imageContainer.resizeToFitSubviews()
         self.resizeToFitSubviews()

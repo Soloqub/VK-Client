@@ -23,21 +23,15 @@ class Post: News {
     var views = 0
     var likes = 0
     var reposts = 0
-//    var attachments: [Attachments]?
-}
-
-class PostWithSinglePhoto: Post {
-
-    var photo: Photo
-
-    init(photo: Photo) {
-        self.photo = photo
-    }
 }
 
 class PostWithPhotos: Post {
 
     var photos = [Photo]()
+
+    init(photos: [Photo]) {
+        self.photos = photos
+    }
 }
 
 class PostWithLink: Post {
@@ -59,9 +53,6 @@ class PhotoWall: News {
 
     var photos = [PhotoWallPhoto]()
 }
-
-//protocol Attachments {
-//}
 
 struct PostAttachmentWithPhotos {
 
