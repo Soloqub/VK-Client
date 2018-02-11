@@ -9,7 +9,7 @@
 import UIKit
 import Neon
 
-class MainContent: UIView {
+class MainContent: UIView, AboveView {
 
     var textLabel = UILabel()
     var mainImageView = UIImageView(frame: .zero)
@@ -24,10 +24,7 @@ class MainContent: UIView {
         super.init(coder: aDecoder)
     }
 
-    init(aboveView: UIView) {
-
-        let origin = CGPoint(x: aboveView.frame.origin.x, y: aboveView.frame.origin.y + aboveView.viewHeight)
-        let frame = CGRect(origin: origin, size: .zero)
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         self.addSubview(textLabel)
@@ -38,8 +35,6 @@ class MainContent: UIView {
     func configure() {
         
         textLabel.numberOfLines = 0
-
-        print("mainContent.configure()")
         let size = textLabel.sizeThatFits(CGSize(width: screen.width, height: .greatestFiniteMagnitude))
         textLabel.frame.size = size
         self.frame.size = CGSize(width: screen.width,
@@ -49,7 +44,6 @@ class MainContent: UIView {
         imageContainer.alignAndFillWidth(align: .underCentered, relativeTo: textLabel, padding: 5, height: 0)
         imageContainer.addSubview(mainImageView)
         imageContainer.addSubview(additionalImagesContainer)
-
 
         if mainImageSize.height != 0 && mainImageSize.width != 0 {
             let estimatedHeight = screen.width * mainImageSize.height / mainImageSize.width
@@ -67,7 +61,6 @@ class MainContent: UIView {
                 self.images.append(image)
                 additionalImagesContainer.addSubview(image)
             }
-
             additionalImagesContainer.groupInCenter(group: .horizontal, views: images, padding: 5,
                                                     width: 100, height: 100)
         }

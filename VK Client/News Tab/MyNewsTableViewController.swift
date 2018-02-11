@@ -33,7 +33,8 @@ class MyNewsTableViewController: UITableViewController {
 
     func configureTableView() {
 
-        self.tableView.register(PostWithPhotosCell.self, forCellReuseIdentifier: "PostWithPhotos")
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "PostWithPhotos")
+        self.tableView.separatorStyle = .none
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -43,7 +44,9 @@ class MyNewsTableViewController: UITableViewController {
         guard let headerView = self.views[indexPath.row][.header],
             let header = headerView as? HeaderView,
             let mainView = self.views[indexPath.row][.main],
-            let main = mainView as? MainContent
+            let main = mainView as? MainContent,
+            let footerView = self.views[indexPath.row][.footer],
+            let footer = footerView as? FooterView
             else {
                 assertionFailure()
                 return cell
@@ -65,7 +68,9 @@ class MyNewsTableViewController: UITableViewController {
                 if index == 0 {
                     self.setPhoto(forImageView: main.mainImageView, withURL: image.url)
                 } else {
-                    self.setPhoto(forImageView: main.images[index - 1], withURL: image.url)
+                    if index <= main.images.count {
+                        self.setPhoto(forImageView: main.images[index - 1], withURL: image.url)
+                    }
                 }
             }
         default:
@@ -73,6 +78,7 @@ class MyNewsTableViewController: UITableViewController {
         }
 
         cell.contentView.addSubview(main)
+        cell.contentView.addSubview(footer)
 
         return cell
     }
@@ -90,15 +96,10 @@ class MyNewsTableViewController: UITableViewController {
             let header = HeaderView(frame: .zero)
             header.nameLabel.text = self.news[indexPath.row].source?.name
             header.dateLabel.text = self.news[indexPath.row].date.vkDateFormatter()
-//            print("")
-//            if self.news[indexPath.row] is Post { print("Post") } else { print("PhotoWall") }
-//            print("PostID: ",(self.news[indexPath.row] as? Post)?.id as Any)
-//            print("Date: ", self.news[indexPath.row].date.vkDateFormatter())
-//            print("SourceType: ", self.news[indexPath.row].sourceType.rawValue)
-//            print("SourceID: ", self.news[indexPath.row].sourceID)
             header.configure()
             
-            let mainContent = MainContent(aboveView: header)
+            let mainContent = MainContent(frame: .zero)
+            let footer = FooterView(frame: .zero)
 
             if let post = self.news[indexPath.row] as? Post {
                 mainContent.textLabel.text = post.text
@@ -116,20 +117,29 @@ class MyNewsTableViewController: UITableViewController {
                             mainContent.imagesSizes.append(CGSize(width: post.photos[index].width, height: post.photos[index].height))
                         }
                     }
+
+                    footer.viewsLabel.text = post.views.description
+                    footer.likesLabel.text = post.likes.description
+                    footer.repostsLabel.text = post.reposts.description
                 default:
                     break
                 }
-
-                mainContent.configure()
             }
+
+            mainContent.setOrigin(forAboveView: header)
+            mainContent.configure()
+
+            footer.setOrigin(forAboveView: mainContent)
+            footer.configure()
 
             self.views.append([:])
             self.views[indexPath.row][.header] = header
             self.views[indexPath.row][.main] = mainContent
+            self.views[indexPath.row][.footer] = footer
 
-            return header.viewHeight + mainContent.viewHeight
+            return header.viewHeight + mainContent.viewHeight + footer.viewHeight + 5
         } else {
-            return self.views[indexPath.row][.header]!.height + self.views[indexPath.row][.main]!.height
+            return self.views[indexPath.row][.header]!.height + self.views[indexPath.row][.main]!.height + self.views[indexPath.row][.footer]!.height + 5
         }
     }
 
@@ -145,6 +155,6 @@ class MyNewsTableViewController: UITableViewController {
     }
 
     enum CellViews {
-        case header, main
+        case header, main, footer
     }
 }

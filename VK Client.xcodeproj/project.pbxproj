@@ -28,7 +28,7 @@
 		928976841FE579A200260502 /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928976831FE579A200260502 /* BaseEntity.swift */; };
 		928976861FE57EF900260502 /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928976851FE57EF900260502 /* RealmHelper.swift */; };
 		9294BE7C2029D77000C4C9C6 /* MainContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294BE7B2029D77000C4C9C6 /* MainContent.swift */; };
-		929E8A42201E5B5500574ED9 /* PostWithPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */; };
+		929549EC2030A5990025C90D /* AboveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929549EB2030A5980025C90D /* AboveView.swift */; };
 		92B441EC1FDC8570008A7111 /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B441EB1FDC8570008A7111 /* Friends.swift */; };
 		92B8652C1FD46027002F30DB /* Common structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8652B1FD46027002F30DB /* Common structs.swift */; };
 		92B8652E1FD4659F002F30DB /* AllGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */; };
@@ -68,7 +68,7 @@
 		928976831FE579A200260502 /* BaseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
 		928976851FE57EF900260502 /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
 		9294BE7B2029D77000C4C9C6 /* MainContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContent.swift; sourceTree = "<group>"; };
-		929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWithPhotosCell.swift; sourceTree = "<group>"; };
+		929549EB2030A5980025C90D /* AboveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboveView.swift; sourceTree = "<group>"; };
 		92B441EB1FDC8570008A7111 /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		92B8652B1FD46027002F30DB /* Common structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common structs.swift"; sourceTree = "<group>"; };
 		92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsTableViewController.swift; sourceTree = "<group>"; };
@@ -185,10 +185,10 @@
 		929E8A43201E5B5F00574ED9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				929E8A41201E5B5500574ED9 /* PostWithPhotosCell.swift */,
 				927CA5C4202652E30002033B /* HeaderView.swift */,
 				9294BE7B2029D77000C4C9C6 /* MainContent.swift */,
 				92110FE7202F989800F1DD9F /* FooterView.swift */,
+				929549EB2030A5980025C90D /* AboveView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -381,7 +381,6 @@
 				92504B561FD6FEB400853259 /* FriendsListProvider.swift in Sources */,
 				9264F7A31F9A362C00CF0CD6 /* FriendsTableViewController.swift in Sources */,
 				927B3E951FD43352000EDA51 /* FriendsPhotoCell.swift in Sources */,
-				929E8A42201E5B5500574ED9 /* PostWithPhotosCell.swift in Sources */,
 				927CA5C5202652E30002033B /* HeaderView.swift in Sources */,
 				920110652014F30B002502FD /* NewsListProvider.swift in Sources */,
 				9255A56E1F94219800808C3C /* LoginFormViewController.swift in Sources */,
@@ -390,6 +389,7 @@
 				92DA2B931FDDBCB100DB59D7 /* UserPhotos.swift in Sources */,
 				92B441EC1FDC8570008A7111 /* Friends.swift in Sources */,
 				92DA2B951FDDC0CD00DB59D7 /* UserPhotosListProvider.swift in Sources */,
+				929549EC2030A5990025C90D /* AboveView.swift in Sources */,
 				92B8652E1FD4659F002F30DB /* AllGroupsTableViewController.swift in Sources */,
 				927B3E971FD434A9000EDA51 /* FriendsGalleryViewController.swift in Sources */,
 				9294BE7C2029D77000C4C9C6 /* MainContent.swift in Sources */,
