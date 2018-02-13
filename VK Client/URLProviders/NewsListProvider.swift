@@ -8,10 +8,11 @@
 
 import Foundation
 import Alamofire
+import SwiftKeychainWrapper
 
 class NewsListProvider {
 
-    var config:RequestConfig
+    var config: RequestConfig
 
     required init(config:RequestConfig) {
 
@@ -128,18 +129,25 @@ class NewsListProvider {
             DispatchQueue.main.async { completion(newsArray) }
         }
     }
+    
+    func post() {
+        // Доделать, распарсить ответ
+        Alamofire.request(self.makeURLRequest()!).responseData(queue: .global(qos: .userInitiated)) { response in
+            return
+        }
+    }
 
     private func createPost(withItem item: ResponseNewsVK.Item) -> Post? {
 
         guard
             let id = item.id,
             let text = item.text,
-            let views = item.views?.count,
             let likes = item.likes?.count,
             let reposts = item.reposts?.count else {
                 assertionFailure()
                 return nil
         }
+        let views = item.views?.count ?? 0
 
         var photosArray = [PostAttachmentWithPhotos]()
         var linksArray = [PostAttachmentWithLink]()
@@ -193,14 +201,16 @@ class NewsListProvider {
 
         let newItem: Post
 
-        if linksArray.count < 1 && photosArray.count > 0 {
+        if linksArray.count < 1 && photosArray.count >= 0 {
 
             var photos = [Photo]()
 
-            if let photo = self.photoFrom(attachmentPhoto: photosArray[0], asFirstPhoto: true) {
-                photos.append(photo)
-            } else {
-                return nil
+            if photosArray.count > 0 {
+                if let photo = self.photoFrom(attachmentPhoto: photosArray[0], asFirstPhoto: true) {
+                    photos.append(photo)
+                } else {
+                    return nil
+                }
             }
 
             if photosArray.count > 1 {
@@ -360,6 +370,34 @@ class NewsListProvider {
         }
 
         return Photo(width: CGFloat(attach.width), height: CGFloat(attach.height), url: photoUrl)
+    }
+    
+    class func makeConfig(forType type: ConfigType) -> RequestConfig {
+        
+        let config:RequestConfig
+        let token = KeychainWrapper.standard.string(forKey: "Token")!
+        
+        switch type {
+        case .textPost(let params):
+            var finalParams: Parameters = [
+                "access_token": token,
+                "v": "5.69",
+                "friends_only": "1"
+            ]
+            finalParams.update(other: params)
+            
+            config = (
+            baseUrl: URL(string: "https://api.vk.com")!,
+            method: "POST",
+            path: "/method/wall.post",
+            params: finalParams)
+        }
+        
+        return config
+    }
+    
+    enum ConfigType {
+        case textPost(params: [String: Any])
     }
 }
 

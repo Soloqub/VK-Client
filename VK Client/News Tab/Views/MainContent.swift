@@ -11,14 +11,14 @@ import Neon
 
 class MainContent: UIView, AboveView {
 
+    private let screen = UIScreen.main.bounds
     var textLabel = UILabel()
-    var mainImageView = UIImageView(frame: .zero)
+    var mainImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0))
     var mainImageSize = CGSize(width: 0, height: 0)
     var additionalImagesContainer = UIView(frame: .zero)
     var images = [UIImageView]()
     var imagesSizes = [CGSize]()
     private var imageContainer = UIView(frame: .zero)
-    private let screen = UIScreen.main.bounds
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

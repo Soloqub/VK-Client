@@ -19,20 +19,22 @@ class MyNewsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         self.configureTableView()
-
+        self.request()
+    }
+    
+    private func request() {
         let token = KeychainWrapper.standard.string(forKey: "Token")!
         // Пробуем получить список новостей
         let provider = NewsListProvider(token: token)
         provider.getNewsList() { [weak self] news in
-
+            
             self?.news = news
             self?.tableView.reloadData()
             print(self?.news.count as Any)
         }
     }
 
-    func configureTableView() {
-
+    private func configureTableView() {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "PostWithPhotos")
         self.tableView.separatorStyle = .none
     }
@@ -152,6 +154,11 @@ class MyNewsTableViewController: UITableViewController {
         imageView.af_setImage(withURL: url,
                               placeholderImage: UIImage(named: "noimage"),
                               progressQueue: .global(qos: .userInteractive))
+    }
+    
+    @IBAction func unwindFromPost(_ sender: UIStoryboardSegue) {
+        print("unwindFromPost")
+        self.request()
     }
 
     enum CellViews {
