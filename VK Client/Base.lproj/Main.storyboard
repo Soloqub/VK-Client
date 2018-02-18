@@ -225,7 +225,7 @@
                     <navigationItem key="navigationItem" title="Новости" id="16L-ZL-NgZ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="zwP-R1-KZg">
                             <connections>
-                                <segue destination="di4-3x-EcY" kind="presentation" id="aO9-pS-8ih"/>
+                                <segue destination="Rnw-jJ-g0B" kind="show" identifier="Post" id="noi-ke-JS8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -243,7 +243,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jMG-mJ-lu0">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -266,19 +266,19 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Готово" id="vpM-H6-vKb">
                             <connections>
-                                <action selector="doneButton:" destination="Rnw-jJ-g0B" id="m1R-c5-6Dz"/>
-                                <segue destination="OJh-Cw-yji" kind="unwind" identifier="unwindFromPost" unwindAction="unwindFromPost:" id="bgy-Z6-QBz"/>
+                                <action selector="doneButton:" destination="Rnw-jJ-g0B" id="RGT-hA-Yvx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="textView" destination="jMG-mJ-lu0" id="UAb-OI-Z6h"/>
+                        <segue destination="OJh-Cw-yji" kind="unwind" identifier="postUnwind" unwindAction="unwindFromPost:" id="FLo-TC-xBY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7o5-fh-JPR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="OJh-Cw-yji" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4648.8000000000002" y="1226.5367316341831"/>
+            <point key="canvasLocation" x="3961" y="1228"/>
         </scene>
         <!--Empty Collection View-->
         <scene sceneID="hMH-nI-Mv0">
@@ -382,24 +382,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCf-k4-wVs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1964" y="1229"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="7cu-bV-gaF">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="di4-3x-EcY" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xos-0R-CEO">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Rnw-jJ-g0B" kind="relationship" relationship="rootViewController" id="WPl-fp-7bQ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QzL-3F-NW4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3844" y="1227"/>
         </scene>
     </scenes>
 </document>

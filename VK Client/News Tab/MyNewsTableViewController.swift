@@ -157,7 +157,7 @@ class MyNewsTableViewController: UITableViewController {
     }
     
     @IBAction func unwindFromPost(_ sender: UIStoryboardSegue) {
-        print("unwindFromPost")
+        
         self.request()
     }
 

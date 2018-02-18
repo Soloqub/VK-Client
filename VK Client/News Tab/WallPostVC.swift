@@ -25,13 +25,14 @@ class WallPostVC: UIViewController {
     }
     
     @IBAction func doneButton(_ sender: Any) {
+        
         let params: [String: Any] = ["message": textView.text]
         let provider = NewsListProvider(withType: .textPost(params: params))
-        provider.post()
-        
-//        performSegue(withIdentifier: "unwindFromPost", sender: self)
+//        provider.post()
+
+        performSegue(withIdentifier: "postUnwind", sender: self)
     }
-    
+
     private func addActionsBarOnKeyboard() {
 
         let actionsBar = UIToolbar()
