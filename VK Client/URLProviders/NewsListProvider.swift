@@ -28,7 +28,7 @@ class NewsListProvider {
         case .textPost(let params):
             var finalParams: Parameters = [
                 "access_token": token,
-                "v": "5.69",
+                "v": "5.70",
                 "friends_only": "1"
             ]
             finalParams.update(other: params)
@@ -42,7 +42,7 @@ class NewsListProvider {
         case .getNews:
             let finalParams: Parameters = [
                 "access_token": token,
-                "v": "5.69"
+                "v": "5.70"
             ]
 
             config = (
@@ -150,10 +150,28 @@ class NewsListProvider {
         }
     }
     
-    func post() {
+    func post(completion: @escaping (_ success: Bool, _ error: PostResponseVK.Error?) -> Void) {
         // Доделать, распарсить ответ
         Alamofire.request(self.makeURLRequest()!).responseData(queue: .global(qos: .userInitiated)) { response in
-            return
+            guard
+                let data = response.value,
+                let response = try? JSONDecoder().decode(PostResponseVK.self, from: data)
+                else {
+                    assertionFailure()
+                    return
+            }
+
+            if response.response != nil  {
+                print("Posting OK")
+                print(response)
+                DispatchQueue.main.async { completion(true, nil) }
+            } else if let error = response.error {
+                print(error.message)
+                DispatchQueue.main.async { completion(false, error) }
+            } else {
+                assertionFailure("Этого не может быть!")
+                DispatchQueue.main.async { completion(false, nil) }
+            }
         }
     }
 

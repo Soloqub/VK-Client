@@ -157,8 +157,13 @@ class MyNewsTableViewController: UITableViewController {
     }
     
     @IBAction func unwindFromPost(_ sender: UIStoryboardSegue) {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         
-        self.request()
+            self.news.removeAll()
+            self.views.removeAll()
+            self.request()
+        }
     }
 
     enum CellViews {

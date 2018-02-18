@@ -28,9 +28,20 @@ class WallPostVC: UIViewController {
         
         let params: [String: Any] = ["message": textView.text]
         let provider = NewsListProvider(withType: .textPost(params: params))
-//        provider.post()
+        provider.post() { [weak self] success, error in
 
-        performSegue(withIdentifier: "postUnwind", sender: self)
+            if success { self?.performSegue(withIdentifier: "postUnwind", sender: self) } else {
+
+                // Выводим сообщение
+                let title = "Ошибка \(error?.code ?? 0)"
+                let message = error?.message
+                let textAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+                textAlert.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.cancel, handler: nil))
+
+                self?.present(textAlert, animated: true, completion: nil)
+//                self?.alert = textAlert
+            }
+        }
     }
 
     private func addActionsBarOnKeyboard() {

@@ -38,6 +38,7 @@
 		92D2A3A32019484F008E33A4 /* simple.json in Resources */ = {isa = PBXBuildFile; fileRef = 92D2A3A22019484F008E33A4 /* simple.json */; };
 		92DA2B931FDDBCB100DB59D7 /* UserPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA2B921FDDBCB100DB59D7 /* UserPhotos.swift */; };
 		92DA2B951FDDC0CD00DB59D7 /* UserPhotosListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA2B941FDDC0CD00DB59D7 /* UserPhotosListProvider.swift */; };
+		92DDC6A9203A211700DE7398 /* PostResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DDC6A8203A211700DE7398 /* PostResponseVK.swift */; };
 		92F7CF181FDF29F300719106 /* UserGroupsListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F7CF171FDF29F300719106 /* UserGroupsListProvider.swift */; };
 		92F7CF1A1FDF2ADE00719106 /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F7CF191FDF2ADE00719106 /* Groups.swift */; };
 		A6324A2B80BC5BFC973C9330 /* Pods_VK_Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078F0FFCFCF0E82B2FF6BC8 /* Pods_VK_Client.framework */; };
@@ -79,6 +80,7 @@
 		92D2A3A22019484F008E33A4 /* simple.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = simple.json; sourceTree = "<group>"; };
 		92DA2B921FDDBCB100DB59D7 /* UserPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotos.swift; sourceTree = "<group>"; };
 		92DA2B941FDDC0CD00DB59D7 /* UserPhotosListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotosListProvider.swift; sourceTree = "<group>"; };
+		92DDC6A8203A211700DE7398 /* PostResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponseVK.swift; sourceTree = "<group>"; };
 		92F7CF171FDF29F300719106 /* UserGroupsListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupsListProvider.swift; sourceTree = "<group>"; };
 		92F7CF191FDF2ADE00719106 /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
 		E1A37D5C62C9D76ECA107906 /* Pods-VK Client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK Client.release.xcconfig"; path = "Pods/Target Support Files/Pods-VK Client/Pods-VK Client.release.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				92011066201500A1002502FD /* News.swift */,
 				9256EF63201D388900373BD8 /* ResponseNewsVK.swift */,
+				92DDC6A8203A211700DE7398 /* PostResponseVK.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				92110FE8202F989800F1DD9F /* FooterView.swift in Sources */,
 				92DA2B931FDDBCB100DB59D7 /* UserPhotos.swift in Sources */,
 				92B441EC1FDC8570008A7111 /* Friends.swift in Sources */,
+				92DDC6A9203A211700DE7398 /* PostResponseVK.swift in Sources */,
 				92DA2B951FDDC0CD00DB59D7 /* UserPhotosListProvider.swift in Sources */,
 				924C1D8720322B4400C73AEA /* WallPostVC.swift in Sources */,
 				929549EC2030A5990025C90D /* AboveView.swift in Sources */,
