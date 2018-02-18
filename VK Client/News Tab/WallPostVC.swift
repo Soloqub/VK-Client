@@ -15,22 +15,9 @@ class WallPostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.fontConfigure()
         textView.contentInsetAdjustmentBehavior = .automatic // Чтобы текст в textView отображался сверху, без отступа
         textView.becomeFirstResponder()
         self.addActionsBarOnKeyboard()
-    }
-
-    private func fontConfigure() {
-        let font = UIFont.systemFont(ofSize: 19.0)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 5.2
-
-        let attrText = NSMutableAttributedString(string: "")
-        attrText.addAttribute(NSAttributedStringKey.font, value: font, range: NSRange(location: 0, length: attrText.length))
-
-        attrText.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attrText.length))
-        textView.attributedText = attrText
     }
 
     @IBAction func cancelButton(_ sender: Any) {
@@ -39,41 +26,27 @@ class WallPostVC: UIViewController {
     
     @IBAction func doneButton(_ sender: Any) {
         let params: [String: Any] = ["message": textView.text]
-        let config = NewsListProvider.makeConfig(forType: .textPost(params: params))
-        let provider = NewsListProvider(config: config)
+        let provider = NewsListProvider(withType: .textPost(params: params))
         provider.post()
         
 //        performSegue(withIdentifier: "unwindFromPost", sender: self)
     }
     
     private func addActionsBarOnKeyboard() {
-        let screenWidth = UIScreen.main.bounds.size.width
-        
-        let actionsBar: UIToolbar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 50.0))
+
+        let actionsBar = UIToolbar()
         actionsBar.barStyle = UIBarStyle.default
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         
-        let placeButton = UIButton()
-        placeButton.setImage(UIImage(named: "placement"), for: .normal)
-        placeButton.addTarget(self, action: #selector(self.placeButtonAction), for: UIControlEvents.touchUpInside)
-        placeButton.sizeToFit()
-        let place = UIBarButtonItem(customView: placeButton)
+        let placeImage = UIImage(named: "placement")
+        let place = UIBarButtonItem(image: placeImage, style: .plain, target: self, action: #selector(self.placeButtonAction))
         
-        let attachmentButton = UIButton()
-        attachmentButton.setImage(UIImage(named: "attachment"), for: .normal)
-        attachmentButton.addTarget(self, action: #selector(self.attachmentButtonAction), for: UIControlEvents.touchUpInside)
-        attachmentButton.sizeToFit()
-        let attach = UIBarButtonItem(customView: attachmentButton)
-        
+        let attachmentImage = UIImage(named: "attachment")
+        let attach = UIBarButtonItem(image: attachmentImage, style: .plain, target: self, action: #selector(self.attachmentButtonAction))
+
         var items = [UIBarButtonItem]()
-        
-        items.append(flexSpace)
-        items.append(place)
-        items.append(flexSpace)
-        items.append(attach)
-        items.append(flexSpace)
-        
+        items.append(contentsOf: [flexSpace, place, flexSpace, attach, flexSpace])
         actionsBar.items = items
         
         actionsBar.sizeToFit()

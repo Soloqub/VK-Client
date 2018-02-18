@@ -19,20 +19,40 @@ class NewsListProvider {
         self.config = config
     }
 
-    convenience init(token: String) {
+    convenience init(withType type: ConfigType) {
 
-        let defaultParams: Parameters = [
-            "access_token": token,
-            "v": "5.69"
-        ]
+        let config:RequestConfig
+        let token = KeychainWrapper.standard.string(forKey: "Token")!
 
-        let defaultConf:RequestConfig = (
-            baseUrl: URL(string: "https://api.vk.com")!,
-            method: "GET",
-            path: "/method/newsfeed.get",
-            params: defaultParams)
+        switch type {
+        case .textPost(let params):
+            var finalParams: Parameters = [
+                "access_token": token,
+                "v": "5.69",
+                "friends_only": "1"
+            ]
+            finalParams.update(other: params)
 
-        self.init(config: defaultConf)
+            config = (
+                baseUrl: URL(string: "https://api.vk.com")!,
+                method: "POST",
+                path: "/method/wall.post",
+                params: finalParams)
+
+        case .getNews:
+            let finalParams: Parameters = [
+                "access_token": token,
+                "v": "5.69"
+            ]
+
+            config = (
+                baseUrl: URL(string: "https://api.vk.com")!,
+                method: "GET",
+                path: "/method/newsfeed.get",
+                params: finalParams)
+        }
+
+        self.init(config: config)
     }
 
     func makeURLRequest() -> URLRequest? {
@@ -372,32 +392,10 @@ class NewsListProvider {
         return Photo(width: CGFloat(attach.width), height: CGFloat(attach.height), url: photoUrl)
     }
     
-    class func makeConfig(forType type: ConfigType) -> RequestConfig {
-        
-        let config:RequestConfig
-        let token = KeychainWrapper.standard.string(forKey: "Token")!
-        
-        switch type {
-        case .textPost(let params):
-            var finalParams: Parameters = [
-                "access_token": token,
-                "v": "5.69",
-                "friends_only": "1"
-            ]
-            finalParams.update(other: params)
-            
-            config = (
-            baseUrl: URL(string: "https://api.vk.com")!,
-            method: "POST",
-            path: "/method/wall.post",
-            params: finalParams)
-        }
-        
-        return config
-    }
-    
+
     enum ConfigType {
         case textPost(params: [String: Any])
+        case getNews
     }
 }
 

@@ -23,9 +23,9 @@ class MyNewsTableViewController: UITableViewController {
     }
     
     private func request() {
-        let token = KeychainWrapper.standard.string(forKey: "Token")!
+        
         // Пробуем получить список новостей
-        let provider = NewsListProvider(token: token)
+        let provider = NewsListProvider(withType: .getNews)
         provider.getNewsList() { [weak self] news in
             
             self?.news = news
