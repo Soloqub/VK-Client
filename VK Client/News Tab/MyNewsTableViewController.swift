@@ -12,6 +12,7 @@ import AlamofireImage
 
 class MyNewsTableViewController: UITableViewController {
 
+    private var provider = NewsListProvider()
     var news = [News]()
     var views = [[CellViews: UIView]]()
 
@@ -25,7 +26,6 @@ class MyNewsTableViewController: UITableViewController {
     private func request() {
         
         // Пробуем получить список новостей
-        let provider = NewsListProvider(withType: .getNews)
         provider.getNewsList() { [weak self] news in
             
             self?.news = news
@@ -158,12 +158,9 @@ class MyNewsTableViewController: UITableViewController {
     
     @IBAction func unwindFromPost(_ sender: UIStoryboardSegue) {
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        
-            self.news.removeAll()
-            self.views.removeAll()
-            self.request()
-        }
+        self.news.removeAll()
+        self.views.removeAll()
+        self.request()
     }
 
     enum CellViews {

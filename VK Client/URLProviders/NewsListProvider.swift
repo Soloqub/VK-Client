@@ -12,50 +12,37 @@ import SwiftKeychainWrapper
 
 class NewsListProvider {
 
-    var config: RequestConfig
+    func getDefaultConfig(forAction type: ActionType) -> RequestConfig {
 
-    required init(config:RequestConfig) {
-
-        self.config = config
-    }
-
-    convenience init(withType type: ConfigType) {
-
-        let config:RequestConfig
         let token = KeychainWrapper.standard.string(forKey: "Token")!
 
         switch type {
-        case .textPost(let params):
-            var finalParams: Parameters = [
+        case .messagePost:
+            let params: Parameters = [
                 "access_token": token,
                 "v": "5.70",
                 "friends_only": "1"
             ]
-            finalParams.update(other: params)
 
-            config = (
-                baseUrl: URL(string: "https://api.vk.com")!,
+            return ( baseUrl: URL(string: "https://api.vk.com")!,
                 method: "POST",
                 path: "/method/wall.post",
-                params: finalParams)
+                params: params)
 
         case .getNews:
-            let finalParams: Parameters = [
+            let params: Parameters = [
                 "access_token": token,
                 "v": "5.70"
             ]
 
-            config = (
-                baseUrl: URL(string: "https://api.vk.com")!,
+            return ( baseUrl: URL(string: "https://api.vk.com")!,
                 method: "GET",
                 path: "/method/newsfeed.get",
-                params: finalParams)
+                params: params)
         }
-
-        self.init(config: config)
     }
 
-    func makeURLRequest() -> URLRequest? {
+    func makeURLRequest(forConfig config: RequestConfig) -> URLRequest? {
 
         let url:URL = config.baseUrl.appendingPathComponent(config.path)
         var urlRequest = URLRequest(url: url)
@@ -75,7 +62,9 @@ class NewsListProvider {
     
     func getNewsList(completion: @escaping (_ news: [News]) -> Void) {
 
-        Alamofire.request(self.makeURLRequest()!).responseData(queue: .global(qos: .userInitiated)) { response in
+        let config = self.getDefaultConfig(forAction: .getNews)
+
+        Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
 
             guard
                 let data = response.value,
@@ -150,9 +139,12 @@ class NewsListProvider {
         }
     }
     
-    func post(completion: @escaping (_ success: Bool, _ error: PostResponseVK.Error?) -> Void) {
-        // Доделать, распарсить ответ
-        Alamofire.request(self.makeURLRequest()!).responseData(queue: .global(qos: .userInitiated)) { response in
+    func post(withParams params: [String: Any], completion: @escaping (_ success: Bool, _ error: PostResponseVK.Error?) -> Void) {
+
+        var config = self.getDefaultConfig(forAction: .messagePost)
+        config.params.update(other: params)
+
+        Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
             guard
                 let data = response.value,
                 let response = try? JSONDecoder().decode(PostResponseVK.self, from: data)
@@ -411,9 +403,8 @@ class NewsListProvider {
     }
     
 
-    enum ConfigType {
-        case textPost(params: [String: Any])
-        case getNews
+    enum ActionType {
+        case messagePost, getNews
     }
 }
 

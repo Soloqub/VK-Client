@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-typealias RequestConfig = (baseUrl: URL, method: String, path: String, params:Parameters)
+typealias RequestConfig = (baseUrl: URL, method: String, path: String, params: Parameters)
 
 class VKAuthProvider {
     

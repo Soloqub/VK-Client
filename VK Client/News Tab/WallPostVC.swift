@@ -11,6 +11,7 @@ import UIKit
 class WallPostVC: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
+    private var provider = NewsListProvider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +28,7 @@ class WallPostVC: UIViewController {
     @IBAction func doneButton(_ sender: Any) {
         
         let params: [String: Any] = ["message": textView.text]
-        let provider = NewsListProvider(withType: .textPost(params: params))
-        provider.post() { [weak self] success, error in
+        provider.post(withParams: params) { [weak self] success, error in
 
             if success { self?.performSegue(withIdentifier: "postUnwind", sender: self) } else {
 
