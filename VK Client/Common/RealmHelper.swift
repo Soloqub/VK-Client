@@ -19,7 +19,11 @@ class RealmHelper<T> where T:Object {
     func realmInit() -> Realm? {
         
         do {
-            return try Realm()
+            let realmContext = try Realm(fileURL: FileManager
+                .default
+                .containerURL(forSecurityApplicationGroupIdentifier: "group.Today")!
+                .appendingPathComponent("db.realm"))
+            return realmContext
         } catch {
             assertionFailure(error.localizedDescription)
             return nil

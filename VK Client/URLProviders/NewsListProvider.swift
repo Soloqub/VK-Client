@@ -76,6 +76,7 @@ class NewsListProvider {
         let config = self.getDefaultConfig(forAction: .getPhotoServer)
 
         Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
+        }
 
     }
     
