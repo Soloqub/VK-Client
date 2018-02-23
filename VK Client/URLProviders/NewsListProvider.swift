@@ -39,6 +39,18 @@ class NewsListProvider {
                 method: "GET",
                 path: "/method/newsfeed.get",
                 params: params)
+
+        case .getPhotoServer:
+            let params: Parameters = [
+                "access_token": token,
+                "v": "5.70",
+                "album_id": 1
+            ]
+
+            return ( baseUrl: URL(string: "https://api.vk.com")!,
+                     method: "GET",
+                     path: "/method/photos.getUploadServer",
+                     params: params)
         }
     }
 
@@ -58,6 +70,13 @@ class NewsListProvider {
             print("error")
             return nil
         }
+    }
+
+    func loadPhoto() {
+        let config = self.getDefaultConfig(forAction: .getPhotoServer)
+
+        Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
+
     }
     
     func getNewsList(completion: @escaping (_ news: [News]) -> Void) {
@@ -404,7 +423,7 @@ class NewsListProvider {
     
 
     enum ActionType {
-        case messagePost, getNews
+        case messagePost, getNews, getPhotoServer
     }
 }
 
