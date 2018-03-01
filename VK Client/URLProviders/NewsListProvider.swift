@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftKeychainWrapper
+import PromiseKit
 
 class NewsListProvider {
 
@@ -72,11 +73,39 @@ class NewsListProvider {
         }
     }
 
-    func loadPhoto() {
+    func uploadPhoto() {
+
+        firstly {
+            self.getPhotosServer()
+        }
+        }
+
+    private func getPhotosServer() -> Promise<URL> {
+
         let config = self.getDefaultConfig(forAction: .getPhotoServer)
 
         Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
 
+            guard
+                let data = response.value,
+                let response = try? JSONDecoder().decode(PostResponseVK.self, from: data)
+                else {
+                    assertionFailure()
+                    return
+            }
+
+            if response.response != nil  {
+                print("Posting OK")
+                print(response)
+                DispatchQueue.main.async { completion(true, nil) }
+            } else if let error = response.error {
+                print(error.message)
+                DispatchQueue.main.async { completion(false, error) }
+            } else {
+                assertionFailure("Этого не может быть!")
+                DispatchQueue.main.async { completion(false, nil) }
+            }
+        }
     }
     
     func getNewsList(completion: @escaping (_ news: [News]) -> Void) {

@@ -11,6 +11,7 @@ target 'VK Client' do
   pod 'SwiftKeychainWrapper'
   pod 'AlamofireImage'
   pod 'Neon'
+  pod "PromiseKit/CorePromise", "~> 6.0"
   # pod 'SnapKit'
   # pod 'SteviaLayout'
   # pod 'YogaKit'
