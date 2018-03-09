@@ -43,15 +43,36 @@ class WatchSessionHelper: NSObject, WCSessionDelegate {
         return nil
     }
 
-    func updateApplicationContext(applicationContext: [String : AnyObject]) throws {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 
-        if let session = validSession {
+        let realm = RealmHelper<Friends>()
+        realm.fetchAll(withType: Friends.self)
+        guard let friends = realm.objects else {
+            return
+        }
 
-            do {
-                try session.updateApplicationContext(applicationContext)
-            } catch let error {
-                throw error
-            }
+        let names: [String] = friends.map { $0.name }
+
+        if message["request"] as? String == "friends" {
+
+            replyHandler(["friends": names])
         }
     }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+
+
+    }
+
+//    func updateApplicationContext(applicationContext: [String : AnyObject]) throws {
+//
+//        if let session = validSession {
+//
+//            do {
+//                try session.updateApplicationContext(applicationContext)
+//            } catch let error {
+//                throw error
+//            }
+//        }
+//    }
 }
