@@ -12,6 +12,9 @@
 		92011067201500A1002502FD /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92011066201500A1002502FD /* News.swift */; };
 		92110FE8202F989800F1DD9F /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92110FE7202F989800F1DD9F /* FooterView.swift */; };
 		9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */; };
+		921A508F2057378A00A05CD3 /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
+		921A509020573BB100A05CD3 /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
+		921B50E12056E0E600A534DF /* WatchExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921B50E02056E0E600A534DF /* WatchExtensions.swift */; };
 		923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */; };
 		924A80E21FCF64F8000CCE98 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924A80E11FCF64F8000CCE98 /* Extensions.swift */; };
 		924C1D8720322B4400C73AEA /* WallPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C1D8620322B4400C73AEA /* WallPostVC.swift */; };
@@ -131,6 +134,8 @@
 		92011066201500A1002502FD /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		92110FE7202F989800F1DD9F /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsTableViewController.swift; sourceTree = "<group>"; };
+		921A508E2057378A00A05CD3 /* WatchFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFriend.swift; sourceTree = "<group>"; };
+		921B50E02056E0E600A534DF /* WatchExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchExtensions.swift; sourceTree = "<group>"; };
 		923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthProvider.swift; sourceTree = "<group>"; };
 		924A80E11FCF64F8000CCE98 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		924C1D8620322B4400C73AEA /* WallPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallPostVC.swift; sourceTree = "<group>"; };
@@ -309,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				925A1A7A2048958D00F32BA6 /* InterfaceController.swift */,
+				921B50E02056E0E600A534DF /* WatchExtensions.swift */,
 				925A1A8F2048A4F000F32BA6 /* FriendRow.swift */,
 				925A1A7C2048958D00F32BA6 /* ExtensionDelegate.swift */,
 				925A1A7E2048958D00F32BA6 /* NotificationController.swift */,
@@ -346,6 +352,7 @@
 				924A80E11FCF64F8000CCE98 /* Extensions.swift */,
 				928976851FE57EF900260502 /* RealmHelper.swift */,
 				925A1A912048B15E00F32BA6 /* WatchSessionHelper.swift */,
+				921A508E2057378A00A05CD3 /* WatchFriend.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -690,6 +697,7 @@
 				9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */,
 				92504B561FD6FEB400853259 /* FriendsListProvider.swift in Sources */,
 				9264F7A31F9A362C00CF0CD6 /* FriendsTableViewController.swift in Sources */,
+				921A508F2057378A00A05CD3 /* WatchFriend.swift in Sources */,
 				927B3E951FD43352000EDA51 /* FriendsPhotoCell.swift in Sources */,
 				927CA5C5202652E30002033B /* HeaderView.swift in Sources */,
 				920110652014F30B002502FD /* NewsListProvider.swift in Sources */,
@@ -724,7 +732,9 @@
 				925A1A7F2048958D00F32BA6 /* NotificationController.swift in Sources */,
 				925A1A7D2048958D00F32BA6 /* ExtensionDelegate.swift in Sources */,
 				925A1A902048A4F000F32BA6 /* FriendRow.swift in Sources */,
+				921B50E12056E0E600A534DF /* WatchExtensions.swift in Sources */,
 				925A1A7B2048958D00F32BA6 /* InterfaceController.swift in Sources */,
+				921A509020573BB100A05CD3 /* WatchFriend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

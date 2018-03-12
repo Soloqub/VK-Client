@@ -46,22 +46,38 @@ class WatchSessionHelper: NSObject, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 
         let realm = RealmHelper<Friends>()
-        realm.fetchAll(withType: Friends.self)
-        guard let friends = realm.objects else {
-            return
+
+        if let key = message["request"] as? String {
+            switch key {
+
+            case "friends":
+                realm.fetchAll(withType: Friends.self)
+                guard let friends = realm.objects else {
+                    assertionFailure("Не получилось вытащить объекты из базы")
+                    return
+                }
+
+                let friendsStruct: [WatchFriend] = friends.map { WatchFriend(id: $0.id, name: $0.name) }
+                let encoder = JSONEncoder()
+                let data = try! encoder.encode(friendsStruct)
+
+                replyHandler(["friends": data])
+
+            case "avatar":
+                if let id = message["id"] as? Int,
+                    let friend = realm.fetchObject(withType: Friends.self, andID: id),
+                    let url = URL(string: friend.imagesURL) {
+
+                    url.getPhoto { image in
+                        if let data = image?.jpegToData {
+                            replyHandler(["avatar": data])
+                        } else { assertionFailure("Не JPEG") }
+                    }
+                } else { assertionFailure("Не получилось вытащить URL аватара для объекта из базы") }
+            default:
+                return
+            }
         }
-
-        let names: [String] = friends.map { $0.name }
-
-        if message["request"] as? String == "friends" {
-
-            replyHandler(["friends": names])
-        }
-    }
-
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-
-
     }
 
 //    func updateApplicationContext(applicationContext: [String : AnyObject]) throws {

@@ -91,3 +91,12 @@ extension Dictionary {
         }
     }
 }
+
+extension UIImage {
+    var jpegToData: Data? {
+        return UIImageJPEGRepresentation(self, 1)
+    }
+    var pngToData: Data? {
+        return UIImagePNGRepresentation(self)
+    }
+}
