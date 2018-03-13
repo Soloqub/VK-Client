@@ -20,7 +20,9 @@
                                     <group key="rootItem" width="1" alignment="left" id="uss-mi-6Ei">
                                         <items>
                                             <imageView width="37" height="1" alignment="left" id="AUQ-dN-vgK"/>
-                                            <label width="86" alignment="left" verticalAlignment="center" text="Label" id="RsI-MS-U4T"/>
+                                            <label width="86" alignment="left" verticalAlignment="center" text="Label" numberOfLines="0" id="RsI-MS-U4T">
+                                                <fontDescription key="font" type="system" pointSize="12"/>
+                                            </label>
                                         </items>
                                     </group>
                                     <connections>

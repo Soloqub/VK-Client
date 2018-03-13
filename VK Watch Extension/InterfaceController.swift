@@ -37,24 +37,34 @@ class TableInterfaceController: WKInterfaceController, WCSessionDelegate {
         if activationState == .activated {
 
             let decoder = JSONDecoder()
-            session.sendMessage(["request": "friends"], replyHandler: { reply in
+            session.sendMessage(["request": "friends"], replyHandler: { [weak self] reply in
                 if let json = reply["friends"] as? Data {
-                    let items = try! decoder.decode([WatchFriend].self, from: json)
-                    items.forEach() { item in
-                        self.friendsList.append(Friend(id: item.id, name: item.name, image: nil))
+                    
+                    do {
+                        let items = try decoder.decode([WatchFriend].self, from: json)
+                        items.forEach() { item in
+                            self?.friendsList.append(Friend(id: item.id, name: item.name, image: nil))
+                        }
+                        self?.loadDataTable()
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            self?.loadPictures(withSession: session)
+                        }
+                    }  catch {
+                        assertionFailure(error.localizedDescription)
+                        self?.showAlert()
+                        return
                     }
-                    self.reloadTable()
-                    self.loadPictures(withSession: session)
                 }
             }, errorHandler: { error in
                 print(error.localizedDescription)
+                self.showAlert()
             })
         } else {
             assertionFailure("Session isn't activated")
         }
     }
 
-    func reloadTable() {
+    func loadDataTable() {
 
         self.table.setNumberOfRows(friendsList.count, withRowType: "friendCell")
 
@@ -67,21 +77,31 @@ class TableInterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     func loadPictures(withSession session: WCSession) {
-        
         for index in 0..<self.friendsList.count {
-            session.sendMessage(["request": "avatar", "id": friendsList[index].id], replyHandler: { reply in
+            session.sendMessage(["request": "avatar", "id": self.friendsList[index].id], replyHandler: { [weak self] reply in
                 
                 if let imageData = reply["avatar"] as? Data,
                     let image = imageData.toData,
-                    let row = self.table.rowController(at: index) as? FriendRow {
+                    let row = self?.table.rowController(at: index) as? FriendRow {
                     
-                    self.friendsList[index].image = image
+                    self?.friendsList[index].image = image
                     row.ava.setImage(image)
                 }
             }, errorHandler: { error in
                 assertionFailure(error.localizedDescription)
             })
         }
+    }
+    
+    func showAlert() {
+        
+        let action = WKAlertAction(title: "Error", style: WKAlertActionStyle.default) {
+            print("OK")
+        }
+        presentAlert(withTitle: "Ошибка",
+                     message: "Возникла ошибка синхронизации. Повторите позже.",
+                     preferredStyle: WKAlertControllerStyle.alert,
+                     actions:[action])
     }
     
     override func didDeactivate() {

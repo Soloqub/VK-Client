@@ -283,6 +283,7 @@
 				92B8652F1FD4A6E0002F30DB /* Groups Tab */,
 				9269A072200D48D9005776B3 /* News Tab */,
 				92D03D091FDDAD1400E62508 /* Entities */,
+				92CDB98C205826FF00AF052C /* iWatchHelper */,
 				9255A5721F94219800808C3C /* Assets.xcassets */,
 				9255A5741F94219800808C3C /* LaunchScreen.storyboard */,
 				9255A5771F94219800808C3C /* Info.plist */,
@@ -351,8 +352,6 @@
 			children = (
 				924A80E11FCF64F8000CCE98 /* Extensions.swift */,
 				928976851FE57EF900260502 /* RealmHelper.swift */,
-				925A1A912048B15E00F32BA6 /* WatchSessionHelper.swift */,
-				921A508E2057378A00A05CD3 /* WatchFriend.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -386,6 +385,15 @@
 				92B8652B1FD46027002F30DB /* Common structs.swift */,
 			);
 			path = "Groups Tab";
+			sourceTree = "<group>";
+		};
+		92CDB98C205826FF00AF052C /* iWatchHelper */ = {
+			isa = PBXGroup;
+			children = (
+				925A1A912048B15E00F32BA6 /* WatchSessionHelper.swift */,
+				921A508E2057378A00A05CD3 /* WatchFriend.swift */,
+			);
+			path = iWatchHelper;
 			sourceTree = "<group>";
 		};
 		92D03D091FDDAD1400E62508 /* Entities */ = {

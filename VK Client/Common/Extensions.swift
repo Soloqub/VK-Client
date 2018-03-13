@@ -85,6 +85,7 @@ extension UIColor {
 }
 
 extension Dictionary {
+    
     mutating func update(other:Dictionary) {
         for (key,value) in other {
             self.updateValue(value, forKey:key)
@@ -93,6 +94,7 @@ extension Dictionary {
 }
 
 extension UIImage {
+    
     var jpegToData: Data? {
         return UIImageJPEGRepresentation(self, 1)
     }

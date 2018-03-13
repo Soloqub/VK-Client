@@ -24,27 +24,16 @@ class WatchSessionHelper: NSObject, WCSessionDelegate {
     }
 
     func sessionDidBecomeInactive(_ session: WCSession) {
-
     }
 
     func sessionDidDeactivate(_ session: WCSession) {
-
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-
-    }
-
-    private var validSession: WCSession? {
-
-        if let session = session, session.isPaired && session.isWatchAppInstalled {
-            return session
-        }
-        return nil
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-
+        
         let realm = RealmHelper<Friends>()
 
         if let key = message["request"] as? String {
@@ -59,9 +48,13 @@ class WatchSessionHelper: NSObject, WCSessionDelegate {
 
                 let friendsStruct: [WatchFriend] = friends.map { WatchFriend(id: $0.id, name: $0.name) }
                 let encoder = JSONEncoder()
-                let data = try! encoder.encode(friendsStruct)
-
-                replyHandler(["friends": data])
+                
+                do {
+                    let data = try encoder.encode(friendsStruct)
+                    replyHandler(["friends": data])
+                } catch {
+                    assertionFailure(error.localizedDescription)
+                }
 
             case "avatar":
                 if let id = message["id"] as? Int,
@@ -69,6 +62,7 @@ class WatchSessionHelper: NSObject, WCSessionDelegate {
                     let url = URL(string: friend.imagesURL) {
 
                     url.getPhoto { image in
+                        
                         if let data = image?.jpegToData {
                             replyHandler(["avatar": data])
                         } else { assertionFailure("Не JPEG") }
@@ -79,16 +73,4 @@ class WatchSessionHelper: NSObject, WCSessionDelegate {
             }
         }
     }
-
-//    func updateApplicationContext(applicationContext: [String : AnyObject]) throws {
-//
-//        if let session = validSession {
-//
-//            do {
-//                try session.updateApplicationContext(applicationContext)
-//            } catch let error {
-//                throw error
-//            }
-//        }
-//    }
 }
