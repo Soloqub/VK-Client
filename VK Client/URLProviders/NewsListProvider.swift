@@ -44,13 +44,13 @@ class NewsListProvider {
         case .getPhotoServer:
             let params: Parameters = [
                 "access_token": token,
-                "v": "5.70",
+                "v": "5.73",
                 "album_id": 1
             ]
 
             return ( baseUrl: URL(string: "https://api.vk.com")!,
                      method: "GET",
-                     path: "/method/photos.getUploadServer",
+                     path: "/method/photos.getWallUploadServer",
                      params: params)
         }
     }
@@ -77,35 +77,110 @@ class NewsListProvider {
 
         firstly {
             self.getPhotosServer()
+            }.done { url in
+                Alamofire.upload(
+                    multipartFormData: { MultipartFormData in
+
+                        MultipartFormData.append(UIImageJPEGRepresentation(UIImage(named: "1.png")!, 1)!, withName: "photos[1]", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
+                        MultipartFormData.append(UIImageJPEGRepresentation(UIImage(named: "1.png")!, 1)!, withName: "photos[2]", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
+
+                }, to: url) { result in
+
+                    switch result {
+                    case .success(let upload, _, _):
+
+                        upload.responseJSON { response in
+                            print(response.result.value)
+                        }
+
+                    case .failure(let encodingError): break
+                    print(encodingError)
+                    }
+                }
+
+            }.catch {error in
+                assertionFailure(error.localizedDescription)
         }
-        }
+    }
 
     private func getPhotosServer() -> Promise<URL> {
 
-        let config = self.getDefaultConfig(forAction: .getPhotoServer)
+        return Promise { seal in
 
-        Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
+            let config = self.getDefaultConfig(forAction: .getPhotoServer)
+            let url: URL = config.baseUrl.appendingPathComponent(config.path)
+            Alamofire.request(url, method: .get, parameters: config.params)
+                .validate()
+                .responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        do {
+                            guard let data = response.data else {
+                                let error = StringErrors(errorCode: nil, description: "В ответе сервера отсутствуют данные")
+                                seal.reject(error)
+                                return
+                            }
+                            let responseObject = try JSONDecoder().decode(UploadServerResponseVK.self, from: data)
 
-            guard
-                let data = response.value,
-                let response = try? JSONDecoder().decode(PostResponseVK.self, from: data)
-                else {
-                    assertionFailure()
-                    return
-            }
+                            if let successResponse = responseObject.successResponse,
+                                let url = URL(string: successResponse.url)
+                                {
+                                seal.fulfill(url)
+                            } else if let errorResponse = responseObject.error {
+                                let error = StringErrors(errorCode: errorResponse.code, description: errorResponse.message)
+                                seal.reject(error)
+                            } else {
+                                assertionFailure("Этого не может быть!")
+                                let error =  StringErrors(errorCode: nil, description: "Нечто необъяснимое случилось при попытке парсинга")
+                                seal.reject(error)
+                            }
+                        } catch {
+                            assertionFailure()
+                            seal.reject(error)
+                        }
 
-            if response.response != nil  {
-                print("Posting OK")
-                print(response)
-                DispatchQueue.main.async { completion(true, nil) }
-            } else if let error = response.error {
-                print(error.message)
-                DispatchQueue.main.async { completion(false, error) }
-            } else {
-                assertionFailure("Этого не может быть!")
-                DispatchQueue.main.async { completion(false, nil) }
+                    case .failure:
+                        seal.reject(response.error!)
+                    }
             }
         }
+        
+            struct StringErrors : LocalizedError
+            {
+                var errorDescription: String? { return msg }
+                var errorCode: Int? { return code }
+                
+                private var code: Int?
+                private var msg: String
+                
+                init(errorCode: Int?, description: String)
+                {
+                    code = errorCode
+                    msg = description
+                }
+            }
+//
+//            Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
+//                guard
+//                    let data = response.value,
+//                    let response = try? JSONDecoder().decode(UploadServerResponseVK.self, from: data)
+//                    else {
+//                        assertionFailure()
+//                        reject("Невозможно распарсить ответ сервера")
+//                }
+//
+//                if let response = response.successResponse  {
+//                    fulfill("")
+//                    DispatchQueue.main.async { completion(true, nil) }
+//                } else if let error = response.error {
+//                    print(error.message)
+//                    DispatchQueue.main.async { completion(false, error) }
+//                } else {
+//                    assertionFailure("Этого не может быть!")
+//                    DispatchQueue.main.async { completion(false, nil) }
+//                }
+//            }
+//        }
     }
     
     func getNewsList(completion: @escaping (_ news: [News]) -> Void) {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		920110652014F30B002502FD /* NewsListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920110642014F30B002502FD /* NewsListProvider.swift */; };
 		92011067201500A1002502FD /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92011066201500A1002502FD /* News.swift */; };
+		92105D3D2059D23600A3DD70 /* UploadServerResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92105D3C2059D23600A3DD70 /* UploadServerResponseVK.swift */; };
 		92110FE8202F989800F1DD9F /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92110FE7202F989800F1DD9F /* FooterView.swift */; };
 		9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */; };
 		923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */; };
@@ -49,6 +50,7 @@
 		9078F0FFCFCF0E82B2FF6BC8 /* Pods_VK_Client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VK_Client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		920110642014F30B002502FD /* NewsListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListProvider.swift; sourceTree = "<group>"; };
 		92011066201500A1002502FD /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		92105D3C2059D23600A3DD70 /* UploadServerResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadServerResponseVK.swift; sourceTree = "<group>"; };
 		92110FE7202F989800F1DD9F /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsTableViewController.swift; sourceTree = "<group>"; };
 		923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthProvider.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				92011066201500A1002502FD /* News.swift */,
 				9256EF63201D388900373BD8 /* ResponseNewsVK.swift */,
 				92DDC6A8203A211700DE7398 /* PostResponseVK.swift */,
+				92105D3C2059D23600A3DD70 /* UploadServerResponseVK.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
@@ -350,6 +354,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
@@ -386,6 +391,7 @@
 				9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */,
 				92504B561FD6FEB400853259 /* FriendsListProvider.swift in Sources */,
 				9264F7A31F9A362C00CF0CD6 /* FriendsTableViewController.swift in Sources */,
+				92105D3D2059D23600A3DD70 /* UploadServerResponseVK.swift in Sources */,
 				927B3E951FD43352000EDA51 /* FriendsPhotoCell.swift in Sources */,
 				927CA5C5202652E30002033B /* HeaderView.swift in Sources */,
 				920110652014F30B002502FD /* NewsListProvider.swift in Sources */,

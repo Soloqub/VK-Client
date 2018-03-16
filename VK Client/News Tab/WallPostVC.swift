@@ -69,5 +69,6 @@ class WallPostVC: UIViewController {
     }
     
     @objc private func attachmentButtonAction() {
+        self.provider.uploadPhoto()
     }
 }

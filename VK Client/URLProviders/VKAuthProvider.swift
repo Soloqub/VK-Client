@@ -23,12 +23,12 @@ class VKAuthProvider {
     convenience init() {
         
         let defaultParams: Parameters = [
-            "client_id": "6285802",
+            "client_id": "6411475",
             "display": "mobile",
             "redirect_uri": "https://oauth.vk.com/blank.html",
             "scope": "270342",
             "response_type": "token",
-            "v": "5.69"
+            "v": "5.73"
         ]
         
         let defaultConf:RequestConfig = (
