@@ -7,15 +7,26 @@
 //
 
 import UIKit
+import RealmSwift
+import WatchConnectivity
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Today")!
+        let realmPath = directory.appendingPathComponent("db.realm")
+
+        var config = Realm.Configuration()
+        config.fileURL = realmPath
+        Realm.Configuration.defaultConfiguration = config
+
+        WatchSessionHelper.shared.startSession()
+
         return true
     }
 
