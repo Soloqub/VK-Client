@@ -52,6 +52,17 @@ class NewsListProvider {
                      method: "GET",
                      path: "/method/photos.getWallUploadServer",
                      params: params)
+
+        case .saveWallPhoto:
+            let params: Parameters = [
+                "access_token": token,
+                "v": "5.73"
+            ]
+
+            return ( baseUrl: URL(string: "https://api.vk.com")!,
+                     method: "POST",
+                     path: "/method/photos.saveWallPhoto",
+                     params: params)
         }
     }
 
@@ -77,28 +88,11 @@ class NewsListProvider {
 
         firstly {
             self.getPhotosServer()
-            }.done { url in
-                Alamofire.upload(
-                    multipartFormData: { MultipartFormData in
-
-                        MultipartFormData.append(UIImageJPEGRepresentation(UIImage(named: "1.png")!, 1)!, withName: "photos[1]", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
-                        MultipartFormData.append(UIImageJPEGRepresentation(UIImage(named: "1.png")!, 1)!, withName: "photos[2]", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
-
-                }, to: url) { result in
-
-                    switch result {
-                    case .success(let upload, _, _):
-
-                        upload.responseJSON { response in
-                            print(response.result.value)
-                        }
-
-                    case .failure(let encodingError): break
-                    print(encodingError)
-                    }
-                }
-
-            }.catch {error in
+            }.then { url in
+                self.uploadPhoto(toUrl: url)
+            }.done { response in
+                self.savePhoto(withParams: response)
+            }.catch { error in
                 assertionFailure(error.localizedDescription)
         }
     }
@@ -144,42 +138,90 @@ class NewsListProvider {
                     }
             }
         }
-        
-            struct StringErrors : LocalizedError
-            {
-                var errorDescription: String? { return msg }
-                var errorCode: Int? { return code }
-                
-                private var code: Int?
-                private var msg: String
-                
-                init(errorCode: Int?, description: String)
-                {
-                    code = errorCode
-                    msg = description
+    }
+
+    private func uploadPhoto(toUrl url: URL) -> Promise<UploadFileResponseVK> {
+
+        return Promise { seal in
+            Alamofire.upload(
+                multipartFormData: { MultipartFormData in
+
+                    let image = UIImage(named: "post")!
+                    MultipartFormData.append(image.jpegToData!, withName: "photo", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
+
+            }, to: url) { result in
+
+                switch result {
+                case .success(let upload, _, _):
+
+                    upload.validate()
+                        .responseJSON { response in
+                            do {
+                                guard let data = response.data else {
+                                    let error = StringErrors(errorCode: nil, description: "В ответе сервера отсутствуют данные")
+                                    seal.reject(error)
+                                    return
+                                }
+                                let responseObject = try JSONDecoder().decode(UploadFileResponseVK.self, from: data)
+                                seal.fulfill(responseObject)
+                            } catch {
+                                assertionFailure()
+                                seal.reject(error)
+                            }
+                    }
+
+                case .failure(let encodingError):
+                    seal.reject(encodingError)
                 }
             }
-//
-//            Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
-//                guard
-//                    let data = response.value,
-//                    let response = try? JSONDecoder().decode(UploadServerResponseVK.self, from: data)
-//                    else {
-//                        assertionFailure()
-//                        reject("Невозможно распарсить ответ сервера")
-//                }
-//
-//                if let response = response.successResponse  {
-//                    fulfill("")
-//                    DispatchQueue.main.async { completion(true, nil) }
-//                } else if let error = response.error {
-//                    print(error.message)
-//                    DispatchQueue.main.async { completion(false, error) }
-//                } else {
-//                    assertionFailure("Этого не может быть!")
-//                    DispatchQueue.main.async { completion(false, nil) }
-//                }
-//            }
+        }
+    }
+
+    private func savePhoto(withParams params: UploadFileResponseVK) {
+//        return Promise { seal in
+
+            let config = self.getDefaultConfig(forAction: .saveWallPhoto)
+//            let url: URL = config.baseUrl.appendingPathComponent(config.path)
+        let url = URL(string: "https://api.vk.com/method/photos.saveWallPhoto")!
+        var requestParams: [String: Any] = ["photo": params.photo, "server": params.server, "hash": params.hash]
+        requestParams.update(other: config.params)
+            Alamofire.request(url, method: .post, parameters: requestParams)
+                .validate()
+                .responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        do {
+                            guard let data = response.data else {
+                                let error = StringErrors(errorCode: nil, description: "В ответе сервера отсутствуют данные")
+                                assertionFailure(error.localizedDescription)
+                                seal.reject(error)
+                                return
+                            }
+
+                            let responseObject = try JSONDecoder().decode(SaveImageResponseVK.self, from: data)
+
+                            if let successResponse = responseObject.successResponse,
+                                let url = URL(string: successResponse.url)
+                            {
+                                seal.fulfill(url)
+                            } else if let errorResponse = responseObject.error {
+                                let error = StringErrors(errorCode: errorResponse.code, description: errorResponse.message)
+                                seal.reject(error)
+                            } else {
+                                assertionFailure("Этого не может быть!")
+                                let error =  StringErrors(errorCode: nil, description: "Нечто необъяснимое случилось при попытке парсинга")
+                                seal.reject(error)
+                            }
+                        } catch {
+                            assertionFailure()
+                            seal.reject(error)
+                        }
+
+                    case .failure:
+                        return
+//                        seal.reject(response.error!)
+                    }
+            }
 //        }
     }
     
@@ -527,7 +569,22 @@ class NewsListProvider {
     
 
     enum ActionType {
-        case messagePost, getNews, getPhotoServer
+        case messagePost, getNews, getPhotoServer, saveWallPhoto
+    }
+
+    struct StringErrors : LocalizedError
+    {
+        var errorDescription: String? { return msg }
+        var errorCode: Int? { return code }
+
+        private var code: Int?
+        private var msg: String
+
+        init(errorCode: Int?, description: String)
+        {
+            code = errorCode
+            msg = description
+        }
     }
 }
 

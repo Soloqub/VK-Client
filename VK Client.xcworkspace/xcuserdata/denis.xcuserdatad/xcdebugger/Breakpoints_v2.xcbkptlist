@@ -110,11 +110,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "VK Client/URLProviders/NewsListProvider.swift"
-            timestampString = "542850342.740232"
+            timestampString = "543011362.695385"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "getPhotosServer()"
             landmarkType = "7">
             <Actions>
@@ -126,6 +126,38 @@
                   </ActionContent>
                </BreakpointActionProxy>
             </Actions>
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VK_Client.NewsListProvider.(getPhotosServer in _023391FE1C1B14ACB68C54718C5D759D)() -&gt; PromiseKit.Promise&lt;Foundation.URL&gt;"
+                  moduleName = "VK Client"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denis/Dropbox/xcode/VK%20Client/VK%20Client/URLProviders/NewsListProvider.swift"
+                  timestampString = "543011362.9046839"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "102"
+                  endingLineNumber = "102"
+                  offsetFromSymbolStart = "14">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (PromiseKit.Resolver&lt;Foundation.URL&gt;) -&gt; () in VK_Client.NewsListProvider.(getPhotosServer in _023391FE1C1B14ACB68C54718C5D759D)() -&gt; PromiseKit.Promise&lt;Foundation.URL&gt;"
+                  moduleName = "VK Client"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denis/Dropbox/xcode/VK%20Client/VK%20Client/URLProviders/NewsListProvider.swift"
+                  timestampString = "543011362.907653"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "104"
+                  endingLineNumber = "104"
+                  offsetFromSymbolStart = "22">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -135,11 +167,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "VK Client/URLProviders/NewsListProvider.swift"
-            timestampString = "542850342.740674"
+            timestampString = "543011362.695814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "getPhotosServer()"
             landmarkType = "7">
             <Actions>
@@ -154,31 +186,6 @@
                   ActionExtensionID = "Xcode.BreakpointAction.Log">
                   <ActionContent
                      message = "error.errorDescription = @error.errorDescription@"
-                     conveyanceType = "0">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "VK Client/URLProviders/NewsListProvider.swift"
-            timestampString = "542850342.740965"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "getPhotosServer()"
-            landmarkType = "7">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.Log">
-                  <ActionContent
-                     message = "@response.request?.description@"
                      conveyanceType = "0">
                   </ActionContent>
                </BreakpointActionProxy>

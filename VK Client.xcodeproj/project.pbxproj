@@ -13,9 +13,11 @@
 		92105D3D2059D23600A3DD70 /* UploadServerResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92105D3C2059D23600A3DD70 /* UploadServerResponseVK.swift */; };
 		92110FE8202F989800F1DD9F /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92110FE7202F989800F1DD9F /* FooterView.swift */; };
 		9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */; };
-		921A508F2057378A00A05CD3 /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
-		921A509020573BB100A05CD3 /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
 		921B50E12056E0E600A534DF /* WatchExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921B50E02056E0E600A534DF /* WatchExtensions.swift */; };
+		922E50B5205D5D54003894DC /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
+		922E50B6205D5D67003894DC /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
+		922E50B8205D9472003894DC /* UploadFileResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E50B7205D9472003894DC /* UploadFileResponseVK.swift */; };
+		922E50BA205DCFA7003894DC /* SaveImageResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */; };
 		923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */; };
 		924A80E21FCF64F8000CCE98 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924A80E11FCF64F8000CCE98 /* Extensions.swift */; };
 		924C1D8720322B4400C73AEA /* WallPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C1D8620322B4400C73AEA /* WallPostVC.swift */; };
@@ -138,6 +140,8 @@
 		9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsTableViewController.swift; sourceTree = "<group>"; };
 		921A508E2057378A00A05CD3 /* WatchFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFriend.swift; sourceTree = "<group>"; };
 		921B50E02056E0E600A534DF /* WatchExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchExtensions.swift; sourceTree = "<group>"; };
+		922E50B7205D9472003894DC /* UploadFileResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileResponseVK.swift; sourceTree = "<group>"; };
+		922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageResponseVK.swift; sourceTree = "<group>"; };
 		923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthProvider.swift; sourceTree = "<group>"; };
 		924A80E11FCF64F8000CCE98 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		924C1D8620322B4400C73AEA /* WallPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallPostVC.swift; sourceTree = "<group>"; };
@@ -195,6 +199,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7327B331D9AE4EF0E019E21F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9255A5651F94219800808C3C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -300,6 +311,8 @@
 				9256EF63201D388900373BD8 /* ResponseNewsVK.swift */,
 				92DDC6A8203A211700DE7398 /* PostResponseVK.swift */,
 				92105D3C2059D23600A3DD70 /* UploadServerResponseVK.swift */,
+				922E50B7205D9472003894DC /* UploadFileResponseVK.swift */,
+				922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -454,6 +467,7 @@
 			buildPhases = (
 				925A1A672048958D00F32BA6 /* Resources */,
 				925A1A8C2048958E00F32BA6 /* Embed App Extensions */,
+				7327B331D9AE4EF0E019E21F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -706,6 +720,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92B8652C1FD46027002F30DB /* Common structs.swift in Sources */,
+				922E50BA205DCFA7003894DC /* SaveImageResponseVK.swift in Sources */,
 				9256EF64201D388900373BD8 /* ResponseNewsVK.swift in Sources */,
 				9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */,
 				92504B561FD6FEB400853259 /* FriendsListProvider.swift in Sources */,
@@ -715,6 +730,7 @@
 				927CA5C5202652E30002033B /* HeaderView.swift in Sources */,
 				920110652014F30B002502FD /* NewsListProvider.swift in Sources */,
 				9255A56E1F94219800808C3C /* LoginFormViewController.swift in Sources */,
+				922E50B8205D9472003894DC /* UploadFileResponseVK.swift in Sources */,
 				923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */,
 				925A1A922048B15E00F32BA6 /* WatchSessionHelper.swift in Sources */,
 				92110FE8202F989800F1DD9F /* FooterView.swift in Sources */,
@@ -734,6 +750,7 @@
 				92F7CF181FDF29F300719106 /* UserGroupsListProvider.swift in Sources */,
 				92011067201500A1002502FD /* News.swift in Sources */,
 				924A80E21FCF64F8000CCE98 /* Extensions.swift in Sources */,
+				922E50B5205D5D54003894DC /* WatchFriend.swift in Sources */,
 				928976841FE579A200260502 /* BaseEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -747,7 +764,7 @@
 				925A1A902048A4F000F32BA6 /* FriendRow.swift in Sources */,
 				921B50E12056E0E600A534DF /* WatchExtensions.swift in Sources */,
 				925A1A7B2048958D00F32BA6 /* InterfaceController.swift in Sources */,
-				921A509020573BB100A05CD3 /* WatchFriend.swift in Sources */,
+				922E50B6205D5D67003894DC /* WatchFriend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,7 +946,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3AFE770163B7D6B1FAA4919E /* Pods-VK Client.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VK Client/VK Client.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -948,7 +964,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E1A37D5C62C9D76ECA107906 /* Pods-VK Client.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VK Client/VK Client.entitlements";
 				CODE_SIGN_STYLE = Automatic;
