@@ -10,7 +10,7 @@ import UIKit
 
 struct SaveImageResponseVK: Decodable {
 
-    var successResponse: Success?
+    var successResponse: [Success]?
     var error: Error?
 
     enum CodingKeys : String, CodingKey {

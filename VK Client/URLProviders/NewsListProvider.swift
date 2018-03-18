@@ -84,14 +84,16 @@ class NewsListProvider {
         }
     }
 
-    func uploadPhoto() {
+    func upload(photoToVK image: UIImage, completion: @escaping (_ imageObject: SaveImageResponseVK.Success) -> Void) {
 
         firstly {
             self.getPhotosServer()
             }.then { url in
-                self.uploadPhoto(toUrl: url)
-            }.done { response in
+                self.upload(photo: image, toUrl: url)
+            }.then { response in
                 self.savePhoto(withParams: response)
+            }.done { imageObjectVK in
+                completion(imageObjectVK)
             }.catch { error in
                 assertionFailure(error.localizedDescription)
         }
@@ -125,7 +127,7 @@ class NewsListProvider {
                                 seal.reject(error)
                             } else {
                                 assertionFailure("Этого не может быть!")
-                                let error =  StringErrors(errorCode: nil, description: "Нечто необъяснимое случилось при попытке парсинга")
+                                let error =  StringErrors(errorCode: nil, description: "Неожиданный ответ от сервера. Что-то не то с парсером.")
                                 seal.reject(error)
                             }
                         } catch {
@@ -140,14 +142,13 @@ class NewsListProvider {
         }
     }
 
-    private func uploadPhoto(toUrl url: URL) -> Promise<UploadFileResponseVK> {
+    private func upload(photo: UIImage, toUrl url: URL) -> Promise<UploadFileResponseVK> {
 
         return Promise { seal in
             Alamofire.upload(
                 multipartFormData: { MultipartFormData in
 
-                    let image = UIImage(named: "post")!
-                    MultipartFormData.append(image.jpegToData!, withName: "photo", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
+                    MultipartFormData.append(photo.jpegToData!, withName: "photo", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
 
             }, to: url) { result in
 
@@ -177,11 +178,11 @@ class NewsListProvider {
         }
     }
 
-    private func savePhoto(withParams params: UploadFileResponseVK) {
-//        return Promise { seal in
+    private func savePhoto(withParams params: UploadFileResponseVK) -> Promise<SaveImageResponseVK.Success> {
+        return Promise { seal in
+
 
             let config = self.getDefaultConfig(forAction: .saveWallPhoto)
-//            let url: URL = config.baseUrl.appendingPathComponent(config.path)
         let url = URL(string: "https://api.vk.com/method/photos.saveWallPhoto")!
         var requestParams: [String: Any] = ["photo": params.photo, "server": params.server, "hash": params.hash]
         requestParams.update(other: config.params)
@@ -200,16 +201,15 @@ class NewsListProvider {
 
                             let responseObject = try JSONDecoder().decode(SaveImageResponseVK.self, from: data)
 
-                            if let successResponse = responseObject.successResponse,
-                                let url = URL(string: successResponse.url)
+                            if let successResponse = responseObject.successResponse
                             {
-                                seal.fulfill(url)
+                                seal.fulfill(successResponse[0])
                             } else if let errorResponse = responseObject.error {
                                 let error = StringErrors(errorCode: errorResponse.code, description: errorResponse.message)
                                 seal.reject(error)
                             } else {
                                 assertionFailure("Этого не может быть!")
-                                let error =  StringErrors(errorCode: nil, description: "Нечто необъяснимое случилось при попытке парсинга")
+                                let error =  StringErrors(errorCode: nil, description: "Неожиданный ответ от сервера. Что-то не то с парсером.")
                                 seal.reject(error)
                             }
                         } catch {
@@ -218,11 +218,10 @@ class NewsListProvider {
                         }
 
                     case .failure:
-                        return
-//                        seal.reject(response.error!)
+                        seal.reject(response.error!)
                     }
             }
-//        }
+        }
     }
     
     func getNewsList(completion: @escaping (_ news: [News]) -> Void) {
