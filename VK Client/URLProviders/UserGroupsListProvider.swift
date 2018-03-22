@@ -11,45 +11,43 @@ import Alamofire
 
 class UserGroupsListProvider {
     
-    var config:RequestConfig
-    
-    required init(config:RequestConfig) {
-        
-        self.config = config
+    let router: Router
+
+    init(withRouter router: Router) {
+        self.router = router
     }
-    
-    convenience init(token: String) {
-        
-        let defaultParams: Parameters = [
-            "access_token": token,
-            "v": "5.69",
-            "extended": 1
-        ]
-        
-        let defaultConf:RequestConfig = (
-            baseUrl: URL(string: "https://api.vk.com")!,
-            method: "GET",
-            path: "/method/groups.get",
-            params: defaultParams)
-        
-        self.init(config: defaultConf)
-    }
-    
-    func makeURLRequest() -> URLRequest? {
-        
-        let url:URL = config.baseUrl.appendingPathComponent(config.path)
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = config.method
-        var encodedRequest:URLRequest
-        
-        do {
-            
-            encodedRequest = try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
-            return encodedRequest
-        } catch {
-            
-            print("error")
-            return nil
+
+    func getUserGroups(realm: RealmHelper<Groups>, competition: @escaping (_ friends: [Groups]) -> Void) {
+
+        let config = router.getRequestConfig(byRequestType: .getUserGroups)
+        Alamofire.request(config.url, method: .get, parameters: config.params)
+            .validate()
+            .responseData(queue: .global(qos: .userInitiated)) { response in
+
+                guard
+                    let data = response.value,
+                    let myStructDictionary = try? JSONDecoder().decode([String: ResponseGroupsVK].self, from: data),
+                    let items = myStructDictionary["response"]?.items
+
+                    else {
+                        assertionFailure()
+                        return
+                }
+
+                var groups = [Groups]()
+
+                items.forEach { object in
+
+                    //Настраиваем Realm сущность Friends
+                    let group = Groups()
+                    group.name = object.name
+                    group.id = object.id
+                    group.imagesURL = object.mainPhotoURL
+
+                    groups.append(group)
+                }
+
+                DispatchQueue.main.async { competition(groups) }
         }
     }
 }

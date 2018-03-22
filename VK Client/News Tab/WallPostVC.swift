@@ -11,8 +11,8 @@ import UIKit
 class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var textView: UITextView!
-    private var provider = NewsListProvider()
     private let imagePicker = UIImagePickerController()
+    private var provider = WallPostProvider(withRouter: Router.sharedInstance)
     private var imageAttachment: SaveImageResponseVK.Success?
     
     override func viewDidLoad() {
@@ -28,12 +28,12 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     @IBAction func doneButton(_ sender: Any) {
-        
+
         var params: [String: Any] = ["message": textView.text]
         if let attach = self.imageAttachment {
             params["attachments"] = "photo\(attach.ownerID.description)_\(attach.mediaID.description)"
         }
-        provider.post(withParams: params) { [weak self] success, error in
+        self.provider.post(withParams: params) { [weak self] success, error in
 
             if success { self?.performSegue(withIdentifier: "postUnwind", sender: self) } else {
 

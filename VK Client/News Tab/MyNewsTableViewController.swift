@@ -12,7 +12,7 @@ import AlamofireImage
 
 class MyNewsTableViewController: UITableViewController {
 
-    private var provider = NewsListProvider()
+    private var provider = NewsListProvider(withRouter: Router.sharedInstance)
     var news = [News]()
     var views = [[CellViews: UIView]]()
 

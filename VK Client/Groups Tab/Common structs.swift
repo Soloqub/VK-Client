@@ -10,7 +10,7 @@ import UIKit
 
 struct vkGroup {
     
-    var name:String
-    var avatar:UIImage?
-    var amountOfMembers:String
+    var name: String
+    var avatar: UIImage?
+    var amountOfMembers: String
 }

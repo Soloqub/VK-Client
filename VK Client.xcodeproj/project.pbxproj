@@ -22,6 +22,7 @@
 		924A80E21FCF64F8000CCE98 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924A80E11FCF64F8000CCE98 /* Extensions.swift */; };
 		924C1D8720322B4400C73AEA /* WallPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C1D8620322B4400C73AEA /* WallPostVC.swift */; };
 		92504B561FD6FEB400853259 /* FriendsListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92504B551FD6FEB400853259 /* FriendsListProvider.swift */; };
+		9250AC622061A5F000BE299D /* WallPostProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9250AC612061A5F000BE299D /* WallPostProvider.swift */; };
 		9255A56C1F94219800808C3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9255A56B1F94219800808C3C /* AppDelegate.swift */; };
 		9255A56E1F94219800808C3C /* LoginFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9255A56D1F94219800808C3C /* LoginFormViewController.swift */; };
 		9255A5711F94219800808C3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255A56F1F94219800808C3C /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 		925A1A902048A4F000F32BA6 /* FriendRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A1A8F2048A4F000F32BA6 /* FriendRow.swift */; };
 		925A1A922048B15E00F32BA6 /* WatchSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A1A912048B15E00F32BA6 /* WatchSessionHelper.swift */; };
 		9264F7A31F9A362C00CF0CD6 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264F7A21F9A362C00CF0CD6 /* FriendsTableViewController.swift */; };
+		9265C0A82060698400E14A6D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9265C0A72060698400E14A6D /* Router.swift */; };
 		92677DD12040342B00D88C0B /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92677DD02040342B00D88C0B /* NotificationCenter.framework */; };
 		92677DD42040342B00D88C0B /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92677DD32040342B00D88C0B /* TodayViewController.swift */; };
 		92677DD72040342B00D88C0B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92677DD52040342B00D88C0B /* MainInterface.storyboard */; };
@@ -146,6 +148,7 @@
 		924A80E11FCF64F8000CCE98 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		924C1D8620322B4400C73AEA /* WallPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallPostVC.swift; sourceTree = "<group>"; };
 		92504B551FD6FEB400853259 /* FriendsListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListProvider.swift; sourceTree = "<group>"; };
+		9250AC612061A5F000BE299D /* WallPostProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallPostProvider.swift; sourceTree = "<group>"; };
 		9255A5681F94219800808C3C /* VK Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VK Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9255A56B1F94219800808C3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9255A56D1F94219800808C3C /* LoginFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +171,7 @@
 		925A1A8F2048A4F000F32BA6 /* FriendRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRow.swift; sourceTree = "<group>"; };
 		925A1A912048B15E00F32BA6 /* WatchSessionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionHelper.swift; sourceTree = "<group>"; };
 		9264F7A21F9A362C00CF0CD6 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
+		9265C0A72060698400E14A6D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		92677DCF2040342B00D88C0B /* VK 5 Friends Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "VK 5 Friends Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92677DD02040342B00D88C0B /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		92677DD32040342B00D88C0B /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 				92504B551FD6FEB400853259 /* FriendsListProvider.swift */,
 				92F7CF171FDF29F300719106 /* UserGroupsListProvider.swift */,
 				920110642014F30B002502FD /* NewsListProvider.swift */,
+				9250AC612061A5F000BE299D /* WallPostProvider.swift */,
 			);
 			path = URLProviders;
 			sourceTree = "<group>";
@@ -368,6 +373,7 @@
 			children = (
 				924A80E11FCF64F8000CCE98 /* Extensions.swift */,
 				928976851FE57EF900260502 /* RealmHelper.swift */,
+				9265C0A72060698400E14A6D /* Router.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -729,6 +735,7 @@
 				927B3E951FD43352000EDA51 /* FriendsPhotoCell.swift in Sources */,
 				927CA5C5202652E30002033B /* HeaderView.swift in Sources */,
 				920110652014F30B002502FD /* NewsListProvider.swift in Sources */,
+				9265C0A82060698400E14A6D /* Router.swift in Sources */,
 				9255A56E1F94219800808C3C /* LoginFormViewController.swift in Sources */,
 				922E50B8205D9472003894DC /* UploadFileResponseVK.swift in Sources */,
 				923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */,
@@ -741,6 +748,7 @@
 				924C1D8720322B4400C73AEA /* WallPostVC.swift in Sources */,
 				929549EC2030A5990025C90D /* AboveView.swift in Sources */,
 				92B8652E1FD4659F002F30DB /* AllGroupsTableViewController.swift in Sources */,
+				9250AC622061A5F000BE299D /* WallPostProvider.swift in Sources */,
 				927B3E971FD434A9000EDA51 /* FriendsGalleryViewController.swift in Sources */,
 				9294BE7C2029D77000C4C9C6 /* MainContent.swift in Sources */,
 				9269A074200D4917005776B3 /* MyNewsTableViewController.swift in Sources */,

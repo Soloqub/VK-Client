@@ -11,45 +11,43 @@ import Alamofire
 
 class FriendsListProvider {
     
-    var config:RequestConfig
-    
-    required init(config:RequestConfig) {
-        
-        self.config = config
+    let router: Router
+
+    init(withRouter router: Router) {
+        self.router = router
     }
     
-    convenience init(token: String) {
-        
-        let defaultParams: Parameters = [
-            "access_token": token,
-            "v": "5.69",
-            "fields":"nickname,domain,photo_50"
-        ]
-        
-        let defaultConf:RequestConfig = (
-            baseUrl: URL(string: "https://api.vk.com")!,
-            method: "GET",
-            path: "/method/friends.get",
-            params: defaultParams)
-        
-        self.init(config: defaultConf)
-    }
-    
-    func makeURLRequest() -> URLRequest? {
-        
-        let url:URL = config.baseUrl.appendingPathComponent(config.path)
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = config.method
-        var encodedRequest:URLRequest
-        
-        do {
-            
-            encodedRequest = try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
-            return encodedRequest
-        } catch {
-            
-            print("error")
-            return nil
+    func getFriendsList(realm: RealmHelper<Friends>, competition: @escaping (_ friends: [Friends]) -> Void) {
+
+        let config = router.getRequestConfig(byRequestType: .getFriendsList)
+        Alamofire.request(config.url, method: .get, parameters: config.params)
+            .validate()
+            .responseData(queue: .global(qos: .userInitiated)) { response in
+
+                guard
+                    let data = response.value,
+                    let myStructDictionary = try? JSONDecoder().decode([String: ResponseFriendsVK].self, from: data),
+                    let items = myStructDictionary["response"]?.items
+
+                    else {
+                        assertionFailure()
+                        return
+                }
+
+                var friends = [Friends]()
+
+                items.forEach { object in
+
+                    //Настраиваем Realm сущность Friends
+                    let friend = Friends()
+                    friend.name = object.firstName + " " + object.lastName
+                    friend.id = object.id
+                    friend.imagesURL = object.mainPhotoURL
+
+                    friends.append(friend)
+                }
+
+                DispatchQueue.main.async { competition(friends) }
         }
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import Alamofire
 
 extension UIViewController {
     func hideKeyboard()

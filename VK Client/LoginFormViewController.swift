@@ -32,8 +32,6 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
-
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -42,16 +40,11 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Enter" {
-            
-//            let defaults = UserDefaults.standard
-//            defaults.set(self.token, forKey: "Token")
             KeychainWrapper.standard.set(self.token, forKey: "Token")
         }
     }
     
-    
     // MARK: - Delegate functions
-    
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         
@@ -67,7 +60,7 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
         let params = VKAuthProvider.parseURLFragment(parameters: fragment)
         
         guard let token = params["access_token"] else {
-            print("токен не обнаружен")
+            assertionFailure("токен не обнаружен")
             return
         }
         

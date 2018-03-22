@@ -9,49 +9,17 @@
 import Foundation
 import Alamofire
 
-typealias RequestConfig = (baseUrl: URL, method: String, path: String, params: Parameters)
-
 class VKAuthProvider {
     
-    var config:RequestConfig
-    
-    required init(config:RequestConfig) {
-        
-        self.config = config
-    }
-    
-    convenience init() {
-        
-        let defaultParams: Parameters = [
-            "client_id": "6411475",
-            "display": "mobile",
-            "redirect_uri": "https://oauth.vk.com/blank.html",
-            "scope": "270342",
-            "response_type": "token",
-            "v": "5.73"
-        ]
-        
-        let defaultConf:RequestConfig = (
-            baseUrl: URL(string: "https://oauth.vk.com")!,
-            method: "GET",
-            path: "/authorize",
-            params: defaultParams)
-        
-        self.init(config: defaultConf)
-    }
-    
     func makeURLRequest() -> URLRequest? {
-        
-        let url:URL = config.baseUrl.appendingPathComponent(config.path)
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = config.method
+        let config = Router.sharedInstance.getRequestConfig(byRequestType: .auth)
         
         do {
-            
-            return try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
+            let urlRequest = try URLRequest(url: config.url, method: .get)
+            let requestWithParams = try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
+            return requestWithParams
         } catch {
-            
-            print("error")
+            assertionFailure(error.localizedDescription)
             return nil
         }
     }

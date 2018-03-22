@@ -21,7 +21,7 @@ struct ResponseFriendsPhotosVK: Decodable {
     
     struct Item: Decodable {
         
-        var photo:String
+        var photo:String?
         
         enum CodingKeys : String, CodingKey {
             case photo = "photo_807"
