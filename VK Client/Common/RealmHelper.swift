@@ -16,7 +16,7 @@ class RealmHelper<T> where T:Object {
     private var token: NotificationToken?
     var delegate:RealmHelperDelegete?
     
-    func realmInit() -> Realm? {
+    private func realmInit() -> Realm? {
         
         do {
             let realmContext = try Realm(fileURL: FileManager

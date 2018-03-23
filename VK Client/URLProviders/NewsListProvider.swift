@@ -8,83 +8,22 @@
 
 import Foundation
 import Alamofire
-import SwiftKeychainWrapper
 
 class NewsListProvider {
 
-    func getDefaultConfig(forAction type: ActionType) -> RequestConfig {
+    let router: Router
 
-        let token = KeychainWrapper.standard.string(forKey: "Token")!
-
-        switch type {
-        case .messagePost:
-            let params: Parameters = [
-                "access_token": token,
-                "v": "5.70",
-                "friends_only": "1"
-            ]
-
-            return ( baseUrl: URL(string: "https://api.vk.com")!,
-                method: "POST",
-                path: "/method/wall.post",
-                params: params)
-
-        case .getNews:
-            let params: Parameters = [
-                "access_token": token,
-                "v": "5.70"
-            ]
-
-            return ( baseUrl: URL(string: "https://api.vk.com")!,
-                method: "GET",
-                path: "/method/newsfeed.get",
-                params: params)
-
-        case .getPhotoServer:
-            let params: Parameters = [
-                "access_token": token,
-                "v": "5.70",
-                "album_id": 1
-            ]
-
-            return ( baseUrl: URL(string: "https://api.vk.com")!,
-                     method: "GET",
-                     path: "/method/photos.getUploadServer",
-                     params: params)
-        }
-    }
-
-    func makeURLRequest(forConfig config: RequestConfig) -> URLRequest? {
-
-        let url:URL = config.baseUrl.appendingPathComponent(config.path)
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = config.method
-        var encodedRequest:URLRequest
-
-        do {
-            encodedRequest = try URLEncoding.default.encode(urlRequest, with: config.params).asURLRequest()
-            print(encodedRequest)
-            return encodedRequest
-        } catch {
-
-            print("error")
-            return nil
-        }
-    }
-
-    func loadPhoto() {
-        let config = self.getDefaultConfig(forAction: .getPhotoServer)
-
-        Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
-        }
-
+    init(withRouter router: Router) {
+        self.router = router
     }
     
     func getNewsList(completion: @escaping (_ news: [News]) -> Void) {
 
-        let config = self.getDefaultConfig(forAction: .getNews)
+        let config = self.router.getRequestConfig(byRequestType: .getNews)
 
-        Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
+        Alamofire.request(config.url, method: .get, parameters: config.params)
+            .validate()
+            .responseData(queue: .global(qos: .userInitiated)) { response in
 
             guard
                 let data = response.value,
@@ -156,34 +95,6 @@ class NewsListProvider {
 
             print("Новостей: ", newsArray.count)
             DispatchQueue.main.async { completion(newsArray) }
-        }
-    }
-    
-    func post(withParams params: [String: Any], completion: @escaping (_ success: Bool, _ error: PostResponseVK.Error?) -> Void) {
-
-        var config = self.getDefaultConfig(forAction: .messagePost)
-        config.params.update(other: params)
-
-        Alamofire.request(self.makeURLRequest(forConfig: config)!).responseData(queue: .global(qos: .userInitiated)) { response in
-            guard
-                let data = response.value,
-                let response = try? JSONDecoder().decode(PostResponseVK.self, from: data)
-                else {
-                    assertionFailure()
-                    return
-            }
-
-            if response.response != nil  {
-                print("Posting OK")
-                print(response)
-                DispatchQueue.main.async { completion(true, nil) }
-            } else if let error = response.error {
-                print(error.message)
-                DispatchQueue.main.async { completion(false, error) }
-            } else {
-                assertionFailure("Этого не может быть!")
-                DispatchQueue.main.async { completion(false, nil) }
-            }
         }
     }
 
@@ -421,21 +332,4 @@ class NewsListProvider {
 
         return Photo(width: CGFloat(attach.width), height: CGFloat(attach.height), url: photoUrl)
     }
-    
-
-    enum ActionType {
-        case messagePost, getNews, getPhotoServer
-    }
 }
-
-/* Тестовая проверка json
- guard
- let path = Bundle.main.path(forResource: "sample", ofType: "json"),
- let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: Data.ReadingOptions.mappedIfSafe),
- let myStructDictionary = try? JSONDecoder().decode([String: ResponseNewsVK].self, from: data),
- let items = myStructDictionary["response"]?.items
- else {
- assertionFailure()
- return
- }
- */
