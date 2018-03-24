@@ -37,7 +37,7 @@ class UserGroupsListProvider {
                 var groups = [Groups]()
                 items.forEach { object in
 
-                    //Настраиваем Realm сущность Friends
+                    //Настраиваем Realm сущность Groups
                     let group = Groups()
                     group.name = object.name
                     group.id = object.id
@@ -48,6 +48,36 @@ class UserGroupsListProvider {
                 }
 
                 DispatchQueue.main.async { competition(groups) }
+        }
+    }
+
+    func getGroupInfo(withId id: Int, competition: @escaping (_ group: Groups) -> Void) {
+
+        var config = router.getRequestConfig(byRequestType: .getGroupInfo)
+        config.params.update(other: ["group_id": id])
+
+        Alamofire.request(config.url, method: .get, parameters: config.params)
+            .validate()
+            .responseData(queue: .global(qos: .userInitiated)) { response in
+
+                guard
+                    let data = response.value,
+                    let myStructDictionary = try? JSONDecoder().decode([String: [DetailGroupInfoResponseVK]].self, from: data),
+                    let items = myStructDictionary["response"]
+
+                    else {
+                        assertionFailure()
+                        return
+                }
+
+                //Настраиваем Realm сущность Groups
+                let group = Groups()
+                group.name = items[0].name
+                group.id = items[0].id
+                group.imagesURL = items[0].mainPhotoURL
+                group.membersCount = items[0].membersCount
+
+                DispatchQueue.main.async { competition(group) }
         }
     }
 
@@ -72,7 +102,7 @@ class UserGroupsListProvider {
 
                 for object in items where (object.isMember == 0 && object.isClosed == 0) {
 
-                    //Настраиваем Realm сущность Friends
+                    //Настраиваем Realm сущность Groups
                     let group = Groups()
                     group.name = object.name
                     group.id = object.id
@@ -85,9 +115,10 @@ class UserGroupsListProvider {
         }
     }
 
-    func joinGroup(withId id: Int, competition: @escaping (_ success: Bool) -> Void) {
+    func joinOrLeaveGroup(withId id: Int, isJoin join: Bool, competition: @escaping (_ success: Bool) -> Void) {
 
-        var config = router.getRequestConfig(byRequestType: .joinGroup)
+        var config = join ?
+            router.getRequestConfig(byRequestType: .joinGroup) : router.getRequestConfig(byRequestType: .leaveGroup)
         config.params.update(other: ["group_id": id])
         let mainQueue = DispatchQueue.main
 

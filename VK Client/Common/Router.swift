@@ -51,6 +51,12 @@ class Router {
 
         case .joinGroup:
             return self.joinGroup()
+
+        case .leaveGroup:
+            return self.leaveGroup()
+
+        case .getGroupInfo:
+            return self.getGroupInfo()
         }
     }
 
@@ -75,7 +81,7 @@ class Router {
 
     enum RequestType {
         case auth, messagePost, getNews, getPhotoServer, saveWallPhoto,
-        getUserGroups, getAllGroupsList, joinGroup,
+        getUserGroups, getAllGroupsList, joinGroup, leaveGroup, getGroupInfo,
         getFriendsList, getUserPhotos
     }
 }
@@ -131,9 +137,30 @@ extension GroupsRouter {
         return RequestConfig(url: url, params: params)
     }
 
+    private func getGroupInfo() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/groups.getById")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion,
+            "fields": "members_count"
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+
     private func joinGroup() -> RequestConfig {
 
         let url = URL(string: "https://api.vk.com/method/groups.join")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+
+    private func leaveGroup() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/groups.leave")!
         let params: Parameters = [
             "access_token": self.token,
             "v": actualAPIVersion

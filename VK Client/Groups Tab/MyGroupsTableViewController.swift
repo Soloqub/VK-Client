@@ -68,6 +68,12 @@ class MyGroupsTableViewController: UITableViewController {
         return cell
     }
 
+    private func showMessage() {
+        let alert  = UIAlertController(title: "Внимание!", message: "Не получилось подключиться к группе.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
     @IBAction func addingGroup(_ sender: UIStoryboardSegue) {
 
         if let senderVC = sender.source as? AllGroupsTableViewController,
@@ -75,22 +81,42 @@ class MyGroupsTableViewController: UITableViewController {
 
             self.realm.update(withObjects: [group])
             self.tableView.reloadData()
+            self.updateInfo(group: group)
         }
     }
-    
+
+    private func updateInfo(group: Groups) {
+
+        let provider = UserGroupsListProvider(withRouter: Router.sharedInstance)
+        provider.getGroupInfo(withId: group.id) { [weak self] group in
+
+            self?.realm.update(withObjects: [group])
+
+            if let rowsCount = self?.tableView.numberOfRows(inSection: 0) {
+                let indexPathOfLastRow = IndexPath(row: rowsCount - 1, section: 0)
+                self?.tableView.reloadRows(at: [indexPathOfLastRow], with: .automatic)
+            }
+        }
+    }
+
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            // Delete the row from the data source
-            if let group = self.realm.objects?[indexPath.row] {
-                self.realm.delete(objects: [group])
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            guard let groups = self.realm.objects else {
+                return
             }
-
-        } else if editingStyle == .insert {
             
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let provider = UserGroupsListProvider(withRouter: Router.sharedInstance)
+            provider.joinOrLeaveGroup(withId: groups[indexPath.row].id, isJoin: false) { [weak self] success in
+                
+                if success {
+                    self?.realm.delete(objects: [groups[indexPath.row]])
+                    self?.tableView.deleteRows(at: [indexPath], with: .fade)
+                } else {
+                    self?.showMessage()
+                }
+            }
+        }
     }
 }

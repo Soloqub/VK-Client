@@ -57,6 +57,7 @@
 		9294BE7C2029D77000C4C9C6 /* MainContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294BE7B2029D77000C4C9C6 /* MainContent.swift */; };
 		929549EC2030A5990025C90D /* AboveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929549EB2030A5980025C90D /* AboveView.swift */; };
 		92A78A952066B18E006FEBBB /* JoinGroupResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A78A942066B18E006FEBBB /* JoinGroupResponseVK.swift */; };
+		92A78A972066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A78A962066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift */; };
 		92B441EC1FDC8570008A7111 /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B441EB1FDC8570008A7111 /* Friends.swift */; };
 		92B8652E1FD4659F002F30DB /* AllGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */; };
 		92D2A39F201944DA008E33A4 /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 92D2A39E201944DA008E33A4 /* sample.json */; };
@@ -188,6 +189,7 @@
 		9294BE7B2029D77000C4C9C6 /* MainContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContent.swift; sourceTree = "<group>"; };
 		929549EB2030A5980025C90D /* AboveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboveView.swift; sourceTree = "<group>"; };
 		92A78A942066B18E006FEBBB /* JoinGroupResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupResponseVK.swift; sourceTree = "<group>"; };
+		92A78A962066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGroupInfoResponseVK.swift; sourceTree = "<group>"; };
 		92B441EB1FDC8570008A7111 /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsTableViewController.swift; sourceTree = "<group>"; };
 		92D2A39E201944DA008E33A4 /* sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample.json; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				92B441EB1FDC8570008A7111 /* Friends.swift */,
 				92F7CF191FDF2ADE00719106 /* Groups.swift */,
 				92A78A942066B18E006FEBBB /* JoinGroupResponseVK.swift */,
+				92A78A962066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift */,
 				9256EF62201D385500373BD8 /* News */,
 				92DA2B921FDDBCB100DB59D7 /* UserPhotos.swift */,
 			);
@@ -759,6 +762,7 @@
 				92011067201500A1002502FD /* News.swift in Sources */,
 				924A80E21FCF64F8000CCE98 /* Extensions.swift in Sources */,
 				922E50B5205D5D54003894DC /* WatchFriend.swift in Sources */,
+				92A78A972066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift in Sources */,
 				928976841FE579A200260502 /* BaseEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
