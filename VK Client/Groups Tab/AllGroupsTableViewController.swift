@@ -7,20 +7,14 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
 
-    var groupsList = [
-        vkGroup(name: "Бог фотошопа", avatar: UIImage(named: "bog_f"), amountOfMembers: "467 673 подписчиков"),
-        vkGroup(name: "Хитрости жизни | GIF", avatar: UIImage(named: "hitrosti"), amountOfMembers: "1 197 191 подписчиков"),
-        vkGroup(name: "Арт Бот", avatar: UIImage(named: "art_bot"), amountOfMembers: "2 004 603 подписчиков"),
-        vkGroup(name: "Сделай сам | GIF", avatar: UIImage(named: "sdelay_sam"), amountOfMembers: "115 750 подписчиков"),
-        vkGroup(name: "Индивидуалист", avatar: UIImage(named: "individualist"), amountOfMembers: "315 780 подписчиков"),
-        vkGroup(name: "Экспериментатор | GIF", avatar: UIImage(named: "experimentator"), amountOfMembers: "337 182 подписчиков"),
-    ]
+    var groupsList = [Groups]()
     
-    var groupsListSaved = [vkGroup]() // Сюда сохраняем полный список групп при поиске
-    var selectedGroup:vkGroup? // Здесь хранится выбранная ячейка
+    var groupsListSaved = [Groups]() // Сюда сохраняем полный список групп при поиске
+    var selectedGroup: Groups? // Здесь хранится выбранная ячейка
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -32,39 +26,54 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
         tableView.tableHeaderView = self.searchController.searchBar
         
         definesPresentationContext = true
-        
         self.searchController.searchResultsUpdater  = self
         self.searchController.dimsBackgroundDuringPresentation = false
-        
-        self.groupsListSaved = self.groupsList
+
+        self.configure()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func configure() {
+
+        let provider = UserGroupsListProvider(withRouter: Router.sharedInstance)
+        provider.getAllGroupsList { [weak self] groups in
+
+            self?.groupsList = groups
+            self?.groupsListSaved = groups
+
+            self?.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.groupsList.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "VKGroup", for: indexPath)
 
+        guard let url = URL(string: groupsList[indexPath.row].imagesURL) else {
+            assertionFailure("Некорректный урл изображения!")
+            return cell
+        }
+
+        let filter = AspectScaledToFillSizeWithRoundedCornersFilter(
+            size: CGSize(width: 50, height: 50),
+            radius: 20.0
+        )
+
         cell.textLabel?.text = groupsList[indexPath.row].name
-        cell.detailTextLabel?.text = groupsList[indexPath.row].amountOfMembers
-        cell.imageView?.image = groupsList[indexPath.row].avatar
-        
-        // Configure the cell...
+        cell.imageView?.af_setImage(withURL: url,
+                                    placeholderImage: UIImage(named: "noimage"),
+                                    filter: filter,
+                                    progressQueue: .global(qos: .userInteractive))
 
         return cell
     }
@@ -74,23 +83,37 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.selectedGroup = self.groupsList[indexPath.row]
-        
-        // Проверка на активность searchController. Иначе он будет блокировать Unwind Segue
-        if self.searchController.isActive {
+        self.joinGroup(withId: self.groupsList[indexPath.row].id)
+    }
 
-            self.searchController.dismiss(animated: false, completion: {
-                
-                self.performSegue(withIdentifier: "AddingGroup", sender: self)
-            })
-            
-        } else {
-            
-            performSegue(withIdentifier: "AddingGroup", sender: self)
+    private func joinGroup(withId id: Int) {
+
+        let provider = UserGroupsListProvider(withRouter: Router.sharedInstance)
+        provider.joinGroup(withId: id) { [weak self] success in
+
+            if success {
+                // Проверка на активность searchController. Иначе он будет блокировать Unwind Segue
+                if (self?.searchController.isActive)! {
+                    self?.searchController.dismiss(animated: false, completion: {
+                        self?.performSegue(withIdentifier: "addGroup", sender: self)
+                    })
+                } else {
+                    self?.performSegue(withIdentifier: "addGroup", sender: self)
+                }
+            } else {
+                self?.showMessage()
+            }
         }
+    }
+
+    private func showMessage() {
+        let alert  = UIAlertController(title: "Внимание!", message: "Не получилось подключиться к группе.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Search
-    func updateSearchResults(for searchController: UISearchController) {
+    internal func updateSearchResults(for searchController: UISearchController) {
         
         if !searchController.isActive {
             
@@ -99,17 +122,16 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
         }
         
         let searchText = searchController.searchBar.text
-        
-        guard let searchTextUrwraped = searchText else { return }
-        
-        self.filterContentForSearchText(searchTextUrwraped)
-        
-        self.tableView.reloadData()
+        if let searchTextUrwraped = searchText {
+
+            self.filterContentForSearchText(searchTextUrwraped)
+            self.tableView.reloadData()
+        }
     }
     
-    func filterContentForSearchText(_ searchText: String) {
+    private func filterContentForSearchText(_ searchText: String) {
         
-        self.groupsList = self.groupsListSaved.filter({ (group:vkGroup) -> Bool in
+        self.groupsList = self.groupsListSaved.filter({ (group: Groups) -> Bool in
             
             let nameMatch = group.name.range(of: searchText, options:
                 NSString.CompareOptions.caseInsensitive)
@@ -117,21 +139,19 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
         })
     }
     
-    func restoreAfterSearch() {
+    private func restoreAfterSearch() {
         
         self.groupsList = self.groupsListSaved
         tableView.reloadData()
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         self.filterContentForSearchText(searchText)
-        
         self.tableView.reloadData()
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
+    internal func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         restoreAfterSearch()
     }
  

@@ -45,82 +45,13 @@ class Router {
 
         case .getUserPhotos:
             return self.getUserPhotos()
+
+        case .getAllGroupsList:
+            return self.getAllGroupsList()
+
+        case .joinGroup:
+            return self.joinGroup()
         }
-    }
-
-    private func messagePost() -> RequestConfig {
-
-        let url = URL(string: "https://api.vk.com/method/wall.post")!
-        let params: Parameters = [
-            "access_token": self.token,
-            "v": actualAPIVersion,
-            "friends_only": "1"
-        ]
-        return RequestConfig(url: url, params: params)
-    }
-
-    private func getNews() -> RequestConfig {
-
-        let url = URL(string: "https://api.vk.com/method/newsfeed.get")!
-        let params: Parameters = [
-            "access_token": self.token,
-            "v": actualAPIVersion
-        ]
-        return RequestConfig(url: url, params: params)
-    }
-
-    private func getPhotoServer() -> RequestConfig {
-
-        let url = URL(string: "https://api.vk.com/method/photos.getWallUploadServer")!
-        let params: Parameters = [
-            "access_token": self.token,
-            "v": actualAPIVersion,
-            "album_id": 1
-            ]
-        return RequestConfig(url: url, params: params)
-    }
-
-    private func saveWallPhoto() -> RequestConfig {
-
-        let url = URL(string: "https://api.vk.com/method/photos.saveWallPhoto")!
-        let params: Parameters = [
-            "access_token": self.token,
-            "v": actualAPIVersion
-        ]
-        return RequestConfig(url: url, params: params)
-    }
-
-    private func getUserGroups() -> RequestConfig {
-
-        let url = URL(string: "https://api.vk.com/method/groups.get")!
-        let params: Parameters = [
-            "access_token": self.token,
-            "v": actualAPIVersion,
-            "extended": 1
-        ]
-        return RequestConfig(url: url, params: params)
-    }
-
-    private func getFriendsList() -> RequestConfig {
-
-        let url = URL(string: "https://api.vk.com/method/friends.get")!
-        let params: Parameters = [
-            "access_token": self.token,
-            "v": actualAPIVersion,
-            "fields":"nickname,domain,photo_50"
-        ]
-        return RequestConfig(url: url, params: params)
-    }
-
-    private func getUserPhotos() -> RequestConfig {
-
-        let url = URL(string: "https://api.vk.com/method/photos.getAll")!
-        let params: Parameters = [
-            "access_token": self.token,
-            "v": actualAPIVersion,
-            "fields":"nickname,domain,photo_50"
-        ]
-        return RequestConfig(url: url, params: params)
     }
 
     private func authorization() -> RequestConfig {
@@ -143,6 +74,125 @@ class Router {
     }
 
     enum RequestType {
-        case auth, messagePost, getNews, getPhotoServer, saveWallPhoto, getUserGroups, getFriendsList, getUserPhotos
+        case auth, messagePost, getNews, getPhotoServer, saveWallPhoto,
+        getUserGroups, getAllGroupsList, joinGroup,
+        getFriendsList, getUserPhotos
     }
 }
+
+
+extension FriendsRouter {
+
+    private func getFriendsList() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/friends.get")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion,
+            "fields":"nickname,domain,photo_50"
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+
+    private func getUserPhotos() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/photos.getAll")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion,
+            "fields":"nickname,domain,photo_50"
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+}
+
+
+extension GroupsRouter {
+
+    private func getUserGroups() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/groups.get")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion,
+            "extended": 1,
+            "fields": "members_count"
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+
+    private func getAllGroupsList() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/groups.getCatalog")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+
+    private func joinGroup() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/groups.join")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+}
+
+
+extension NewsRouter {
+
+    private func getNews() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/newsfeed.get")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+}
+
+
+extension WallPostRouter {
+
+    private func messagePost() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/wall.post")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion,
+            "friends_only": "1"
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+
+    private func getPhotoServer() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/photos.getWallUploadServer")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion,
+            "album_id": 1
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+
+    private func saveWallPhoto() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/photos.saveWallPhoto")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+}
+
+fileprivate typealias GroupsRouter = Router
+fileprivate typealias FriendsRouter = Router
+fileprivate typealias NewsRouter = Router
+fileprivate typealias WallPostRouter = Router

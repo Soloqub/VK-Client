@@ -26,7 +26,7 @@ class MyGroupsTableViewController: UITableViewController {
         self.tableView.reloadData()
 
         let provider = UserGroupsListProvider(withRouter: Router.sharedInstance)
-        provider.getUserGroups(realm: realm) { [weak self] groups in
+        provider.getUserGroups { [weak self] groups in
 
             self?.realm.deleteAll(withType: Groups.self)
             self?.realm.update(withObjects: groups)
@@ -59,6 +59,7 @@ class MyGroupsTableViewController: UITableViewController {
         )
         
         cell.textLabel?.text = myGroups[indexPath.row].name
+        cell.detailTextLabel?.text = "Участников: \(myGroups[indexPath.row].membersCount)"
         cell.imageView?.af_setImage(withURL: url,
                                     placeholderImage: UIImage(named: "noimage"),
                                     filter: filter,
@@ -66,15 +67,27 @@ class MyGroupsTableViewController: UITableViewController {
         
         return cell
     }
+
+    @IBAction func addingGroup(_ sender: UIStoryboardSegue) {
+
+        if let senderVC = sender.source as? AllGroupsTableViewController,
+            let group = senderVC.selectedGroup {
+
+            self.realm.update(withObjects: [group])
+            self.tableView.reloadData()
+        }
+    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
             // Delete the row from the data source
-//            self.myGroups.remove(at: indexPath.row)
-//            self.tableView.deleteRows(at: [indexPath], with: .fade)
-            
+            if let group = self.realm.objects?[indexPath.row] {
+                self.realm.delete(objects: [group])
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+
         } else if editingStyle == .insert {
             
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
