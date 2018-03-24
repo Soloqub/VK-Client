@@ -58,6 +58,7 @@
 		929549EC2030A5990025C90D /* AboveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929549EB2030A5980025C90D /* AboveView.swift */; };
 		92A78A952066B18E006FEBBB /* JoinGroupResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A78A942066B18E006FEBBB /* JoinGroupResponseVK.swift */; };
 		92A78A972066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A78A962066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift */; };
+		92A78A992066E579006FEBBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92A78A982066E578006FEBBB /* GoogleService-Info.plist */; };
 		92B441EC1FDC8570008A7111 /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B441EB1FDC8570008A7111 /* Friends.swift */; };
 		92B8652E1FD4659F002F30DB /* AllGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */; };
 		92D2A39F201944DA008E33A4 /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 92D2A39E201944DA008E33A4 /* sample.json */; };
@@ -190,6 +191,7 @@
 		929549EB2030A5980025C90D /* AboveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboveView.swift; sourceTree = "<group>"; };
 		92A78A942066B18E006FEBBB /* JoinGroupResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupResponseVK.swift; sourceTree = "<group>"; };
 		92A78A962066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGroupInfoResponseVK.swift; sourceTree = "<group>"; };
+		92A78A982066E578006FEBBB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92B441EB1FDC8570008A7111 /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		92B8652D1FD4659F002F30DB /* AllGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsTableViewController.swift; sourceTree = "<group>"; };
 		92D2A39E201944DA008E33A4 /* sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample.json; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				9255A5721F94219800808C3C /* Assets.xcassets */,
 				9255A5741F94219800808C3C /* LaunchScreen.storyboard */,
 				9255A5771F94219800808C3C /* Info.plist */,
+				92A78A982066E578006FEBBB /* GoogleService-Info.plist */,
 			);
 			path = "VK Client";
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				92D2A3A12019452B008E33A4 /* lida.json in Resources */,
 				9255A5711F94219800808C3C /* Main.storyboard in Resources */,
 				92D2A3A32019484F008E33A4 /* simple.json in Resources */,
+				92A78A992066E579006FEBBB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,21 +656,25 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-VK Client/Pods-VK Client-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

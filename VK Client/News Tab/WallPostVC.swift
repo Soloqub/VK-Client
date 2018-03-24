@@ -24,6 +24,7 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
 
     @IBAction func cancelButton(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -126,5 +127,6 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
 
         self.imagePicker.dismiss(animated: true, completion: nil)
+        textView.becomeFirstResponder()
     }
 }

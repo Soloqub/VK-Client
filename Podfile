@@ -13,6 +13,7 @@ target 'VK Client' do
   pod 'Neon'
   pod 'PromiseKit/CorePromise', '~> 6.0'
   pod 'PromiseKit/Alamofire', '~> 6.0'
+  pod 'Firebase/Core'
   # pod 'SnapKit'
   # pod 'SteviaLayout'
   # pod 'YogaKit'

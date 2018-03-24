@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import WatchConnectivity
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Realm.Configuration.defaultConfiguration = config
 
         WatchSessionHelper.shared.startSession()
+
+        FirebaseApp.configure()
 
         return true
     }
