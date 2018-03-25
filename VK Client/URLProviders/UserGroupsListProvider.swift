@@ -110,7 +110,7 @@ class UserGroupsListProvider {
 
                     groups.append(group)
                 }
-
+                
                 DispatchQueue.main.async { competition(groups) }
         }
     }

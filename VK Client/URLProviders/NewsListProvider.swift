@@ -46,8 +46,6 @@ class NewsListProvider {
                 groupsArray = self.parseSources(fromArray: groups) as! [GroupVK]
             }
 
-            print("Найдено сущностей: ", items.count)
-
             items.enumerated().forEach { index, item in
                 if let type = NewsType(rawValue: item.type) {
 
@@ -67,25 +65,9 @@ class NewsListProvider {
                                 newsArray.append(pieceOfNews)
                             } else { return }
 
-                        } else {
-                            print("Пустой пост без приложений и текста с id: ", item.id as Any)
-                            return
-                        }
+                        } else { return }
                     case .wallPhoto:
-                        break
-//                        let pieceOfNews = self.createPhotoWall(withItem: item)
-//
-//                        if pieceOfNews.photos.count > 0 {
-//                            pieceOfNews.source = pieceOfNews.sourceType == .profile ?
-//                                profilesArray.first(where: {$0.id == pieceOfNews.sourceID}) :
-//                                groupsArray.first(where: {$0.id == pieceOfNews.sourceID})
-//
-//                            newsArray.append(pieceOfNews)
-//
-//                        } else {
-//                            assertionFailure("Некорректная структура PhotoWall")
-//                            return
-//                        }
+                        break // На будущее
                     }
 
                 } else {
@@ -93,7 +75,6 @@ class NewsListProvider {
                 }
             }
 
-            print("Новостей: ", newsArray.count)
             DispatchQueue.main.async { completion(newsArray) }
         }
     }
@@ -153,9 +134,7 @@ class NewsListProvider {
                         linksArray.append(newLink)
                     }
                 } else {
-                    print("Нераспарсиваемый тип: ", attach.type)
-                    print("Пропускаем элемент")
-                    return nil
+                    return nil // Нераспарсиваемый тип, пропускаем
                 }
             }
         }
@@ -184,8 +163,7 @@ class NewsListProvider {
             newItem = PostWithPhotos(photos: photos)
 
         } else {
-            print("Пост содержит неподдерживаемый тип вложений, пропускаем")
-            return nil
+            return nil // Пост содержит неподдерживаемый тип вложений, пропускаем
         }
 
         newItem.id = id
@@ -199,36 +177,6 @@ class NewsListProvider {
 
         return newItem
     }
-
-//    private func createPhotoWall(withItem item: ResponseNewsVK.Item) -> PhotoWall {
-//
-//        let photoWall = PhotoWall()
-//
-//        item.photos?.items.forEach { item in
-//            var photo = PhotoWallPhoto()
-//            photo.text = item.text
-//            photo.likes = item.likes?.count
-//
-//            let urlStrings: [URLSizes: String?] = [.small: item.smallSizePhotoURL,
-//                              .middle: item.middleSizePhotoURL,
-//                              .big: item.bigSizePhotoURL,
-//                              .smallest: item.smallestSizePhotoURL]
-//            photo.urls = self.parsePhotos(withStrings: urlStrings)
-//
-//            if photo.urls.count > 0 {
-//                photoWall.photos.append(photo)
-//            } else {
-//                assertionFailure("Некорректное фото")
-//                return
-//            }
-//        }
-//
-//        photoWall.date = Date(timeIntervalSince1970: item.date)
-//        photoWall.sourceID = item.sourceID > 0 ? item.sourceID : item.sourceID * -1
-//        photoWall.sourceType = item.sourceID > 0 ? .profile : .group
-//
-//        return photoWall
-//    }
 
     private func parsePhotos(withStrings urlStrings: [URLSizes: String?]) -> [URLSizes: URL] {
 

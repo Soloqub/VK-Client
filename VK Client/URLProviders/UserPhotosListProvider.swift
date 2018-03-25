@@ -45,7 +45,6 @@ class UserPhotosListProvider {
                 }
 
                 let photosUrls = items.flatMap{ $0.photo }
-
                 DispatchQueue.main.async { competition(photosUrls) }
         }
     }

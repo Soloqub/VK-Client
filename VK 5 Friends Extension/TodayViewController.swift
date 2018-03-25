@@ -27,12 +27,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
 
         self.realm.fetchAll(withType: Friends.self)
@@ -50,9 +45,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
 
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
+
         if activeDisplayMode == .expanded {
             self.preferredContentSize = CGSize(width: self.view.frame.size.width, height: 5.0 * 44.0)
-        }else if activeDisplayMode == .compact{
+        } else if activeDisplayMode == .compact {
             self.preferredContentSize = CGSize(width: maxSize.width, height: 110)
         }
     }

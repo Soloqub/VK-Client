@@ -11,7 +11,6 @@ import RealmSwift
 
 class RealmHelper<T> where T:Object {
 
-//    static let sharedInstance =  RealmHelper()
     var objects: Results<T>?
     private var token: NotificationToken?
     var delegate:RealmHelperDelegete?

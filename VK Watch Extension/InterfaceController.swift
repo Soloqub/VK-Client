@@ -21,7 +21,6 @@ class TableInterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
         super.willActivate()
 
         if WCSession.isSupported() {
@@ -42,6 +41,7 @@ class TableInterfaceController: WKInterfaceController, WCSessionDelegate {
                     
                     do {
                         let items = try decoder.decode([WatchFriend].self, from: json)
+
                         items.forEach() { item in
                             self?.friendsList.append(Friend(id: item.id, name: item.name, image: nil))
                         }
@@ -105,7 +105,6 @@ class TableInterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
 
@@ -114,5 +113,4 @@ class TableInterfaceController: WKInterfaceController, WCSessionDelegate {
         var name: String
         var image: UIImage?
     }
-
 }

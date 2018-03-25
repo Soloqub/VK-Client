@@ -9,9 +9,7 @@
 import UIKit
 import RealmSwift
 
-class Friends: BaseEntity {
-    
-}
+class Friends: BaseEntity {}
 
 struct ResponseFriendsVK: Decodable {
     

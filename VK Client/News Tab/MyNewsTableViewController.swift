@@ -86,7 +86,6 @@ class MyNewsTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -146,7 +145,7 @@ class MyNewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.news.count //== 0 ? 0 : 1
+        return self.news.count
     }
 
     func setPhoto(forImageView imageView: UIImageView, withURL url: URL) {

@@ -19,8 +19,7 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+
         webView.navigationDelegate = self
         self.showLogin()
     }
@@ -28,16 +27,10 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
     func showLogin() {
         
         if let request = VKAuthProvider().makeURLRequest() {
-            
             webView.load(request)
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Enter" {

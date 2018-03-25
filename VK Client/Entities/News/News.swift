@@ -26,7 +26,7 @@ class Post: News {
 }
 
 class PostWithPhotos: Post {
-
+    
     var photos = [Photo]()
 
     init(photos: [Photo]) {

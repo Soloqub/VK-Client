@@ -8,9 +8,7 @@
 
 import UIKit
 
-protocol AboveView where Self: UIView {
-
-}
+protocol AboveView where Self: UIView {}
 
 extension AboveView {
 

@@ -13,11 +13,13 @@ import CoreLocation
 class MapViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+
     private let locationManager = CLLocationManager()
     private var currentLocation = CLLocation()
     private var locationDescription = ""
     var delegate: MapViewControllerDelegate?
-    @IBOutlet weak var doneButton: UIBarButtonItem!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,11 +74,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 self.doneButton.isEnabled = true
             }
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction private func cancelButton(_ sender: Any) {

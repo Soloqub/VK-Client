@@ -9,18 +9,14 @@
 import UIKit
 
 class UserPhotos {
-    
     var images = [UIImage]()
-    
 }
 
 struct ResponseFriendsPhotosVK: Decodable {
-    
     var count: Int
     var items: [Item]
     
     struct Item: Decodable {
-        
         var photo:String?
         
         enum CodingKeys : String, CodingKey {

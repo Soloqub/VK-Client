@@ -38,7 +38,6 @@ class HeaderView: UIView {
         dateLabel.textColor = .gray
     }
 
-
     func configure() {
 
         self.frame = CGRect(x: 0, y: 3, width: screen.width, height: 60)

@@ -46,7 +46,6 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -80,7 +79,6 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
     }
     
     // MARK: - Table View Control
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.selectedGroup = self.groupsList[indexPath.row]
