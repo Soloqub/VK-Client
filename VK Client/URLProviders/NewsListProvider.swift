@@ -52,7 +52,6 @@ class NewsListProvider {
                     switch type {
                     case .post:
                         if item.isRepost != nil {
-                            print("Запись является репостом с id: ", item.id as Any, " пропускаем")
                             return
                         }
                         if item.attachments != nil || item.text != "" {
@@ -70,8 +69,6 @@ class NewsListProvider {
                         break // На будущее
                     }
 
-                } else {
-                    print(item.type)
                 }
             }
 

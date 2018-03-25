@@ -56,7 +56,6 @@ class TableInterfaceController: WKInterfaceController, WCSessionDelegate {
                     }
                 }
             }, errorHandler: { error in
-                print(error.localizedDescription)
                 self.showAlert()
             })
         } else {
