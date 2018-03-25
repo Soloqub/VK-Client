@@ -112,10 +112,11 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
 
     private func openCamera() {
 
-        if UIImagePickerController.isSourceTypeAvailable(.camera)
-        {
+        if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
             self.imagePicker.sourceType = .camera
             self.imagePicker.allowsEditing = false
+            self.imagePicker.cameraCaptureMode = .photo
+            self.imagePicker.modalPresentationStyle = .fullScreen
             self.present(imagePicker, animated: true, completion: nil)
         }
         else
