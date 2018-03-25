@@ -328,6 +328,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="doneButton" destination="CVe-Ej-Uvv" id="GnJ-UA-8lT"/>
                         <outlet property="mapView" destination="dOS-IU-LEv" id="hTo-d9-YcA"/>
                     </connections>
                 </viewController>

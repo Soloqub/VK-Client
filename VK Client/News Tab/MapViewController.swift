@@ -15,7 +15,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     private let locationManager = CLLocationManager()
     private var currentLocation = CLLocation()
-
+    private var locationDescription = ""
+    var delegate: MapViewControllerDelegate?
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,12 +28,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
+
+        self.doneButton.isEnabled = false
     }
 
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         if let currentLocation = locations.last {
             self.currentLocation = currentLocation
+
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.geocodeLocation()
+            }
+
             let currentRadius: CLLocationDistance = 1000
             let currentRegion = MKCoordinateRegionMakeWithDistance((currentLocation.coordinate), currentRadius *
                 2.0, currentRadius * 2.0)
@@ -51,26 +61,35 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         mapView.addAnnotation(annotation)
     }
 
+    private func geocodeLocation() {
+
+        let coder = CLGeocoder()
+        coder.reverseGeocodeLocation(self.currentLocation) {(myPlaces, Error) -> Void in
+            if let place = myPlaces?.first,
+                let cityName = place.locality {
+
+                self.locationDescription = cityName
+                self.doneButton.isEnabled = true
+            }
+        }
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cancelButton(_ sender: Any) {
+    @IBAction private func cancelButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func doneButton(_ sender: Any) {
+    @IBAction private func doneButton(_ sender: Any) {
+        delegate?.setLocation(coordinates: self.currentLocation.coordinate, andCityName: self.locationDescription)
+        self.dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+protocol MapViewControllerDelegate {
 
+    func setLocation(coordinates: CLLocationCoordinate2D, andCityName cityName: String)
 }
