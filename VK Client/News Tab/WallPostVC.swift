@@ -17,6 +17,9 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     private var imageAttachment: SaveImageResponseVK.Success?
     private var mapDelegate: MapViewControllerDelegate?
     private var location: vkLocation?
+
+    var place = UIBarButtonItem()
+    var attach = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,10 +74,10 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         
         let placeImage = UIImage(named: "placement")
-        let place = UIBarButtonItem(image: placeImage, style: .plain, target: self, action: #selector(self.placeButtonAction))
+        self.place = UIBarButtonItem(image: placeImage, style: .plain, target: self, action: #selector(self.placeButtonAction))
         
         let attachmentImage = UIImage(named: "attachment")
-        let attach = UIBarButtonItem(image: attachmentImage, style: .plain, target: self, action: #selector(self.attachmentButtonAction))
+        self.attach = UIBarButtonItem(image: attachmentImage, style: .plain, target: self, action: #selector(self.attachmentButtonAction))
 
         var items = [UIBarButtonItem]()
         items.append(contentsOf: [flexSpace, place, flexSpace, attach, flexSpace])
@@ -142,10 +145,13 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
 
         self.provider.upload(photoToVK: image) { imageObject in
             self.imageAttachment = imageObject
+
+            self.attach.image = UIImage(named: "attachment")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            self.attach.tintColor = UIColor.lightPink()
         }
 
         self.imagePicker.dismiss(animated: true, completion: nil)
-        textView.becomeFirstResponder()
+        self.textView.becomeFirstResponder()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -171,6 +177,12 @@ extension WallPostVC: MapViewControllerDelegate {
 
     func setLocation(coordinates: CLLocationCoordinate2D, andCityName cityName: String) {
         self.location = vkLocation(coordinates: coordinates, cityName: cityName)
-        self.textView.becomeFirstResponder()
+
+        self.place.image = UIImage(named: "placement")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.place.tintColor = UIColor.lightPink()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.textView.becomeFirstResponder()
+        }
     }
 }
