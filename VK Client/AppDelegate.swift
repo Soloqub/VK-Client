@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UIApplication.shared.statusBarStyle = .lightContent
 
-        let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Today")!
+        let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.techranch.today")!
         let realmPath = directory.appendingPathComponent("db.realm")
 
         var config = Realm.Configuration()

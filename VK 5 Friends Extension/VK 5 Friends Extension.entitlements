@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.Today</string>
+		<string>group.com.techranch.today</string>
 	</array>
 </dict>
 </plist>

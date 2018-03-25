@@ -20,7 +20,7 @@ class RealmHelper<T> where T: Object {
         do {
             let realmContext = try Realm(fileURL: FileManager
                 .default
-                .containerURL(forSecurityApplicationGroupIdentifier: "group.Today")!
+                .containerURL(forSecurityApplicationGroupIdentifier: "group.com.techranch.today")!
                 .appendingPathComponent("db.realm"))
             return realmContext
         } catch {
