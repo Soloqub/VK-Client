@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -14,6 +15,8 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     private let imagePicker = UIImagePickerController()
     private var provider = WallPostProvider(withRouter: Router.sharedInstance)
     private var imageAttachment: SaveImageResponseVK.Success?
+    private var mapDelegate: MapViewControllerDelegate?
+    private var location: vkLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +33,21 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     @IBAction func doneButton(_ sender: Any) {
 
-        var params: [String: Any] = ["message": textView.text]
+        var text = textView.text!
+        var params = [String: Any]()
+
+        if let location = self.location {
+            text = text + "\n\n Отправлено из: \(location.cityName)\n"
+            params["lat"] = location.coordinates.latitude
+            params["long"] = location.coordinates.longitude
+        }
+
         if let attach = self.imageAttachment {
             params["attachments"] = "photo\(attach.ownerID.description)_\(attach.mediaID.description)"
         }
+
+        params["message"] = text
+
         self.provider.post(withParams: params) { [weak self] success, error in
 
             if success { self?.performSegue(withIdentifier: "postUnwind", sender: self) } else {
@@ -72,7 +86,9 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     @objc private func placeButtonAction() {
 
-        self.performSegue(withIdentifier: "ToMap", sender: self)
+        DispatchQueue.main.async{
+            self.performSegue(withIdentifier: "ToMap", sender: self)
+        }
     }
     
     @objc private func attachmentButtonAction() {
@@ -130,5 +146,31 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
 
         self.imagePicker.dismiss(animated: true, completion: nil)
         textView.becomeFirstResponder()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.identifier == "ToMap" {
+
+            if let destinationController = segue.destination as? MapViewController {
+                destinationController.delegate = self
+            } else {
+                assertionFailure()
+                return
+            }
+        }
+    }
+
+    struct vkLocation {
+        var coordinates: CLLocationCoordinate2D
+        var cityName: String
+    }
+}
+
+extension WallPostVC: MapViewControllerDelegate {
+
+    func setLocation(coordinates: CLLocationCoordinate2D, andCityName cityName: String) {
+        self.location = vkLocation(coordinates: coordinates, cityName: cityName)
+        self.textView.becomeFirstResponder()
     }
 }
