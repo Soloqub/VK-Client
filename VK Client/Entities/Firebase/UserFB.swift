@@ -8,19 +8,17 @@
 
 import UIKit
 
-struct UserFB: Codable {
+struct UserFB {
     let id: Int
-    var groups: [GroupFB]
 
     var toAnyObject: Any {
         return [
-            "id": id,
-            "groups": groups.map { $0.toAnyObject }
+            "id": id
         ]
     }
 }
 
-struct GroupFB: Codable {
+struct GroupFB {
     let id: Int
 
     var toAnyObject: Any {

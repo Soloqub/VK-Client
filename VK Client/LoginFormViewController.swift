@@ -45,10 +45,26 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
             let provider = UserInfoProvider(withRouter: Router.sharedInstance)
             provider.getSelfInfo{ id in
 
-                let user = UserFB(id: id, groups: [GroupFB]())
+                let user = UserFB(id: id)
                 let data = user.toAnyObject
 
                 let dbLink = Database.database().reference()
+
+                dbLink.child("Users").observe(DataEventType.value, with:
+                    { (snapshot) in
+                        guard let dict = snapshot.value as? [String: Any] else {
+                            addElement(dbLink: dbLink, id: id, data: data)
+                            return
+                        }
+                        if let _ = dict[id.description] {
+                            return
+                        } else {
+                            addElement(dbLink: dbLink, id: id, data: data)
+                        }
+                })
+            }
+
+            func addElement(dbLink: DatabaseReference, id: Int, data: Any) {
                 dbLink.child("Users").child(id.description).setValue(data)
 
                 let defaults = UserDefaults.standard
