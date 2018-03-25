@@ -26,7 +26,7 @@ class FriendsTableViewController: UITableViewController {
         self.tableView.reloadData()
 
         let provider = FriendsListProvider(withRouter: Router.sharedInstance)
-        provider.getFriendsList(realm: realm) { [weak self] friends in 
+        provider.getFriendsList { [weak self] friends in
 
             self?.realm.deleteAll(withType: Friends.self)
             self?.realm.update(withObjects: friends)

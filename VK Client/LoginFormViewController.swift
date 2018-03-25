@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import SwiftKeychainWrapper
+import Firebase
 
 class LoginFormViewController: UIViewController, WKNavigationDelegate {
     
@@ -43,6 +44,25 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
             KeychainWrapper.standard.set(self.token, forKey: "Token")
         }
     }
+
+    private func addUserToFirebase() {
+
+        DispatchQueue.global(qos: .userInteractive).async {
+
+            let provider = UserInfoProvider(withRouter: Router.sharedInstance)
+            provider.getSelfInfo{ id in
+
+                let user = UserFB(id: id, groups: [GroupFB]())
+                let data = user.toAnyObject
+
+                let dbLink = Database.database().reference()
+                dbLink.child("Users").child(id.description).setValue(data)
+
+                let defaults = UserDefaults.standard
+                defaults.set(id, forKey: "CurrentUserID")
+            }
+        }
+    }
     
     // MARK: - Delegate functions
     
@@ -68,6 +88,7 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
         
         decisionHandler(.cancel)
         performSegue(withIdentifier: "Enter", sender: nil)
+        self.addUserToFirebase()
     }
 }
 

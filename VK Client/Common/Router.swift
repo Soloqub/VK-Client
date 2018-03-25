@@ -57,6 +57,9 @@ class Router {
 
         case .getGroupInfo:
             return self.getGroupInfo()
+
+        case .getUserInfo:
+            return self.getUserInfo()
         }
     }
 
@@ -82,7 +85,8 @@ class Router {
     enum RequestType {
         case auth, messagePost, getNews, getPhotoServer, saveWallPhoto,
         getUserGroups, getAllGroupsList, joinGroup, leaveGroup, getGroupInfo,
-        getFriendsList, getUserPhotos
+        getFriendsList, getUserPhotos,
+        getUserInfo
     }
 }
 
@@ -219,7 +223,21 @@ extension WallPostRouter {
     }
 }
 
+extension UserRouter {
+
+    private func getUserInfo() -> RequestConfig {
+
+        let url = URL(string: "https://api.vk.com/method/users.get")!
+        let params: Parameters = [
+            "access_token": self.token,
+            "v": actualAPIVersion
+        ]
+        return RequestConfig(url: url, params: params)
+    }
+}
+
 fileprivate typealias GroupsRouter = Router
 fileprivate typealias FriendsRouter = Router
 fileprivate typealias NewsRouter = Router
 fileprivate typealias WallPostRouter = Router
+fileprivate typealias UserRouter = Router

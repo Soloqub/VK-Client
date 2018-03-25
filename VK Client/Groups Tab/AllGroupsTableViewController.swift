@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import Firebase
 
 class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
 
@@ -96,9 +97,11 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
                 if (self?.searchController.isActive)! {
                     self?.searchController.dismiss(animated: false, completion: {
                         self?.performSegue(withIdentifier: "addGroup", sender: self)
+                        self?.addToFirebase(GroupWithId: id)
                     })
                 } else {
                     self?.performSegue(withIdentifier: "addGroup", sender: self)
+                    self?.addToFirebase(GroupWithId: id)
                 }
             } else {
                 self?.showMessage()
@@ -110,6 +113,20 @@ class AllGroupsTableViewController: UITableViewController, UISearchResultsUpdati
         let alert  = UIAlertController(title: "Внимание!", message: "Не получилось подключиться к группе.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+
+    private func addToFirebase(GroupWithId id: Int) {
+
+        DispatchQueue.global(qos: .userInteractive).async {
+
+            let defaults = UserDefaults.standard
+            let userId = defaults.integer(forKey: "CurrentUserID")
+
+            let dbLink = Database.database().reference()
+
+            let group = GroupFB(id: id)
+            dbLink.child("Users").child(userId.description).child("groups").child(id.description).setValue(group.toAnyObject)
+        }
     }
     
     // MARK: - Search

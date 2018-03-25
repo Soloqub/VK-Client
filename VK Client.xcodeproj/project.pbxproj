@@ -18,6 +18,7 @@
 		922E50B6205D5D67003894DC /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
 		922E50B8205D9472003894DC /* UploadFileResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E50B7205D9472003894DC /* UploadFileResponseVK.swift */; };
 		922E50BA205DCFA7003894DC /* SaveImageResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */; };
+		923A00282066F48A00BAA46D /* UserInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A00272066F48A00BAA46D /* UserInfoProvider.swift */; };
 		923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */; };
 		924A80E21FCF64F8000CCE98 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924A80E11FCF64F8000CCE98 /* Extensions.swift */; };
 		924C1D8720322B4400C73AEA /* WallPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C1D8620322B4400C73AEA /* WallPostVC.swift */; };
@@ -29,6 +30,7 @@
 		9255A5731F94219800808C3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9255A5721F94219800808C3C /* Assets.xcassets */; };
 		9255A5761F94219800808C3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255A5741F94219800808C3C /* LaunchScreen.storyboard */; };
 		9256EF64201D388900373BD8 /* ResponseNewsVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256EF63201D388900373BD8 /* ResponseNewsVK.swift */; };
+		925950E52067063300066E1F /* UserFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925950E42067063300066E1F /* UserFB.swift */; };
 		925A1A6D2048958D00F32BA6 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 925A1A6B2048958D00F32BA6 /* Interface.storyboard */; };
 		925A1A6F2048958D00F32BA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925A1A6E2048958D00F32BA6 /* Assets.xcassets */; };
 		925A1A762048958D00F32BA6 /* VK Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 925A1A752048958D00F32BA6 /* VK Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -146,6 +148,7 @@
 		921B50E02056E0E600A534DF /* WatchExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchExtensions.swift; sourceTree = "<group>"; };
 		922E50B7205D9472003894DC /* UploadFileResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileResponseVK.swift; sourceTree = "<group>"; };
 		922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageResponseVK.swift; sourceTree = "<group>"; };
+		923A00272066F48A00BAA46D /* UserInfoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoProvider.swift; sourceTree = "<group>"; };
 		923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthProvider.swift; sourceTree = "<group>"; };
 		924A80E11FCF64F8000CCE98 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		924C1D8620322B4400C73AEA /* WallPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallPostVC.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 		9255A5751F94219800808C3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9255A5771F94219800808C3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9256EF63201D388900373BD8 /* ResponseNewsVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseNewsVK.swift; sourceTree = "<group>"; };
+		925950E42067063300066E1F /* UserFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFB.swift; sourceTree = "<group>"; };
 		925A1A692048958D00F32BA6 /* VK Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VK Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		925A1A6C2048958D00F32BA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		925A1A6E2048958D00F32BA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */,
+				923A00272066F48A00BAA46D /* UserInfoProvider.swift */,
 				92DA2B941FDDC0CD00DB59D7 /* UserPhotosListProvider.swift */,
 				92504B551FD6FEB400853259 /* FriendsListProvider.swift */,
 				92F7CF171FDF29F300719106 /* UserGroupsListProvider.swift */,
@@ -325,6 +330,14 @@
 				922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */,
 			);
 			path = News;
+			sourceTree = "<group>";
+		};
+		925950E32067060F00066E1F /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				925950E42067063300066E1F /* UserFB.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		925A1A6A2048958D00F32BA6 /* VK Watch */ = {
@@ -432,6 +445,7 @@
 				92A78A962066CCEE006FEBBB /* DetailGroupInfoResponseVK.swift */,
 				9256EF62201D385500373BD8 /* News */,
 				92DA2B921FDDBCB100DB59D7 /* UserPhotos.swift */,
+				925950E32067060F00066E1F /* Firebase */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -662,6 +676,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -674,6 +689,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -745,11 +761,13 @@
 				927B3E951FD43352000EDA51 /* FriendsPhotoCell.swift in Sources */,
 				927CA5C5202652E30002033B /* HeaderView.swift in Sources */,
 				920110652014F30B002502FD /* NewsListProvider.swift in Sources */,
+				923A00282066F48A00BAA46D /* UserInfoProvider.swift in Sources */,
 				9265C0A82060698400E14A6D /* Router.swift in Sources */,
 				9255A56E1F94219800808C3C /* LoginFormViewController.swift in Sources */,
 				922E50B8205D9472003894DC /* UploadFileResponseVK.swift in Sources */,
 				92A78A952066B18E006FEBBB /* JoinGroupResponseVK.swift in Sources */,
 				923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */,
+				925950E52067063300066E1F /* UserFB.swift in Sources */,
 				925A1A922048B15E00F32BA6 /* WatchSessionHelper.swift in Sources */,
 				92110FE8202F989800F1DD9F /* FooterView.swift in Sources */,
 				92DA2B931FDDBCB100DB59D7 /* UserPhotos.swift in Sources */,

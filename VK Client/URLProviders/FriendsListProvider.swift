@@ -17,7 +17,7 @@ class FriendsListProvider {
         self.router = router
     }
     
-    func getFriendsList(realm: RealmHelper<Friends>, competition: @escaping (_ friends: [Friends]) -> Void) {
+    func getFriendsList(competition: @escaping (_ friends: [Friends]) -> Void) {
 
         let config = router.getRequestConfig(byRequestType: .getFriendsList)
         Alamofire.request(config.url, method: .get, parameters: config.params)

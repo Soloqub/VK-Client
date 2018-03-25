@@ -14,6 +14,7 @@ target 'VK Client' do
   pod 'PromiseKit/CorePromise', '~> 6.0'
   pod 'PromiseKit/Alamofire', '~> 6.0'
   pod 'Firebase/Core'
+  pod 'Firebase/Database'
   # pod 'SnapKit'
   # pod 'SteviaLayout'
   # pod 'YogaKit'
