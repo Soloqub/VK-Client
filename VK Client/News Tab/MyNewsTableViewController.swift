@@ -13,6 +13,7 @@ import AlamofireImage
 class MyNewsTableViewController: UITableViewController {
 
     private var provider = NewsListProvider(withRouter: Router.sharedInstance)
+    private var realm = RealmHelper<MessageNews>()
     var news = [News]()
     var views = [[CellViews: UIView]]()
 
@@ -30,7 +31,27 @@ class MyNewsTableViewController: UITableViewController {
             
             self?.news = news
             self?.tableView.reloadData()
-            print(self?.news.count as Any)
+
+            if news.count > 0 {
+                guard
+                    let post = self?.news[0] as? Post,
+                    let authorName = post.source?.name else {
+                        return
+                }
+
+                self?.realm.deleteAll(withType: MessageNews.self)
+
+                let item = MessageNews()
+                item.name = authorName
+                item.text = post.text
+                item.postId = post.id
+
+                if let photoPost = post as? PostWithPhotos, photoPost.photos.count > 0 {
+                    item.image = photoPost.photos[0].url.absoluteString
+                }
+
+                self?.realm.update(withObjects: [item])
+            }
         }
     }
 

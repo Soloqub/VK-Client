@@ -15,6 +15,13 @@
 		9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */; };
 		921B50E12056E0E600A534DF /* WatchExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921B50E02056E0E600A534DF /* WatchExtensions.swift */; };
 		921CB0342067B2B700C697AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921CB0332067B2B700C697AF /* MapViewController.swift */; };
+		921CB03D20681EBF00C697AF /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921CB03C20681EBF00C697AF /* Messages.framework */; };
+		921CB04020681EBF00C697AF /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921CB03F20681EBF00C697AF /* MessagesViewController.swift */; };
+		921CB04320681EBF00C697AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 921CB04120681EBF00C697AF /* MainInterface.storyboard */; };
+		921CB04520681EBF00C697AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 921CB04420681EBF00C697AF /* Assets.xcassets */; };
+		921CB04920681EBF00C697AF /* iMessage.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 921CB03B20681EBF00C697AF /* iMessage.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		921CB04D2068275700C697AF /* MessageNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921CB0352068161100C697AF /* MessageNews.swift */; };
+		921CB04E2068278F00C697AF /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928976851FE57EF900260502 /* RealmHelper.swift */; };
 		922E50B5205D5D54003894DC /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
 		922E50B6205D5D67003894DC /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
 		922E50B8205D9472003894DC /* UploadFileResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E50B7205D9472003894DC /* UploadFileResponseVK.swift */; };
@@ -23,6 +30,7 @@
 		923A8C241FD6A80F001B9782 /* VKAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */; };
 		924A80E21FCF64F8000CCE98 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924A80E11FCF64F8000CCE98 /* Extensions.swift */; };
 		924C1D8720322B4400C73AEA /* WallPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C1D8620322B4400C73AEA /* WallPostVC.swift */; };
+		924C236B20682E81007588D6 /* MessageNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921CB0352068161100C697AF /* MessageNews.swift */; };
 		92504B561FD6FEB400853259 /* FriendsListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92504B551FD6FEB400853259 /* FriendsListProvider.swift */; };
 		9250AC622061A5F000BE299D /* WallPostProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9250AC612061A5F000BE299D /* WallPostProvider.swift */; };
 		9255A56C1F94219800808C3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9255A56B1F94219800808C3C /* AppDelegate.swift */; };
@@ -70,9 +78,17 @@
 		92F7CF181FDF29F300719106 /* UserGroupsListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F7CF171FDF29F300719106 /* UserGroupsListProvider.swift */; };
 		92F7CF1A1FDF2ADE00719106 /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F7CF191FDF2ADE00719106 /* Groups.swift */; };
 		A6324A2B80BC5BFC973C9330 /* Pods_VK_Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078F0FFCFCF0E82B2FF6BC8 /* Pods_VK_Client.framework */; };
+		F55213DC6C458DF57544EF45 /* Pods_iMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4AFE093ED9602C62F2C874 /* Pods_iMessage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		921CB04720681EBF00C697AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9255A5601F94219800808C3C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 921CB03A20681EBF00C697AF;
+			remoteInfo = iMessage;
+		};
 		925A1A772048958D00F32BA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9255A5601F94219800808C3C /* Project object */;
@@ -125,6 +141,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				921CB04920681EBF00C697AF /* iMessage.appex in Embed App Extensions */,
 				92677DDB2040342B00D88C0B /* VK 5 Friends Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -135,6 +152,7 @@
 /* Begin PBXFileReference section */
 		0ED5C02C02E0BCF91DAB2066 /* Pods_VK_5_Friends_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VK_5_Friends_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFE770163B7D6B1FAA4919E /* Pods-VK Client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK Client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VK Client/Pods-VK Client.debug.xcconfig"; sourceTree = "<group>"; };
+		719CCE8A2451664D8F5BB698 /* Pods-iMessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-iMessage/Pods-iMessage.release.xcconfig"; sourceTree = "<group>"; };
 		9078F0FFCFCF0E82B2FF6BC8 /* Pods_VK_Client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VK_Client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C2D8E72C7B19B9147D6D2F /* Pods-VK 5 Friends Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK 5 Friends Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-VK 5 Friends Extension/Pods-VK 5 Friends Extension.release.xcconfig"; sourceTree = "<group>"; };
 		920110642014F30B002502FD /* NewsListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListProvider.swift; sourceTree = "<group>"; };
@@ -145,12 +163,20 @@
 		921A508E2057378A00A05CD3 /* WatchFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFriend.swift; sourceTree = "<group>"; };
 		921B50E02056E0E600A534DF /* WatchExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchExtensions.swift; sourceTree = "<group>"; };
 		921CB0332067B2B700C697AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		921CB0352068161100C697AF /* MessageNews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNews.swift; sourceTree = "<group>"; };
+		921CB03B20681EBF00C697AF /* iMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		921CB03C20681EBF00C697AF /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
+		921CB03F20681EBF00C697AF /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		921CB04220681EBF00C697AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		921CB04420681EBF00C697AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		921CB04620681EBF00C697AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		922E50B7205D9472003894DC /* UploadFileResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileResponseVK.swift; sourceTree = "<group>"; };
 		922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageResponseVK.swift; sourceTree = "<group>"; };
 		923A00272066F48A00BAA46D /* UserInfoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoProvider.swift; sourceTree = "<group>"; };
 		923A8C231FD6A80F001B9782 /* VKAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthProvider.swift; sourceTree = "<group>"; };
 		924A80E11FCF64F8000CCE98 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		924C1D8620322B4400C73AEA /* WallPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallPostVC.swift; sourceTree = "<group>"; };
+		924C236C20682F33007588D6 /* iMessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iMessage.entitlements; sourceTree = "<group>"; };
 		92504B551FD6FEB400853259 /* FriendsListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListProvider.swift; sourceTree = "<group>"; };
 		9250AC612061A5F000BE299D /* WallPostProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallPostProvider.swift; sourceTree = "<group>"; };
 		9255A5681F94219800808C3C /* VK Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VK Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,8 +228,10 @@
 		92DDC6A8203A211700DE7398 /* PostResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponseVK.swift; sourceTree = "<group>"; };
 		92F7CF171FDF29F300719106 /* UserGroupsListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupsListProvider.swift; sourceTree = "<group>"; };
 		92F7CF191FDF2ADE00719106 /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
+		9E4AFE093ED9602C62F2C874 /* Pods_iMessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A37D5C62C9D76ECA107906 /* Pods-VK Client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK Client.release.xcconfig"; path = "Pods/Target Support Files/Pods-VK Client/Pods-VK Client.release.xcconfig"; sourceTree = "<group>"; };
 		F154F3F812BE3986CCFD5CAE /* Pods-VK 5 Friends Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK 5 Friends Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VK 5 Friends Extension/Pods-VK 5 Friends Extension.debug.xcconfig"; sourceTree = "<group>"; };
+		FCA17B1C1436B6B7FA5045FA /* Pods-iMessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMessage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMessage/Pods-iMessage.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +239,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		921CB03820681EBF00C697AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				921CB03D20681EBF00C697AF /* Messages.framework in Frameworks */,
+				F55213DC6C458DF57544EF45 /* Pods_iMessage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,8 +285,23 @@
 				E1A37D5C62C9D76ECA107906 /* Pods-VK Client.release.xcconfig */,
 				F154F3F812BE3986CCFD5CAE /* Pods-VK 5 Friends Extension.debug.xcconfig */,
 				90C2D8E72C7B19B9147D6D2F /* Pods-VK 5 Friends Extension.release.xcconfig */,
+				FCA17B1C1436B6B7FA5045FA /* Pods-iMessage.debug.xcconfig */,
+				719CCE8A2451664D8F5BB698 /* Pods-iMessage.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		921CB03E20681EBF00C697AF /* iMessage */ = {
+			isa = PBXGroup;
+			children = (
+				924C236C20682F33007588D6 /* iMessage.entitlements */,
+				921CB03F20681EBF00C697AF /* MessagesViewController.swift */,
+				921CB0352068161100C697AF /* MessageNews.swift */,
+				921CB04120681EBF00C697AF /* MainInterface.storyboard */,
+				921CB04420681EBF00C697AF /* Assets.xcassets */,
+				921CB04620681EBF00C697AF /* Info.plist */,
+			);
+			path = iMessage;
 			sourceTree = "<group>";
 		};
 		92504B541FD6FE5A00853259 /* URLProviders */ = {
@@ -273,6 +325,7 @@
 				92677DD22040342B00D88C0B /* VK 5 Friends Extension */,
 				925A1A6A2048958D00F32BA6 /* VK Watch */,
 				925A1A792048958D00F32BA6 /* VK Watch Extension */,
+				921CB03E20681EBF00C697AF /* iMessage */,
 				9255A5691F94219800808C3C /* Products */,
 				3129305BCE4D2A70E7ED9BD9 /* Pods */,
 				965C9954B1F8686492876858 /* Frameworks */,
@@ -286,6 +339,7 @@
 				92677DCF2040342B00D88C0B /* VK 5 Friends Extension.appex */,
 				925A1A692048958D00F32BA6 /* VK Watch.app */,
 				925A1A752048958D00F32BA6 /* VK Watch Extension.appex */,
+				921CB03B20681EBF00C697AF /* iMessage.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,6 +504,8 @@
 				9078F0FFCFCF0E82B2FF6BC8 /* Pods_VK_Client.framework */,
 				92677DD02040342B00D88C0B /* NotificationCenter.framework */,
 				0ED5C02C02E0BCF91DAB2066 /* Pods_VK_5_Friends_Extension.framework */,
+				921CB03C20681EBF00C697AF /* Messages.framework */,
+				9E4AFE093ED9602C62F2C874 /* Pods_iMessage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -457,6 +513,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		921CB03A20681EBF00C697AF /* iMessage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 921CB04A20681EBF00C697AF /* Build configuration list for PBXNativeTarget "iMessage" */;
+			buildPhases = (
+				F1B242199360D06D7C2BA3C1 /* [CP] Check Pods Manifest.lock */,
+				921CB03720681EBF00C697AF /* Sources */,
+				921CB03820681EBF00C697AF /* Frameworks */,
+				921CB03920681EBF00C697AF /* Resources */,
+				201433E63C4D5A3677462DED /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iMessage;
+			productName = iMessage;
+			productReference = 921CB03B20681EBF00C697AF /* iMessage.appex */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
 		9255A5671F94219800808C3C /* VK Client */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9255A57A1F94219800808C3C /* Build configuration list for PBXNativeTarget "VK Client" */;
@@ -475,6 +550,7 @@
 			dependencies = (
 				92677DDA2040342B00D88C0B /* PBXTargetDependency */,
 				925A1A852048958E00F32BA6 /* PBXTargetDependency */,
+				921CB04820681EBF00C697AF /* PBXTargetDependency */,
 			);
 			name = "VK Client";
 			productName = Weather;
@@ -545,6 +621,15 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Денис Львович";
 				TargetAttributes = {
+					921CB03A20681EBF00C697AF = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					9255A5671F94219800808C3C = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
@@ -590,11 +675,21 @@
 				92677DCE2040342B00D88C0B /* VK 5 Friends Extension */,
 				925A1A682048958D00F32BA6 /* VK Watch */,
 				925A1A742048958D00F32BA6 /* VK Watch Extension */,
+				921CB03A20681EBF00C697AF /* iMessage */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		921CB03920681EBF00C697AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				921CB04520681EBF00C697AF /* Assets.xcassets in Resources */,
+				921CB04320681EBF00C697AF /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9255A5661F94219800808C3C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -688,6 +783,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VK Client/Pods-VK Client-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		201433E63C4D5A3677462DED /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iMessage/Pods-iMessage-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		43138BD9A63D4867F03337F3 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -736,9 +846,37 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VK 5 Friends Extension/Pods-VK 5 Friends Extension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F1B242199360D06D7C2BA3C1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iMessage-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		921CB03720681EBF00C697AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				921CB04D2068275700C697AF /* MessageNews.swift in Sources */,
+				921CB04E2068278F00C697AF /* RealmHelper.swift in Sources */,
+				921CB04020681EBF00C697AF /* MessagesViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9255A5641F94219800808C3C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -773,6 +911,7 @@
 				927B3E971FD434A9000EDA51 /* FriendsGalleryViewController.swift in Sources */,
 				9294BE7C2029D77000C4C9C6 /* MainContent.swift in Sources */,
 				9269A074200D4917005776B3 /* MyNewsTableViewController.swift in Sources */,
+				924C236B20682E81007588D6 /* MessageNews.swift in Sources */,
 				92F7CF1A1FDF2ADE00719106 /* Groups.swift in Sources */,
 				928976861FE57EF900260502 /* RealmHelper.swift in Sources */,
 				9255A56C1F94219800808C3C /* AppDelegate.swift in Sources */,
@@ -812,6 +951,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		921CB04820681EBF00C697AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 921CB03A20681EBF00C697AF /* iMessage */;
+			targetProxy = 921CB04720681EBF00C697AF /* PBXContainerItemProxy */;
+		};
 		925A1A782048958D00F32BA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 925A1A742048958D00F32BA6 /* VK Watch Extension */;
@@ -830,6 +974,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		921CB04120681EBF00C697AF /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				921CB04220681EBF00C697AF /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		9255A56F1F94219800808C3C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -865,6 +1017,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		921CB04B20681EBF00C697AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FCA17B1C1436B6B7FA5045FA /* Pods-iMessage.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_ENTITLEMENTS = iMessage/iMessage.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y6G74A59K6;
+				INFOPLIST_FILE = iMessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.techranch.vkclient.iMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		921CB04C20681EBF00C697AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 719CCE8A2451664D8F5BB698 /* Pods-iMessage.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_ENTITLEMENTS = iMessage/iMessage.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y6G74A59K6;
+				INFOPLIST_FILE = iMessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.techranch.vkclient.iMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		9255A5781F94219800808C3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -976,6 +1166,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3AFE770163B7D6B1FAA4919E /* Pods-VK Client.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VK Client/VK Client.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -994,6 +1185,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E1A37D5C62C9D76ECA107906 /* Pods-VK Client.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VK Client/VK Client.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -1121,6 +1313,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		921CB04A20681EBF00C697AF /* Build configuration list for PBXNativeTarget "iMessage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				921CB04B20681EBF00C697AF /* Debug */,
+				921CB04C20681EBF00C697AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9255A5631F94219800808C3C /* Build configuration list for PBXProject "VK Client" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

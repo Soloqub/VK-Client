@@ -9,11 +9,11 @@
 import UIKit
 import RealmSwift
 
-class RealmHelper<T> where T:Object {
+class RealmHelper<T> where T: Object {
 
     var objects: Results<T>?
     private var token: NotificationToken?
-    var delegate:RealmHelperDelegete?
+    var delegate: RealmHelperDelegete?
     
     private func realmInit() -> Realm? {
         
@@ -29,7 +29,7 @@ class RealmHelper<T> where T:Object {
         }
     }
     
-    func update<T>(withObjects objects:[T]) where T:Object {
+    func update<T>(withObjects objects:[T]) where T: Object {
         
         guard let realm = self.realmInit() else { return }
         
@@ -59,7 +59,7 @@ class RealmHelper<T> where T:Object {
         }
     }
     
-    func delete<T>(objects:[T]) where T:Object  {
+    func delete<T>(objects:[T]) where T: Object  {
         
         guard let realm = self.realmInit() else { return }
 
@@ -95,7 +95,7 @@ class RealmHelper<T> where T:Object {
         print(realm.configuration.fileURL as Any)
     }
     
-    func realmNotificationCenter(forTableView tableView:UITableView) {
+    func realmNotificationCenter(forTableView tableView: UITableView) {
         
         guard let objects = self.objects else { return }
         

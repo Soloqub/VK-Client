@@ -15,15 +15,19 @@ target 'VK Client' do
   pod 'PromiseKit/Alamofire', '~> 6.0'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
-  # pod 'SnapKit'
-  # pod 'SteviaLayout'
-  # pod 'YogaKit'
 end
 
 target 'VK 5 Friends Extension' do
     # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
     # Pods for VK Client
     # pod 'Alamofire'
+    pod 'RealmSwift'
+end
+
+target 'iMessage' do
+    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+    # Pods for VK Client
+    pod 'AlamofireImage'
     pod 'RealmSwift'
 end
 
