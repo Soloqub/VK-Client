@@ -71,6 +71,8 @@ class WallPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     @objc private func placeButtonAction() {
+
+        self.performSegue(withIdentifier: "ToMap", sender: self)
     }
     
     @objc private func attachmentButtonAction() {

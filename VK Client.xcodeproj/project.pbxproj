@@ -14,6 +14,7 @@
 		92110FE8202F989800F1DD9F /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92110FE7202F989800F1DD9F /* FooterView.swift */; };
 		9215B5021FD0344D004B0312 /* MyGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */; };
 		921B50E12056E0E600A534DF /* WatchExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921B50E02056E0E600A534DF /* WatchExtensions.swift */; };
+		921CB0342067B2B700C697AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921CB0332067B2B700C697AF /* MapViewController.swift */; };
 		922E50B5205D5D54003894DC /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
 		922E50B6205D5D67003894DC /* WatchFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A508E2057378A00A05CD3 /* WatchFriend.swift */; };
 		922E50B8205D9472003894DC /* UploadFileResponseVK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E50B7205D9472003894DC /* UploadFileResponseVK.swift */; };
@@ -146,6 +147,7 @@
 		9215B5011FD0344D004B0312 /* MyGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsTableViewController.swift; sourceTree = "<group>"; };
 		921A508E2057378A00A05CD3 /* WatchFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFriend.swift; sourceTree = "<group>"; };
 		921B50E02056E0E600A534DF /* WatchExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchExtensions.swift; sourceTree = "<group>"; };
+		921CB0332067B2B700C697AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		922E50B7205D9472003894DC /* UploadFileResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileResponseVK.swift; sourceTree = "<group>"; };
 		922E50B9205DCFA7003894DC /* SaveImageResponseVK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageResponseVK.swift; sourceTree = "<group>"; };
 		923A00272066F48A00BAA46D /* UserInfoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoProvider.swift; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 			children = (
 				9269A073200D4917005776B3 /* MyNewsTableViewController.swift */,
 				924C1D8620322B4400C73AEA /* WallPostVC.swift */,
+				921CB0332067B2B700C697AF /* MapViewController.swift */,
 				929E8A43201E5B5F00574ED9 /* Views */,
 			);
 			path = "News Tab";
@@ -771,6 +774,7 @@
 				925A1A922048B15E00F32BA6 /* WatchSessionHelper.swift in Sources */,
 				92110FE8202F989800F1DD9F /* FooterView.swift in Sources */,
 				92DA2B931FDDBCB100DB59D7 /* UserPhotos.swift in Sources */,
+				921CB0342067B2B700C697AF /* MapViewController.swift in Sources */,
 				92B441EC1FDC8570008A7111 /* Friends.swift in Sources */,
 				92DDC6A9203A211700DE7398 /* PostResponseVK.swift in Sources */,
 				92DA2B951FDDC0CD00DB59D7 /* UserPhotosListProvider.swift in Sources */,
