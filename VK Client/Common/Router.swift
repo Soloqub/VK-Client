@@ -62,6 +62,10 @@ class Router {
             return self.getUserInfo()
         }
     }
+    
+    func reloadToken() {
+        self.token = KeychainWrapper.standard.string(forKey: "Token") ?? ""
+    }
 
     private func authorization() -> RequestConfig {
 

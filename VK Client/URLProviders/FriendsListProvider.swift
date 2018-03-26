@@ -33,7 +33,7 @@ class FriendsListProvider {
                         assertionFailure()
                         return
                 }
-
+                
                 var friends = [Friends]()
 
                 items.forEach { object in

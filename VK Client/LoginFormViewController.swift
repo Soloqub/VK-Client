@@ -16,6 +16,8 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var webView: WKWebView!
     
     var token = ""
+    var reload = false
+    var request: URLRequest?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +32,11 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
     func showLogin() {
         
         if let request = VKAuthProvider().makeURLRequest() {
-
+            self.request = request
+            
             if webView.url != nil {
                 webView.load(URLRequest(url: URL(string: "about:blank")!))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.webView.load(request)
-                }
+                self.reload = true
             } else {
                 webView.load(request)
             }
@@ -45,7 +46,9 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Enter" {
+            
             KeychainWrapper.standard.set(self.token, forKey: "Token")
+            Router.sharedInstance.reloadToken()
             self.addUserToFirebase()
         }
     }
@@ -109,6 +112,17 @@ class LoginFormViewController: UIViewController, WKNavigationDelegate {
         
         decisionHandler(.cancel)
         performSegue(withIdentifier: "Enter", sender: nil)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if self.reload,
+            let request = self.request {
+            self.reload = false
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.webView.load(request)
+            }
+        }
     }
 }
 

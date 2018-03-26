@@ -79,7 +79,10 @@ class FriendsTableViewController: UITableViewController {
         let exitObject = LeaveAccount()
         exitObject.logOut()
 
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            print(self.view.window?.rootViewController)
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

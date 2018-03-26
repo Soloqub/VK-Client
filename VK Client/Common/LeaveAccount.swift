@@ -19,18 +19,18 @@ class LeaveAccount {
 
     private func clearCookies() {
 
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
         let dataStore = WKWebsiteDataStore.default()
-        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
-            for record in records {
-                if record.displayName.contains("vk.com") {
-                    dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: [record], completionHandler: { })
-                }
+
+        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                dataStore.removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
             }
         }
     }
 
     private func clearDefaults() {
-        KeychainWrapper.standard.removeObject(forKey: "Token")
+        KeychainWrapper.standard.set("", forKey: "Token")
         UserDefaults.standard.removeObject(forKey: "CurrentUserID")
     }
 
@@ -38,8 +38,10 @@ class LeaveAccount {
 
         let realmFriends = RealmHelper<Friends>()
         realmFriends.deleteAll(withType: Friends.self)
+        
         let realmGroups = RealmHelper<Groups>()
         realmGroups.deleteAll(withType: Groups.self)
+        
         let realmNews = RealmHelper<MessageNews>()
         realmNews.deleteAll(withType: MessageNews.self)
     }
