@@ -117,4 +117,11 @@ class MyGroupsTableViewController: UITableViewController {
             }
         }
     }
+
+    @IBAction func exit(_ sender: Any) {
+        let exitObject = LeaveAccount()
+        exitObject.logOut()
+
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
 }

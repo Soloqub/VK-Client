@@ -183,6 +183,13 @@ class MyNewsTableViewController: UITableViewController {
         self.request()
     }
 
+    @IBAction func exit(_ sender: Any) {
+        let exitObject = LeaveAccount()
+        exitObject.logOut()
+        
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+
     enum CellViews {
         case header, main, footer
     }

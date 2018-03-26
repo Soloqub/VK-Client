@@ -14,7 +14,7 @@ class Router {
 
     static let sharedInstance = Router()
     private let actualAPIVersion = "5.73"
-    private let token = KeychainWrapper.standard.string(forKey: "Token")!
+    lazy private var token = KeychainWrapper.standard.string(forKey: "Token") ?? ""
     
     private init() { }
 

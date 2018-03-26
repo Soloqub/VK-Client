@@ -76,7 +76,13 @@
                             <outlet property="delegate" destination="rbh-PV-HOM" id="3mT-po-87R"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Друзья" id="jKF-Tz-SXF"/>
+                    <navigationItem key="navigationItem" title="Друзья" id="jKF-Tz-SXF">
+                        <barButtonItem key="leftBarButtonItem" title="Выход" id="ghV-6R-iPE">
+                            <connections>
+                                <action selector="exit:" destination="rbh-PV-HOM" id="GKb-AD-oxq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="Fp8-hI-WBk" kind="show" identifier="To Gallery" id="w5I-vn-VjF"/>
                     </connections>
@@ -126,6 +132,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Мои группы" id="neT-Tc-ucq">
+                        <barButtonItem key="leftBarButtonItem" title="Выход" id="8lP-SQ-Svq">
+                            <connections>
+                                <action selector="exit:" destination="Fsq-yj-pBm" id="dir-eH-GvF"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wOl-1I-HWN">
                             <connections>
                                 <segue destination="scK-ol-KMq" kind="show" identifier="Add Groups" id="ibl-EJ-sXl"/>
@@ -135,7 +146,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHt-cf-eA3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2882" y="527"/>
+            <point key="canvasLocation" x="2735" y="527"/>
         </scene>
         <!--Список групп-->
         <scene sceneID="NYP-mB-2HD">
@@ -228,6 +239,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Новости" id="16L-ZL-NgZ">
+                        <barButtonItem key="leftBarButtonItem" title="Выход" id="Of3-Oy-oI5">
+                            <connections>
+                                <action selector="exit:" destination="zPA-Vh-iQu" id="gJs-0t-7ec"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="zwP-R1-KZg">
                             <connections>
                                 <segue destination="Rnw-jJ-g0B" kind="show" identifier="Post" id="noi-ke-JS8"/>

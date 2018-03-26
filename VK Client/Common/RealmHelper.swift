@@ -43,7 +43,7 @@ class RealmHelper<T> where T: Object {
         }
     }
     
-    func deleteAll<T>(withType classType:T.Type) {
+    func deleteAll<T>(withType classType: T.Type) {
         
         guard let realm = self.realmInit() else { return }
 

@@ -74,6 +74,14 @@ class FriendsTableViewController: UITableViewController {
     }
 
     // MARK: - Navigation
+
+    @IBAction func exit(_ sender: Any) {
+        let exitObject = LeaveAccount()
+        exitObject.logOut()
+
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let friends = self.realm.objects else { return }
