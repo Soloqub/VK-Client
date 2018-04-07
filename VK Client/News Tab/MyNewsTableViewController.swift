@@ -187,7 +187,8 @@ class MyNewsTableViewController: UITableViewController {
         let exitObject = LeaveAccount()
         exitObject.logOut()
         
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+        UIApplication.shared.keyWindow?.rootViewController = loginViewController
     }
 
     enum CellViews {

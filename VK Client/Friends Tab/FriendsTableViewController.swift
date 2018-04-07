@@ -80,8 +80,8 @@ class FriendsTableViewController: UITableViewController {
         exitObject.logOut()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-            print(self.view.window?.rootViewController)
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+            UIApplication.shared.keyWindow?.rootViewController = loginViewController
         }
     }
 
